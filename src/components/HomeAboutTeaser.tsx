@@ -28,7 +28,7 @@ export default function HomeAboutTeaser() {
       <div className="container">
         <div className="hat-inner">
           <div className="hat-header-row">
-            <span className="hat-eyebrow">01 / WHO WE ARE</span>
+            <span className="hat-eyebrow">WHO WE ARE</span>
             <div className="hat-rule" aria-hidden="true" />
           </div>
 

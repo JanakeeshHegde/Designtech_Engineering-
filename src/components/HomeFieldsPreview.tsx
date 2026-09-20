@@ -83,7 +83,7 @@ export default function HomeFieldsPreview() {
       <div className="container">
         <div className="hfpw-header-row">
           <div className="hfpw-header-left">
-            <span className="hfpw-eyebrow">03 / FIELDS OF OPERATION</span>
+            <span className="hfpw-eyebrow">FIELDS OF OPERATION</span>
             <h2 id="hfpw-heading" className="hfpw-headline">
               DIVERSE SECTORS, ONE STANDARD OF EXCELLENCE
             </h2>

@@ -83,7 +83,7 @@ export default function HomeFeaturedProjects() {
     <section ref={ref} id="featured-journey" className="hfp section" aria-labelledby="hfp-heading">
       <div className="container">
         <div className="hfp-header section-header">
-          <div className="section-number">04 / FEATURED ENGINEERING JOURNEY</div>
+          <div className="section-number">FEATURED ENGINEERING JOURNEY</div>
           <h2 id="hfp-heading" className="t-display-md">
             FROM DRAWINGS<br />TO REAL STRUCTURES.
           </h2>

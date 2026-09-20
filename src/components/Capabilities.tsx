@@ -163,7 +163,7 @@ export default function Capabilities() {
         {/* Header */}
         <div className="cap-header">
           <div className="cap-header-left">
-            <span className="cap-eyebrow">02 / CORE CAPABILITIES</span>
+            <span className="cap-eyebrow">CORE CAPABILITIES</span>
             <h2 id="cap-heading" className="cap-headline">
               COMPREHENSIVE CONSULTING SCOPE
             </h2>

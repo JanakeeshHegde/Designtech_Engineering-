@@ -109,7 +109,7 @@ export default function HomeTrustSection() {
         {/* Header */}
         <div className="hts-header">
           <div className="hts-header-left">
-            <span className="hts-eyebrow">05 / CLIENT & TRUST ECOSYSTEM</span>
+            <span className="hts-eyebrow">CLIENT & TRUST ECOSYSTEM</span>
             <h2 id="hts-heading" className="hts-headline">
               TRUSTED BY INSTITUTIONS & INDUSTRY LEADERS
             </h2>

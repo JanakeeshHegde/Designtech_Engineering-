@@ -43,7 +43,7 @@ export default function EngineeringJourney({ onScrollToProject }: Props) {
       {/* Header */}
       <div className="ej-intro container">
         <div className="ej-header section-header">
-          <div className="section-number">05 / ENGINEERING JOURNEY</div>
+          <div className="section-number">ENGINEERING JOURNEY</div>
           <h2 id="ej-heading" className="t-display-md">
             FROM DRAWINGS<br />TO REAL STRUCTURES.
           </h2>

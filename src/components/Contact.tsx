@@ -110,7 +110,7 @@ export default function Contact() {
     <section id="contact" ref={sectionRef} className="contact section" aria-labelledby="contact-heading">
       <div className="container">
         <div className="contact-header section-header">
-          <div className="section-number">07 / CONTACT</div>
+          <div className="section-number">CONTACT</div>
           <h2 id="contact-heading" className="t-display-lg">LET&apos;S BUILD<br />WHAT LASTS.</h2>
           <div className="section-divider" />
         </div>

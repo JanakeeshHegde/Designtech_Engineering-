@@ -37,7 +37,7 @@ export default function HomeContactCTA() {
 
       <div className="container hcc-container">
         <div className="hcc-text">
-          <div className="section-number">05 / START A PROJECT</div>
+          <div className="section-number">START A PROJECT</div>
           <h2 id="hcc-heading" className="hcc-heading t-display-lg">
             LET&apos;S BUILD<br />WHAT LASTS.
           </h2>

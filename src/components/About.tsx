@@ -71,7 +71,7 @@ export default function About() {
       <div className="container">
         {/* Editorial Section Header */}
         <div className="about-header">
-          <span className="about-eyebrow">01 / WHO WE ARE</span>
+          <span className="about-eyebrow">WHO WE ARE</span>
           <div className="about-header-rule" aria-hidden="true" />
         </div>
 

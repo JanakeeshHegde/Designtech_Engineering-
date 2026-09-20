@@ -145,7 +145,7 @@ export default function EngineeringProcess() {
     <section id="process" ref={sectionRef} className="eng-process section" aria-labelledby="process-heading">
       <div className="container">
         <div className="process-header section-header">
-          <div className="section-number">04 / PROCESS</div>
+          <div className="section-number">PROCESS</div>
           <h2 id="process-heading" className="t-display-md">FROM SOIL TO SKYLINE</h2>
           <div className="section-divider" />
           <p className="t-body" style={{ maxWidth: "480px" }}>

@@ -73,7 +73,7 @@ export default function StructuralInspector() {
     <section id="structural-inspector" ref={sectionRef} className="si section" aria-labelledby="si-heading">
       <div className="container">
         <div className="si-header section-header">
-          <div className="section-number">04.5 / INSPECT</div>
+          <div className="section-number">INSPECT</div>
           <h2 id="si-heading" className="t-display-md">INSPECT THE STRUCTURE</h2>
           <div className="section-divider" />
           <p className="t-body" style={{ maxWidth: "460px" }}>

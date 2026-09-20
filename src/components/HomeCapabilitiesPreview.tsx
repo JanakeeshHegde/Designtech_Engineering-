@@ -58,7 +58,7 @@ export default function HomeCapabilitiesPreview() {
         {/* Section Header */}
         <div className="hcp-header-row">
           <div className="hcp-header-left">
-            <span className="hcp-eyebrow">02 / CORE EXPERTISE</span>
+            <span className="hcp-eyebrow">CORE EXPERTISE</span>
             <h2 id="hcp-heading" className="hcp-headline">
               PRECISION CAPABILITIES
             </h2>

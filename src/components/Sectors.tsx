@@ -138,7 +138,7 @@ export default function Sectors() {
         {/* Header */}
         <div className="sectors-header">
           <div className="sectors-header-left">
-            <span className="sectors-eyebrow">03 / SPECIALIZED SECTORS</span>
+            <span className="sectors-eyebrow">SPECIALIZED SECTORS</span>
             <h2 id="sectors-heading" className="sectors-headline">
               FIELDS OF OPERATION
             </h2>

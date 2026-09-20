@@ -3,10 +3,10 @@ import { NavLink, Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 const NAV_ITEMS = [
-  { num: "01", label: "HOME", path: "/" },
-  { num: "02", label: "ABOUT", path: "/about" },
-  { num: "03", label: "SECTORS", path: "/sectors" },
-  { num: "04", label: "CONTACT", path: "/contact" },
+  { label: "HOME", path: "/" },
+  { label: "ABOUT", path: "/about" },
+  { label: "SECTORS", path: "/sectors" },
+  { label: "CONTACT", path: "/contact" },
 ];
 
 export default function Navbar() {
@@ -83,7 +83,6 @@ export default function Navbar() {
                   }
                   onClick={() => setMenuOpen(false)}
                 >
-                  <span className="mobile-menu-num">{item.num}</span>
                   {item.label}
                 </NavLink>
               </li>

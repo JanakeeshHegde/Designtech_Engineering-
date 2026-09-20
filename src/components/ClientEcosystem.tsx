@@ -57,7 +57,7 @@ export default function ClientEcosystem() {
     <section id="clients" ref={sectionRef} className="client-eco section" aria-labelledby="ce-heading">
       <div className="container">
         <div className="ce-header section-header">
-          <div className="section-number">06.5 / CLIENTS</div>
+          <div className="section-number">CLIENTS</div>
           <h2 id="ce-heading" className="t-display-md">CLIENT ECOSYSTEM</h2>
           <div className="section-divider" />
           <p className="t-body" style={{ maxWidth: "440px" }}>
