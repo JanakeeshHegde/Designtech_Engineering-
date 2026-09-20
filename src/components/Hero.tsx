@@ -41,32 +41,12 @@ function createParticle(w: number, h: number): Particle {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   COORDINATE MARKERS DATA
-───────────────────────────────────────────────────────────── */
-const COORD_MARKERS = [
-  { id: "X01", x: "8%",  y: "22%", active: false },
-  { id: "Y01", x: "8%",  y: "62%", active: false },
-  { id: "X02", x: "28%", y: "12%", active: true  },
-  { id: "Y02", x: "28%", y: "82%", active: false },
-  { id: "A",   x: "52%", y: "18%", active: false },
-  { id: "B",   x: "72%", y: "14%", active: true  },
-  { id: "C",   x: "88%", y: "26%", active: false },
-  { id: "D",   x: "91%", y: "68%", active: false },
-];
-
-
-
-/* ─────────────────────────────────────────────────────────────
    COMPONENT
 ───────────────────────────────────────────────────────── */
 export default function Hero({ onEnter }: Props) {
   const sectionRef        = useRef<HTMLElement>(null);
-  const bgImgRef          = useRef<HTMLDivElement>(null);
-  const overlayLayersRef  = useRef<HTMLDivElement>(null);
-  const scanLineRef       = useRef<HTMLDivElement>(null);
-  const lightSweepRef     = useRef<HTMLDivElement>(null);
+  const bgImgRef          = useRef<HTMLVideoElement>(null);
   const particleCanvasRef = useRef<HTMLCanvasElement>(null);
-  const progressLineRef   = useRef<HTMLDivElement>(null);
   const revealMaskRef     = useRef<HTMLDivElement>(null);
 
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
@@ -207,6 +187,41 @@ export default function Hero({ onEnter }: Props) {
 
     const reduced = prefersReducedMotion.current;
 
+    const videoEl = bgImgRef.current;
+    let setPlayback: (() => void) | null = null;
+    let tryPlay: (() => void) | null = null;
+    let onVisibility: (() => void) | null = null;
+    if (videoEl) {
+      setPlayback = () => {
+        try {
+          videoEl.playbackRate = 0.7;
+        } catch (e) {
+          // no-op
+        }
+      };
+      setPlayback();
+      videoEl.addEventListener("loadedmetadata", setPlayback);
+      tryPlay = () => {
+        try {
+          const p = videoEl.play();
+          if (p && typeof p.catch === "function") {
+            p.catch(() => {});
+          }
+        } catch (e) {
+          // no-op
+        }
+      };
+      tryPlay();
+      videoEl.addEventListener("canplay", tryPlay);
+      onVisibility = () => {
+        if (document.visibilityState === "visible") {
+          setPlayback?.();
+          tryPlay?.();
+        }
+      };
+      document.addEventListener("visibilitychange", onVisibility);
+    }
+
     const ctx = gsap.context(() => {
 
       /* ── CINEMATIC IMAGE REVEAL ── */
@@ -218,58 +233,6 @@ export default function Hero({ onEnter }: Props) {
             opacity: 0, duration: 1.2, delay: 0.8, ease: "power2.inOut",
             onComplete: () => { revealMask.style.pointerEvents = "none"; }
           }
-        );
-      }
-
-      /* ── OVERLAY LAYERS FADE IN ── */
-      const overlayLayers = overlayLayersRef.current;
-      if (overlayLayers) {
-        gsap.fromTo(overlayLayers,
-          { opacity: 0 },
-          { opacity: 1, duration: 1.6, delay: 0.5, ease: "power2.out" }
-        );
-      }
-
-      /* ── BLUEPRINT SCAN LINE ── */
-      const scanLine = scanLineRef.current;
-      if (scanLine && !reduced) {
-        // Initial entrance
-        gsap.set(scanLine, { left: "0%", opacity: 0 });
-        gsap.to(scanLine, { opacity: 1, duration: 0.4, delay: 0.35 });
-        // Continuous scan across the blueprint area (left 48%)
-        gsap.to(scanLine, {
-          left: "48%",
-          duration: 9,
-          delay: 0.35,
-          ease: "none",
-          repeat: -1,
-          onRepeat: () => {
-            gsap.set(scanLine, { left: "0%" });
-          },
-        });
-      }
-
-      /* ── LIGHT SWEEP ── */
-      const lightSweep = lightSweepRef.current;
-      if (lightSweep && !reduced) {
-        gsap.set(lightSweep, { left: "55%" });
-        gsap.to(lightSweep, {
-          left: "110%",
-          duration: 9,
-          delay: 2.5,
-          ease: "power1.inOut",
-          repeat: -1,
-          repeatDelay: 7,
-          onRepeat: () => gsap.set(lightSweep, { left: "55%" }),
-        });
-      }
-
-      /* ── CONSTRUCTION PROGRESS LINE ── */
-      const progressLine = progressLineRef.current;
-      if (progressLine && !reduced) {
-        gsap.fromTo(progressLine,
-          { width: "0%" },
-          { width: "100%", duration: 3.5, delay: 1.0, ease: "power2.inOut" }
         );
       }
 
@@ -295,29 +258,11 @@ export default function Hero({ onEnter }: Props) {
         { opacity: 1, duration: 0.6, delay: reduced ? 0.9 : 2.1, ease: "power2.out" }
       );
 
-      /* ── HUD & COORD MARKERS STAGGER IN ── */
+      /* ── HUD STAGGER IN ── */
       gsap.fromTo(".hero-hud-item",
         { opacity: 0, x: -8 },
         { opacity: 1, x: 0, stagger: 0.12, duration: 0.6, delay: reduced ? 0.2 : 2.4, ease: "power2.out" }
       );
-      gsap.fromTo(".hero-coord-marker",
-        { opacity: 0, scale: 0.6 },
-        { opacity: 1, scale: 1, stagger: 0.08, duration: 0.5, delay: reduced ? 0.2 : 2.6, ease: "back.out(1.4)" }
-      );
-
-      /* ── SVG BLUEPRINT LINES DRAW-ON ── */
-      const bpLines = gsap.utils.toArray<SVGElement>(".bp-line");
-      bpLines.forEach((line, i) => {
-        const len = (line as SVGPathElement).getTotalLength?.() ?? 200;
-        gsap.set(line, { strokeDasharray: len, strokeDashoffset: len, opacity: 0 });
-        gsap.to(line, {
-          strokeDashoffset: 0,
-          opacity: 1,
-          duration: 1.4,
-          delay: (reduced ? 0.1 : 0.3) + i * 0.12,
-          ease: "power2.inOut",
-        });
-      });
 
       /* ── SCROLL TRANSITION ── */
       ScrollTrigger.create({
@@ -327,8 +272,6 @@ export default function Hero({ onEnter }: Props) {
         scrub: 1.2,
         onUpdate: (self) => {
           const p = self.progress;
-          const overlayEl = overlayLayersRef.current;
-          if (overlayEl) overlayEl.style.opacity = String(Math.max(0, 1 - p * 1.8));
           const bgEl = bgImgRef.current;
           if (bgEl) bgEl.style.opacity = String(Math.max(0.55, 1 - p * 0.45));
         },
@@ -342,6 +285,11 @@ export default function Hero({ onEnter }: Props) {
     const cleanupParallax  = startParallaxLoop();
 
     return () => {
+      if (videoEl) {
+        if (setPlayback) videoEl.removeEventListener("loadedmetadata", setPlayback);
+        if (tryPlay) videoEl.removeEventListener("canplay", tryPlay);
+      }
+      if (onVisibility) document.removeEventListener("visibilitychange", onVisibility);
       ctx.revert();
       cleanupParticles?.();
       cleanupMouse?.();
@@ -357,9 +305,19 @@ export default function Hero({ onEnter }: Props) {
       aria-labelledby="hero-headline"
     >
 
-      {/* ── LAYER 0: Background Image ── */}
+      {/* ── LAYER 0: Background Video ── */}
       <div className="hero-bg-wrap" aria-hidden="true">
-        <div ref={bgImgRef} className="hero-bg-img" />
+        <video
+          ref={bgImgRef}
+          className="hero-bg-video"
+          src="/hero.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        />
       </div>
 
       {/* ── LAYER 1: Cinematic Dark Gradient Overlay ── */}
@@ -370,87 +328,6 @@ export default function Hero({ onEnter }: Props) {
 
       {/* ── LAYER 1c: Sunset Enhancement ── */}
       <div className="hero-sunset-overlay" aria-hidden="true" />
-
-      {/* ── LAYER 2: Blueprint + Technical Overlays ── */}
-      <div ref={overlayLayersRef} className="hero-overlay-layers" aria-hidden="true">
-
-        {/* Blueprint SVG engineering lines */}
-        <svg
-          className="hero-bp-svg"
-          viewBox="0 0 800 500"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          {/* Horizontal measurement baseline */}
-          <line className="bp-line" x1="20" y1="460" x2="380" y2="460"
-            stroke="#737373" strokeWidth="0.6" strokeOpacity="0.5" />
-          {/* Tick marks on measurement line */}
-          <line className="bp-line" x1="20"  y1="455" x2="20"  y2="465" stroke="#737373" strokeWidth="0.6" strokeOpacity="0.5"/>
-          <line className="bp-line" x1="95"  y1="457" x2="95"  y2="463" stroke="#737373" strokeWidth="0.5" strokeOpacity="0.4"/>
-          <line className="bp-line" x1="190" y1="455" x2="190" y2="465" stroke="#A87524" strokeWidth="0.8" strokeOpacity="0.6"/>
-          <line className="bp-line" x1="285" y1="457" x2="285" y2="463" stroke="#737373" strokeWidth="0.5" strokeOpacity="0.4"/>
-          <line className="bp-line" x1="380" y1="455" x2="380" y2="465" stroke="#737373" strokeWidth="0.6" strokeOpacity="0.5"/>
-          {/* Vertical reference lines */}
-          <line className="bp-line" x1="60"  y1="30"  x2="60"  y2="430" stroke="#353535" strokeWidth="0.5" strokeOpacity="0.45"/>
-          <line className="bp-line" x1="190" y1="20"  x2="190" y2="460" stroke="#A87524" strokeWidth="0.7" strokeOpacity="0.35"/>
-          <line className="bp-line" x1="310" y1="50"  x2="310" y2="440" stroke="#353535" strokeWidth="0.5" strokeOpacity="0.4"/>
-          {/* Horizontal grid levels */}
-          <line className="bp-line" x1="15" y1="100" x2="375" y2="100" stroke="#353535" strokeWidth="0.4" strokeOpacity="0.4"/>
-          <line className="bp-line" x1="15" y1="200" x2="375" y2="200" stroke="#737373" strokeWidth="0.5" strokeOpacity="0.35"/>
-          <line className="bp-line" x1="15" y1="300" x2="375" y2="300" stroke="#353535" strokeWidth="0.4" strokeOpacity="0.4"/>
-          <line className="bp-line" x1="15" y1="380" x2="375" y2="380" stroke="#737373" strokeWidth="0.4" strokeOpacity="0.3"/>
-          {/* Structural analysis rectangle — blueprint zone */}
-          <path className="bp-line" d="M 180 60 L 310 60 L 310 160 L 180 160 Z"
-            stroke="#A87524" strokeWidth="0.8" strokeOpacity="0.3" fill="none"/>
-          {/* Diagonal — structural cross-analysis */}
-          <line className="bp-line" x1="180" y1="60"  x2="310" y2="160" stroke="#737373" strokeWidth="0.4" strokeOpacity="0.25"/>
-          <line className="bp-line" x1="310" y1="60"  x2="180" y2="160" stroke="#737373" strokeWidth="0.4" strokeOpacity="0.25"/>
-          {/* Arc — radius / curve indicator */}
-          <path className="bp-line" d="M 60 300 Q 130 240 190 300" stroke="#A87524" strokeWidth="0.7" strokeOpacity="0.3" fill="none"/>
-          {/* Right side — building facade structural edges */}
-          <line className="bp-line" x1="520" y1="40"  x2="520" y2="430" stroke="#A87524" strokeWidth="1"   strokeOpacity="0.15"/>
-          <line className="bp-line" x1="710" y1="40"  x2="710" y2="420" stroke="#D0A04A" strokeWidth="0.8" strokeOpacity="0.12"/>
-          {/* Floor slab horizontal lines */}
-          <line className="bp-line" x1="520" y1="140" x2="710" y2="140" stroke="#D0A04A" strokeWidth="0.6" strokeOpacity="0.12"/>
-          <line className="bp-line" x1="520" y1="250" x2="710" y2="250" stroke="#D0A04A" strokeWidth="0.6" strokeOpacity="0.12"/>
-          <line className="bp-line" x1="520" y1="350" x2="710" y2="350" stroke="#D0A04A" strokeWidth="0.6" strokeOpacity="0.10"/>
-        </svg>
-
-        {/* Blueprint Scan Line */}
-        <div ref={scanLineRef} className="hero-scan-line" aria-hidden="true" />
-
-        {/* Construction Progress Track */}
-        <div className="hero-progress-track" aria-hidden="true">
-          <div ref={progressLineRef} className="hero-progress-line" />
-          <div className="hero-progress-label">STRUCTURAL PROGRESS</div>
-          <div className="hero-progress-ticks">
-            {["0%","25%","50%","75%","100%"].map((t) => (
-              <span key={t}>{t}</span>
-            ))}
-          </div>
-        </div>
-
-        {/* Light Sweep */}
-        <div ref={lightSweepRef} className="hero-light-sweep" aria-hidden="true" />
-
-       
-
-        {/* Coordinate Markers */}
-        {COORD_MARKERS.map((m) => (
-          <div
-            key={m.id}
-            className={`hero-coord-marker ${m.active ? "hero-coord-marker--active" : ""}`}
-            style={{ left: m.x, top: m.y }}
-            aria-hidden="true"
-          >
-            <div className="coord-crosshair" />
-            <span className="coord-id">{m.id}</span>
-          </div>
-        ))}
-
-      </div>
 
       {/* ── LAYER 3: Atmospheric Particles ── */}
       <canvas
@@ -513,7 +390,6 @@ export default function Hero({ onEnter }: Props) {
 
       {/* Scroll indicator */}
       <div className="hero-scroll-hint" aria-hidden="true">
-        <div className="scroll-hint-line" />
         <span className="scroll-hint-text">SCROLL TO EXPLORE</span>
       </div>
 

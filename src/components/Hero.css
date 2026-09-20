@@ -10,7 +10,7 @@
 .hero {
   position: relative;
   width: 100%;
-  min-height: 82vh;
+  min-height: 100svh;
   overflow: hidden;
   background: #171717;
   color: #F4F1EA;
@@ -20,7 +20,7 @@
 }
 
 /* ──────────────────────────────────────────────────────────
-   LAYER 0 — BACKGROUND IMAGE (full-bleed)
+   LAYER 0 — BACKGROUND VIDEO (full-bleed cinematic)
 ────────────────────────────────────────────────────────── */
 
 .hero-bg-wrap {
@@ -31,15 +31,16 @@
   will-change: transform;
 }
 
-.hero-bg-img {
+.hero-bg-video {
   position: absolute;
   inset: 0;
-  background-image: url("/hero.png");
-  background-size: cover;
-  background-position: center 35%;
-  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
   will-change: transform, opacity;
   transform-origin: center center;
+  display: block;
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -108,107 +109,6 @@
   height: 100%;
 }
 
-/* ── Blueprint Scan Line ── */
-.hero-scan-line {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0%;
-  width: 1px;
-  z-index: 3;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(168,117,36,0.0) 5%,
-    rgba(168,117,36,0.45) 30%,
-    rgba(168,117,36,0.50) 50%,
-    rgba(168,117,36,0.45) 70%,
-    rgba(168,117,36,0.0) 95%,
-    transparent 100%
-  );
-  will-change: left;
-  /* Brightening glow when scanning */
-  box-shadow: 0 0 8px rgba(168,117,36,0.15), 0 0 20px rgba(168,117,36,0.06);
-}
-
-/* ── Construction Progress Track ── */
-.hero-progress-track {
-  position: absolute;
-  bottom: 10%;
-  left: 0;
-  right: 0;
-  height: 24px;
-  z-index: 4;
-  padding: 0 4%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.hero-progress-line {
-  height: 1px;
-  width: 0%;
-  background: linear-gradient(
-    90deg,
-    rgba(168,117,36,0.2) 0%,
-    rgba(168,117,36,0.6) 50%,
-    rgba(208,160,74,0.8) 100%
-  );
-  position: relative;
-  will-change: width;
-  /* Engineering measurement arrow at tip */
-}
-.hero-progress-line::after {
-  content: "";
-  position: absolute;
-  right: -1px;
-  top: -3px;
-  width: 7px;
-  height: 7px;
-  border-right: 1px solid rgba(208,160,74,0.8);
-  border-top: 1px solid rgba(208,160,74,0.8);
-  transform: rotate(45deg);
-}
-
-.hero-progress-label {
-  font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.52rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  color: #737373;
-  text-transform: uppercase;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.hero-progress-ticks {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.48rem;
-  color: #353535;
-  letter-spacing: 0.1em;
-  pointer-events: none;
-  flex-shrink: 0;
-  position: absolute;
-  left: 4%;
-  right: 4%;
-  bottom: -14px;
-}
-.hero-progress-ticks span {
-  position: relative;
-}
-.hero-progress-ticks span::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  width: 1px;
-  height: 5px;
-  background: #353535;
-}
-
 /* ── Light Sweep ── */
 .hero-light-sweep {
   position: absolute;
@@ -260,67 +160,6 @@
 }
 
 .hud-value--active {
-  color: #A87524;
-}
-
-/* ── Coordinate Markers ── */
-.hero-coord-marker {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  opacity: 0;
-  transform-origin: left center;
-}
-
-.coord-crosshair {
-  width: 8px;
-  height: 8px;
-  border: 1px solid rgba(115,115,115,0.6);
-  border-radius: 0;
-  position: relative;
-  flex-shrink: 0;
-}
-.coord-crosshair::before,
-.coord-crosshair::after {
-  content: "";
-  position: absolute;
-  background: rgba(115,115,115,0.5);
-}
-.coord-crosshair::before {
-  left: 50%;
-  top: -3px;
-  bottom: -3px;
-  width: 1px;
-  transform: translateX(-50%);
-}
-.coord-crosshair::after {
-  top: 50%;
-  left: -3px;
-  right: -3px;
-  height: 1px;
-  transform: translateY(-50%);
-}
-
-.hero-coord-marker--active .coord-crosshair {
-  border-color: rgba(168,117,36,0.7);
-}
-.hero-coord-marker--active .coord-crosshair::before,
-.hero-coord-marker--active .coord-crosshair::after {
-  background: rgba(168,117,36,0.6);
-}
-
-.coord-id {
-  font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.46rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #737373;
-  line-height: 1;
-}
-
-.hero-coord-marker--active .coord-id {
   color: #A87524;
 }
 
@@ -560,11 +399,9 @@
 ────────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-scan-line,
   .hero-light-sweep,
   .hero-particle-canvas,
-  .hero-progress-track,
-  .hero-bg-img {
+  .hero-bg-video {
     display: none;
   }
   .hero-line,
@@ -572,8 +409,7 @@
   .hero-sub,
   .hero-cta-row,
   .hero-address,
-  .hero-hud-item,
-  .hero-coord-marker {
+  .hero-hud-item {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -586,7 +422,7 @@
 
 @media (max-width: 1024px) {
   .hero {
-    min-height: 80vh;
+    min-height: 100svh;
   }
 
   .hero-content-wrap {
@@ -611,7 +447,11 @@
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 82svh;
+    min-height: 100svh;
+  }
+
+  .hero-bg-video {
+    object-position: center center;
   }
 
   .hero-content-wrap {
@@ -649,8 +489,6 @@
 
   /* Reduce overlay complexity on mobile */
   .hero-hud-item { display: none; }
-  .hero-coord-marker { display: none; }
-  .hero-progress-track { display: none; }
 
   /* Darker gradient for readability */
   .hero-gradient-overlay {
