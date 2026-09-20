@@ -1,0 +1,160 @@
+export interface Project {
+  id: string;
+  number: string;
+  title: string;
+  location: string;
+  client?: string;
+  category: string;
+  type: string;
+  floors?: string;
+  builtUpArea?: string;
+  description?: string;
+  facilities?: string[];
+  technicalHighlights?: string[];
+  heroImage: string;
+  gallery?: string[];
+  constructionImages?: string[];
+  completedImages?: string[];
+  featured: boolean;
+  hasBeforeAfter?: boolean;
+  beforeImage?: string;
+  afterImage?: string;
+  accentColor?: string;
+}
+
+export const projects: Project[] = [
+  {
+    id: 'hotel-country-inn',
+    number: '001',
+    title: 'Hotel Country Inn',
+    location: 'Manipal',
+    client: 'Shree Raghupathi Bhat / Country Inn, Udupi',
+    category: 'Commercial',
+    type: 'Hotel Building',
+    floors: 'B2 + G + 5',
+    builtUpArea: '60,000 sq.ft',
+    description: 'A landmark hospitality structure in Manipal featuring two basement levels, ground floor, and five upper floors.',
+    facilities: ['Commercial space', 'Banquet halls', 'Rooftop swimming pool', 'Restaurant'],
+    heroImage: '/projects/hotel-country-inn/hero.jpg',
+    gallery: ['/projects/hotel-country-inn/img1.jpg'],
+    constructionImages: ['/projects/hotel-country-inn/construction1.jpg'],
+    completedImages: ['/projects/hotel-country-inn/completed.jpg'],
+    featured: true,
+    accentColor: '#2563eb',
+  },
+  {
+    id: 'st-josephs-college',
+    number: '002',
+    title: "St. Joseph's College - Multi Activity Centre",
+    location: 'Bangalore',
+    client: "St. Joseph's Group of Institutions, Bangalore",
+    category: 'Institutional',
+    type: 'Multi Activity Centre',
+    floors: 'G + 3',
+    builtUpArea: '70,000 sq.ft',
+    description: 'A state-of-the-art multi-activity centre featuring a 22-metre clear span with 8-metre high ceiling, MS truss with Kalzip sheeting.',
+    facilities: ['Basketball court', 'Badminton court', 'Table tennis', 'Gym', 'Canteen'],
+    technicalHighlights: ['22m clear span', '8m high ceiling', 'Kalzip sheeting', 'MS truss spanning 22m'],
+    heroImage: '/projects/st-josephs/hero.jpg',
+    gallery: ['/projects/st-josephs/img1.jpg'],
+    constructionImages: ['/projects/st-josephs/construction1.jpg'],
+    completedImages: ['/projects/st-josephs/completed.jpg'],
+    featured: true,
+    accentColor: '#16a34a',
+  },
+  {
+    id: 'cmr-pu-college',
+    number: '003',
+    title: 'CMR - PU College',
+    location: 'Bangalore',
+    client: 'CMR Group of Institutions, Bangalore',
+    category: 'Institutional',
+    type: 'Educational Institution',
+    floors: 'B + G + 4',
+    builtUpArea: '60,000 sq.ft',
+    description: 'An educational institution with an 18-metre clear span basement basketball court, classrooms, and central court.',
+    facilities: ['Basketball court at basement', 'Classrooms', 'Central court'],
+    technicalHighlights: ['18m clear span'],
+    heroImage: '/projects/cmr-pu-college/hero.jpg',
+    gallery: ['/projects/cmr-pu-college/img1.jpg'],
+    constructionImages: ['/projects/cmr-pu-college/construction1.jpg'],
+    completedImages: ['/projects/cmr-pu-college/completed.jpg'],
+    featured: true,
+    accentColor: '#dc2626',
+  },
+  {
+    id: 'cross-winds-apartment',
+    number: '004',
+    title: 'Cross Winds Apartment',
+    location: 'Hyderabad',
+    category: 'Residential',
+    type: 'Residential Apartment',
+    heroImage: '/projects/cross-winds/hero.jpg',
+    gallery: ['/projects/cross-winds/img1.jpg'],
+    constructionImages: ['/projects/cross-winds/construction1.jpg'],
+    completedImages: ['/projects/cross-winds/completed.jpg'],
+    hasBeforeAfter: true,
+    beforeImage: '/projects/cross-winds/construction1.jpg',
+    afterImage: '/projects/cross-winds/completed.jpg',
+    featured: true,
+    accentColor: '#7c3aed',
+  },
+  {
+    id: 'taurus-jcb',
+    number: '005',
+    title: 'Taurus JCB',
+    location: 'Bangalore',
+    category: 'Industrial',
+    type: 'Industrial Structure',
+    heroImage: '/projects/taurus-jcb/hero.jpg',
+    featured: false,
+    accentColor: '#d97706',
+  },
+  {
+    id: 'complex-mangalore',
+    number: '006',
+    title: 'Complex at Mangalore',
+    location: 'Mangalore',
+    category: 'Commercial',
+    type: 'Commercial Complex',
+    heroImage: '/projects/complex-mangalore/hero.jpg',
+    featured: false,
+    accentColor: '#0891b2',
+  },
+  {
+    id: 'gallery-ksca-alur',
+    number: '007',
+    title: 'Gallery at KSCA Alur',
+    location: 'Alur',
+    category: 'Institutional',
+    type: 'Sports Gallery',
+    heroImage: '/projects/ksca-alur/gallery-hero.jpg',
+    featured: false,
+    accentColor: '#059669',
+  },
+  {
+    id: 'convention-center-ksca-alur',
+    number: '008',
+    title: 'Convention Center at KSCA Alur',
+    location: 'Alur',
+    category: 'Institutional',
+    type: 'Convention Center',
+    heroImage: '/projects/ksca-alur/convention-hero.jpg',
+    featured: false,
+    accentColor: '#2563eb',
+  },
+  {
+    id: 'sagittarius-metals',
+    number: '009',
+    title: 'Factory for Sagittarius Metals',
+    location: 'Peenya, Bangalore',
+    category: 'Industrial',
+    type: 'Industrial Factory',
+    heroImage: '/projects/sagittarius-metals/hero.jpg',
+    featured: false,
+    accentColor: '#ca8a04',
+  },
+];
+
+export const featuredProjects = projects.filter((p) => p.featured);
+export const allProjects = projects;

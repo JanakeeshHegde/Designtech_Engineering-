@@ -1,0 +1,120 @@
+.si {
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.si-header { opacity: 0; }
+
+.si-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.si-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem;
+}
+
+.si-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.125rem;
+  border: none;
+  border-left: 3px solid transparent;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  color: var(--color-text-secondary);
+  transition: all 0.2s;
+  opacity: 0;
+}
+
+.si-btn:hover {
+  color: var(--color-text-primary);
+  border-left-color: var(--color-gold-highlight);
+  background: rgba(239, 235, 227, 0.4);
+}
+
+.si-btn--active {
+  color: var(--color-gold);
+  border-left-color: var(--color-gold);
+  background: var(--color-bg-secondary);
+}
+
+.si-btn-dot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.si-btn--active .si-btn-dot {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+.si-btn-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.si-info-panel {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-card-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.si-info-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-primary);
+}
+
+.si-info-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.si-canvas {
+  position: relative;
+  border: 1px solid var(--color-border);
+  padding: 1.75rem;
+  background: #FFFFFF;
+  opacity: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.si-svg { width: 100%; height: auto; }
+
+.si-detail-label {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+@media (max-width: 1024px) {
+  .si-layout { grid-template-columns: 1fr; gap: 2rem; }
+}

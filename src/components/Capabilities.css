@@ -1,0 +1,289 @@
+/* ============================================================
+   CAPABILITIES COMPONENT — EDITORIAL LIST + CAD VIEWPORT
+   ============================================================ */
+
+.capabilities {
+  background: var(--color-bg-secondary, #EFEBE3);
+  border-top: 1px solid var(--color-border, #D9D5CC);
+  border-bottom: 1px solid var(--color-border, #D9D5CC);
+  padding: var(--section-pad-y) 0;
+}
+
+.cap-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--color-border, #D9D5CC);
+}
+
+.cap-header-left {
+  flex-shrink: 0;
+}
+
+.cap-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold, #A87524);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.cap-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary, #202124);
+}
+
+.cap-header-rule {
+  height: 1px;
+  background: var(--color-border, #D9D5CC);
+  flex-grow: 1;
+}
+
+/* ------------------------------------------------------------
+   LAYOUT
+   ------------------------------------------------------------ */
+
+.cap-layout {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+/* ------------------------------------------------------------
+   LIST
+   ------------------------------------------------------------ */
+
+.cap-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.cap-item {
+  display: grid;
+  grid-template-columns: 45px 1fr 24px;
+  align-items: start;
+  gap: 1.5rem;
+  padding: 1.625rem 1.25rem;
+  border: none;
+  border-bottom: 1px solid var(--color-border, #D9D5CC);
+  cursor: pointer;
+  text-align: left;
+  background: transparent;
+  color: inherit;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  position: relative;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.cap-item:first-child {
+  border-top: 1px solid var(--color-border, #D9D5CC);
+}
+
+.cap-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--color-gold, #A87524);
+  transition: width 0.3s ease;
+}
+
+.cap-item:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.cap-item--active {
+  background: #FFFFFF;
+  box-shadow: var(--shadow-subtle, 0 2px 16px rgba(32,33,36,0.06));
+}
+
+.cap-item--active::before {
+  width: 4px;
+}
+
+.cap-num {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-gold, #A87524);
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+
+.cap-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cap-item-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary, #687078);
+}
+
+.cap-item-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary, #202124);
+  transition: color 0.2s ease;
+}
+
+.cap-item--active .cap-item-title {
+  color: var(--color-gold, #A87524);
+}
+
+.cap-item-desc {
+  margin-top: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary, #687078);
+  animation: fadeIn 0.3s ease-out both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cap-item-arrow {
+  color: var(--color-border-strong, #687078);
+  padding-top: 0.35rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cap-item--active .cap-item-arrow {
+  color: var(--color-gold, #A87524);
+  transform: translateX(4px);
+}
+
+/* ------------------------------------------------------------
+   CAD VIEWPORT PANEL
+   ------------------------------------------------------------ */
+
+.cap-viz-panel {
+  position: sticky;
+  top: calc(var(--nav-height, 72px) + 1.25rem);
+}
+
+.cap-viz-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border, #D9D5CC);
+  border-radius: var(--radius-sm, 4px);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card, 0 4px 24px rgba(32,33,36,0.08));
+  display: flex;
+  flex-direction: column;
+}
+
+.cap-viz-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(217, 213, 204, 0.7);
+  margin-bottom: 1.25rem;
+}
+
+.cap-viz-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cap-viz-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-gold, #A87524);
+}
+
+.cap-viz-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-gold, #A87524);
+  letter-spacing: 0.1em;
+}
+
+.cap-viz-code {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-text-secondary, #687078);
+  letter-spacing: 0.1em;
+}
+
+.cap-viz-viewport {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FAF8F5;
+  border: 1px solid rgba(217, 213, 204, 0.5);
+  border-radius: 2px;
+  padding: 1rem;
+}
+
+.cap-viz-svg {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+}
+
+.cap-viz-footer {
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(217, 213, 204, 0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cap-viz-title-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary, #202124);
+}
+
+.cap-viz-status-ok {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #687078);
+  letter-spacing: 0.1em;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .cap-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cap-viz-panel {
+    display: none;
+  }
+}

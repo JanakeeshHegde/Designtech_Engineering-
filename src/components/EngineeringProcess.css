@@ -1,0 +1,99 @@
+.eng-process {
+  background: var(--color-bg-primary);
+  position: relative;
+}
+
+.process-header { opacity: 0; }
+
+.process-track {
+  position: relative;
+  height: 2px;
+  background: var(--color-border);
+  margin: 1.75rem 0 0.25rem;
+  overflow: hidden;
+}
+
+.process-connector {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--color-gold), var(--color-gold-highlight));
+  transform-origin: left;
+  box-shadow: 0 0 6px var(--color-gold-glow);
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.process-stage {
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+  opacity: 0;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.process-stage:hover {
+  background: rgba(239, 235, 227, 0.4);
+}
+
+.process-stage:nth-child(3n) { border-right: none; }
+.process-stage:nth-child(4), .process-stage:nth-child(5), .process-stage:nth-child(6) { border-bottom: none; }
+
+.process-stage-num {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--color-gold);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.75rem;
+}
+
+.process-stage-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+}
+
+.process-stage-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.process-stage-title {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.process-stage-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .process-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-stage:nth-child(3n) { border-right: 1px solid var(--color-border); }
+  .process-stage:nth-child(2n) { border-right: none; }
+  .process-stage:nth-child(5), .process-stage:nth-child(6) { border-bottom: none; }
+  .process-stage:nth-child(4) { border-bottom: 1px solid var(--color-border); }
+}
+
+@media (max-width: 640px) {
+  .process-grid { grid-template-columns: 1fr; }
+  .process-stage { border-right: none; }
+  .process-stage:last-child { border-bottom: none; }
+}

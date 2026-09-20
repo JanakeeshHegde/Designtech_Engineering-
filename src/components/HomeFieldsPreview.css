@@ -1,0 +1,203 @@
+/* ============================================================
+   HOME FIELDS PREVIEW COMPONENT
+   ============================================================ */
+
+.hfpw {
+  background: var(--color-bg-primary, #F7F5F0);
+  border-bottom: 1px solid var(--color-border, #D9D5CC);
+  padding: var(--section-pad-y) 0;
+}
+
+.hfpw.section {
+  padding: var(--section-pad-y) 0;
+}
+
+.hfpw-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--color-border, #D9D5CC);
+}
+
+.hfpw-header-left {
+  max-width: 680px;
+}
+
+.hfpw-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold, #A87524);
+  margin-bottom: 0.5rem;
+}
+
+.hfpw-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary, #202124);
+}
+
+.hfpw-header-desc {
+  max-width: 440px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary, #687078);
+  margin-bottom: 0.5rem;
+}
+
+/* ------------------------------------------------------------
+   4-CARD GRID
+   ------------------------------------------------------------ */
+
+.hfpw-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.hfpw-card {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border, #D9D5CC);
+  border-radius: var(--radius-sm, 4px);
+  padding: 1.5rem 1.5rem 1.25rem;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hfpw-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-gold, #A87524);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.hfpw-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168, 117, 36, 0.4);
+  box-shadow: 0 12px 30px rgba(32, 33, 36, 0.08);
+}
+
+.hfpw-card:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.hfpw-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.25rem;
+}
+
+.hfpw-card-num {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-gold, #A87524);
+}
+
+.hfpw-card-cat {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary, #687078);
+}
+
+.hfpw-card-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary, #202124);
+  margin-bottom: 1rem;
+}
+
+.hfpw-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--color-text-secondary, #687078);
+  margin-bottom: 1rem;
+  flex-grow: 0;
+}
+
+.hfpw-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(217, 213, 204, 0.6);
+}
+
+.hfpw-card-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-gold, #A87524);
+  letter-spacing: 0.04em;
+}
+
+.hfpw-card-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-bg-secondary, #EFEBE3);
+  color: var(--color-text-primary, #202124);
+  transition: all 0.3s ease;
+}
+
+.hfpw-card:hover .hfpw-card-arrow {
+  background: var(--color-gold, #A87524);
+  color: #FFFFFF;
+  transform: translateX(3px);
+}
+
+.hfpw-cta-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+
+@media (max-width: 1024px) {
+  .hfpw-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hfpw-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hfpw-grid {
+    grid-template-columns: 1fr;
+  }
+}
