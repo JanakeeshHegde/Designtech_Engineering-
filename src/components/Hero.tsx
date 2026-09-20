@@ -54,13 +54,7 @@ const COORD_MARKERS = [
   { id: "D",   x: "91%", y: "68%", active: false },
 ];
 
-const HUD_ITEMS = [
-  { label: "STRUCTURAL ANALYSIS",  value: "ACTIVE",   x: "3%",  y: "18%", gold: true  },
-  { label: "ENGINEERING MODE",     value: "CAD/BIM",  x: "3%",  y: "24%", gold: false },
-  { label: "LOAD ANALYSIS",        value: "COMPLETE", x: "3%",  y: "30%", gold: false },
-  { label: "SITE ANALYSIS",        value: "LIVE",     x: "72%", y: "88%", gold: true  },
-  { label: "DESIGN REVIEW",        value: "OK",       x: "72%", y: "93%", gold: false },
-];
+
 
 /* ─────────────────────────────────────────────────────────────
    COMPONENT
@@ -441,20 +435,7 @@ export default function Hero({ onEnter }: Props) {
         {/* Light Sweep */}
         <div ref={lightSweepRef} className="hero-light-sweep" aria-hidden="true" />
 
-        {/* HUD Elements */}
-        {HUD_ITEMS.map((item) => (
-          <div
-            key={item.label}
-            className="hero-hud-item"
-            style={{ left: item.x, top: item.y }}
-            aria-hidden="true"
-          >
-            <span className="hud-label">{item.label}</span>
-            <span className={`hud-value ${item.gold ? "hud-value--active" : ""}`}>
-              {item.value}
-            </span>
-          </div>
-        ))}
+       
 
         {/* Coordinate Markers */}
         {COORD_MARKERS.map((m) => (
