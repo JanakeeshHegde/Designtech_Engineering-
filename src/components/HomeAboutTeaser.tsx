@@ -47,21 +47,6 @@ export default function HomeAboutTeaser() {
                 institutional developments — engineered for performance, constructed to endure.
               </p>
 
-              <div className="hat-stats" role="list">
-                <div className="hat-stat" role="listitem">
-                  <div className="hat-stat-val">15+</div>
-                  <div className="hat-stat-label">Years of Engineering</div>
-                </div>
-                <div className="hat-stat" role="listitem">
-                  <div className="hat-stat-val">50+</div>
-                  <div className="hat-stat-label">Major Projects</div>
-                </div>
-                <div className="hat-stat" role="listitem">
-                  <div className="hat-stat-val">5M+</div>
-                  <div className="hat-stat-label">Sq.Ft Designed</div>
-                </div>
-              </div>
-
               <div className="hat-pillars" role="list">
                 {["QUALITY FIRST", "INNOVATION", "COST-EFFECTIVE", "ON-TIME DELIVERY"].map((pillar, idx) => (
                   <div key={pillar} className="hat-pillar" role="listitem">

@@ -51,12 +51,7 @@ const CLIENTS = [
   },
 ];
 
-const METRICS = [
-  { value: "50+", label: "Engineered Landmarks" },
-  { value: "100%", label: "IS & Global Code Compliance" },
-  { value: "6+", label: "Regional Geographies" },
-  { value: "0", label: "Structural Non-Conformances" },
-];
+
 
 export default function HomeTrustSection() {
   const ref = useRef<HTMLElement>(null);
@@ -124,16 +119,7 @@ export default function HomeTrustSection() {
             architectural collaboration across South India.
           </p>
         </div>
-
-        {/* Metrics Banner */}
-        <div className="hts-metrics" role="list">
-          {METRICS.map((m) => (
-            <div key={m.label} className="hts-metric" role="listitem">
-              <div className="hts-metric-val">{m.value}</div>
-              <div className="hts-metric-label">{m.label}</div>
-            </div>
-          ))}
-        </div>
+       
 
         {/* Client Roster Grid */}
         <div className="hts-client-grid" role="list">
