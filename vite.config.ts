@@ -6,6 +6,8 @@ export default defineConfig({
   server: {
     // Serve index.html for all routes (SPA fallback)
     historyApiFallback: true,
+    host: '127.0.0.1',
+    port: 5190,
   },
   build: {
     rollupOptions: {
