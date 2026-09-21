@@ -147,11 +147,9 @@ ${message}
       subjectLine
     )}&body=${encodeURIComponent(body)}`;
 
-    const link = document.createElement("a");
-    link.href = mailtoUrl;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Direct synchronous navigation ensures mobile browsers (iOS Safari, Android Chrome)
+    // immediately trigger the OS default email client without popup blockers.
+    window.location.href = mailtoUrl;
 
     setStatus("success");
   };
@@ -294,8 +292,7 @@ ${message}
       </div>
       <h3 className="t-heading">EMAIL CLIENT OPENED</h3>
       <p className="t-body" style={{ textAlign: "center", maxWidth: "380px" }}>
-        Your email application has been opened.
-        Please review the enquiry and click Send.
+        Your email app is opening. Please review the enquiry and press Send.
       </p>
       <button
         type="button"
