@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Contact from "../components/Contact";
+import Contact from "../components/sections/contact/Contact";
 import "./ContactPage.css";
 
 export default function ContactPage() {

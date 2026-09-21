@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { FOOTER_NAV_ITEMS } from "../../data/navigation";
+import { OFFICE_INFO } from "../../data/company";
 import "./Footer.css";
 
 /* ─── Minimal architectural line icons ─────────────────────── */
@@ -36,6 +38,8 @@ const ArrowIcon = () => (
 );
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="footer" role="contentinfo">
       {/* Subtle architectural grid overlay */}
@@ -68,12 +72,7 @@ export default function Footer() {
             <span className="footer-heading">EXPLORE</span>
             <nav aria-label="Footer navigation">
               <ul className="footer-nav-list" role="list">
-                {[
-                  { label: "Home", path: "/" },
-                  { label: "About Us", path: "/about" },
-                  { label: "Sectors", path: "/sectors" },
-                  { label: "Contact", path: "/contact" },
-                ].map((item) => (
+                {FOOTER_NAV_ITEMS.map((item) => (
                   <li key={item.path}>
                     <Link to={item.path} className="footer-nav-link">
                       {item.label}
@@ -110,24 +109,26 @@ export default function Footer() {
               <div className="footer-contact-row">
                 <LocationIcon />
                 <address className="footer-address">
-                  #880, Nehru Road,<br />
-                  BEML Layout 4th Stage,<br />
-                  RR Nagar, Bangalore – 560098
+                  {OFFICE_INFO.addressLine1}<br />
+                  {OFFICE_INFO.addressLine2}<br />
+                  {OFFICE_INFO.addressLine3}<br />
+                  {OFFICE_INFO.addressLine4}<br />
+                  {OFFICE_INFO.addressLine5}
                 </address>
               </div>
 
               <div className="footer-contact-row">
                 <PhoneIcon />
                 <div className="footer-phones">
-                  <a href="tel:+919035761979" className="footer-link">9035761979</a>
-                  <a href="tel:+919880593211" className="footer-link">9880593211</a>
+                  <a href={`tel:+91${OFFICE_INFO.phone1}`} className="footer-link">{OFFICE_INFO.phone1}</a>
+                  <a href={`tel:+91${OFFICE_INFO.phone2}`} className="footer-link">{OFFICE_INFO.phone2}</a>
                 </div>
               </div>
 
               <div className="footer-contact-row">
                 <EmailIcon />
-                <a href="mailto:designtecheng.team@gmail.com" className="footer-link footer-email">
-                  designtecheng.team@gmail.com
+                <a href={`mailto:${OFFICE_INFO.email}`} className="footer-link footer-email">
+                  {OFFICE_INFO.email}
                 </a>
               </div>
             </div>
@@ -137,7 +138,7 @@ export default function Footer() {
         {/* ── Bottom bar ── */}
         <div className="footer-bottom">
           <p className="footer-copy">
-            © {new Date().getFullYear()} Designtech Engineering. All Rights Reserved.
+            © {currentYear} Designtech Engineering. All Rights Reserved.
           </p>
           <Link to="/contact" className="footer-cta-link">
             <span>Start a Project</span>

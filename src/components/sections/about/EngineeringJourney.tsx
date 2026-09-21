@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { featuredProjects, allProjects } from "../data/projects";
+import { featuredProjects, allProjects } from "../../../data/projects";
 import ProjectChapter from "./ProjectChapter";
 import "./EngineeringJourney.css";
 

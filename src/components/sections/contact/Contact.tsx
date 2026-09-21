@@ -11,22 +11,12 @@ gsap.registerPlugin(ScrollTrigger);
    CONSTANTS
 ───────────────────────────────────────────────────────────── */
 
-const GOOGLE_MAPS_DIRECTIONS = "https://maps.app.goo.gl/hVHjofptkSHAEeiz5";
+import { OFFICE_INFO } from "../../../data/company";
+import { generateMailtoUrl } from "../../../utils/mailto";
 
-const OFFICE_COORDS: [number, number] = [12.9162, 77.5118];
+const GOOGLE_MAPS_DIRECTIONS = OFFICE_INFO.googleMapsUrl;
+const OFFICE_COORDS: [number, number] = OFFICE_INFO.coordinates;
 
-const OFFICE_INFO = {
-  business: "DESIGNTECH ENGINEERING",
-  tagline: "Civil and Structural Consultants",
-  addressLine1: "880, First Floor,",
-  addressLine2: "Jawaharlal Nehru Road,",
-  addressLine3: "BEML Layout, 4th Stage,",
-  addressLine4: "Rajarajeshwari Nagar,",
-  addressLine5: "Bengaluru, Karnataka – 560098",
-  phone1: "9035761979",
-  phone2: "9880593211",
-  email: "designtecheng.team@gmail.com",
-};
 
 interface FormData {
   fullName: string;
@@ -109,43 +99,14 @@ export default function Contact() {
       return;
     }
 
-    const fullName = form.fullName.trim();
-    const email = form.email.trim();
-    const phone = form.phone.trim();
-    const company = form.company.trim();
-    const subject = form.subject.trim();
-    const message = form.message.trim();
-
-    const subjectLine = `New Website Enquiry — ${subject}`;
-
-    const body = `DESIGNTECH ENGINEERING
-CONTACT ENQUIRY
-
---------------------------------
-
-Name
-${fullName}
-
-Email
-${email}
-
-Phone
-${phone}
-
-Company
-${company}
-
-Subject
-${subject}
-
-Message
-${message}
-
---------------------------------`;
-
-    const mailtoUrl = `mailto:designtecheng.team@gmail.com?subject=${encodeURIComponent(
-      subjectLine
-    )}&body=${encodeURIComponent(body)}`;
+    const mailtoUrl = generateMailtoUrl({
+      fullName: form.fullName,
+      email: form.email,
+      phone: form.phone,
+      company: form.company,
+      subject: form.subject,
+      message: form.message,
+    });
 
     // Direct synchronous navigation ensures mobile browsers (iOS Safari, Android Chrome)
     // immediately trigger the OS default email client without popup blockers.

@@ -3,23 +3,19 @@
    ============================================================
    How to add a new client:
      1. Drop the client logo into:   /public/Clients/
-        (e.g.  /public/Clients/acme-corp.png)
+        (e.g.  /public/Clients/client 13.png)
      2. Add a new object to the array below:
-          { id: "acme", name: "Acme Corp", logo: "/Clients/acme-corp.png" }
+          { id: "client-id", name: "Client Name", logo: "/Clients/client-file.png" }
 
-   That's it. The ecosystem visualization automatically:
+   The ecosystem visualization automatically:
      · recalculates radial positions
      · splits clients across 1 / 2 orbital rings when >8 clients
      · draws animated SVG connections to the center hub
    ============================================================ */
 
-export interface ClientItem {
-  id: string;
-  name: string;
-  logo: string;
-  /** Optional — only set if it already exists in the project content. */
-  project?: string;
-}
+import type { ClientItem } from "../types/client";
+
+export type { ClientItem };
 
 export const CLIENTS: ClientItem[] = [
   {

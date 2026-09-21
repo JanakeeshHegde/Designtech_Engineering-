@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CLIENTS, type ClientItem, CLIENT_LOGO_FALLBACK_ENABLED } from "../data/clients";
+import { CLIENTS, type ClientItem, CLIENT_LOGO_FALLBACK_ENABLED } from "../../../data/clients";
 import "./ClientEcosystem.css";
 
 gsap.registerPlugin(ScrollTrigger);

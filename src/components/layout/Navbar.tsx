@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
+import { NAV_ITEMS } from "../../data/navigation";
 import "./Navbar.css";
-
-const NAV_ITEMS = [
-  { label: "HOME", path: "/" },
-  { label: "ABOUT", path: "/about" },
-  { label: "SECTORS", path: "/sectors" },
-  { label: "CONTACT", path: "/contact" },
-];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -28,7 +22,6 @@ export default function Navbar() {
     handler();
     return () => window.removeEventListener("scroll", handler);
   }, []);
-
 
   return (
     <header className={`navbar ${scrolled ? "navbar--scrolled" : ""}`} role="banner">

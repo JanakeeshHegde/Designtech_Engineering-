@@ -4,12 +4,3 @@ declare module '*.css' {
 }
 
 /// <reference types="vite/client" />
-
-interface ImportMetaEnv {
-  readonly VITE_FORMSPREE_ENDPOINT: string;
-  readonly CONTACT_EMAIL: string;
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
-}

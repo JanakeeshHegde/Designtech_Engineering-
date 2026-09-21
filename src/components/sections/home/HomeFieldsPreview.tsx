@@ -6,40 +6,8 @@ import "./HomeFieldsPreview.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FIELDS = [
-  {
-    num: "01",
-    title: "Residential & Commercial",
-    category: "HIGH-RISE & MIXED-USE",
-    desc: "Iconic residential towers, commercial IT parks, and luxury enclaves with high-efficiency RCC post-tensioned systems.",
-    tag: "High-Rise // PT Slabs",
-    sectorId: "residential-commercial",
-  },
-  {
-    num: "02",
-    title: "Water & Sewage Plants",
-    category: "ENVIRONMENTAL INFRASTRUCTURE",
-    desc: "Robust hydraulic engineering for WTP, STP, aeration basins, and underground reservoirs under IS 3370 standards.",
-    tag: "IS 3370 Liquid Retaining",
-    sectorId: "residential-commercial",
-  },
-  {
-    num: "03",
-    title: "Industrial & Institutions",
-    category: "PEB & LARGE-SPAN HUBS",
-    desc: "Expansive column-free structural steel, dynamic machine foundations, gantry girders, and civic university campuses.",
-    tag: "PEB & Heavy Gantry",
-    sectorId: "residential-commercial",
-  },
-  {
-    num: "04",
-    title: "Solar & Renewable Energy",
-    category: "UTILITY & ROOFTOP ARRAYS",
-    desc: "High-strength lightweight cold-formed steel MMS frames, wind-load audits, and rooftop mounting structures.",
-    tag: "Wind Resilient MMS",
-    sectorId: "residential-commercial",
-  },
-];
+import { FIELDS_PREVIEW } from "../../../data/sectors";
+
 
 export default function HomeFieldsPreview() {
   const ref = useRef<HTMLElement>(null);
@@ -95,7 +63,7 @@ export default function HomeFieldsPreview() {
         </div>
 
         <div className="hfpw-grid" role="list">
-          {FIELDS.map((f) => (
+          {FIELDS_PREVIEW.map((f) => (
             <Link
               key={f.num}
               to="/sectors"

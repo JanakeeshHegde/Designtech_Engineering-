@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import Hero from "../components/Hero";
-import HomeAboutTeaser from "../components/HomeAboutTeaser";
-import HomeCapabilitiesPreview from "../components/HomeCapabilitiesPreview";
-import HomeFieldsPreview from "../components/HomeFieldsPreview";
-import HomeFeaturedProjects from "../components/HomeFeaturedProjects";
-import HomeTrustSection from "../components/HomeTrustSection";
-import HomeContactCTA from "../components/HomeContactCTA";
+import Hero from "../components/sections/home/Hero";
+import HomeAboutTeaser from "../components/sections/home/HomeAboutTeaser";
+import HomeCapabilitiesPreview from "../components/sections/home/HomeCapabilitiesPreview";
+import HomeFieldsPreview from "../components/sections/home/HomeFieldsPreview";
+import HomeFeaturedProjects from "../components/sections/home/HomeFeaturedProjects";
+import HomeTrustSection from "../components/sections/home/HomeTrustSection";
+import HomeContactCTA from "../components/sections/home/HomeContactCTA";
 
 export default function HomePage() {
   useEffect(() => {

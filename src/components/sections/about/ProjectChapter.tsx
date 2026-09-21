@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { Project } from "../data/projects";
-import BeforeAfter from "./BeforeAfter";
+import type { Project } from "../../../types/project";
+import BeforeAfter from "../../common/BeforeAfter";
 import "./ProjectChapter.css";
 
 interface Props {

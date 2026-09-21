@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Sectors from "../components/Sectors";
+import Sectors from "../components/sections/sectors/Sectors";
 import "./SectorsPage.css";
 
 export default function SectorsPage() {

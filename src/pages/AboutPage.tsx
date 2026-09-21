@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import About from "../components/About";
-import Capabilities from "../components/Capabilities";
-import EngineeringProcess from "../components/EngineeringProcess";
-import StructuralInspector from "../components/StructuralInspector";
-import EngineeringJourney from "../components/EngineeringJourney";
-import ClientEcosystem from "../components/ClientEcosystem";
+import About from "../components/sections/about/About";
+import Capabilities from "../components/sections/about/Capabilities";
+import EngineeringProcess from "../components/sections/about/EngineeringProcess";
+import StructuralInspector from "../components/sections/about/StructuralInspector";
+import EngineeringJourney from "../components/sections/about/EngineeringJourney";
+import ClientEcosystem from "../components/sections/about/ClientEcosystem";
 import "./AboutPage.css";
 
 export default function AboutPage() {
