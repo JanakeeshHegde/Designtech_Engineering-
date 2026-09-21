@@ -47,21 +47,6 @@ interface FormErrors {
 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
 
-/* ─────────────────────────────────────────────────────────────
-   SANITISATION HELPERS
-───────────────────────────────────────────────────────────── */
-
-function stripHtml(value: string): string {
-  return value
-    .replace(/<[^>]*>/g, "")
-    .replace(/javascript:/gi, "")
-    .replace(/on\w+\s*=/gi, "");
-}
-
-function sanitize(input: string): string {
-  return stripHtml(input.trim());
-}
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /* ─────────────────────────────────────────────────────────────
@@ -84,7 +69,6 @@ export default function Contact() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<SubmitStatus>("idle");
-  const [statusMessage, setStatusMessage] = useState<string>("");
 
   /* ───── FORM HANDLERS ───── */
 
@@ -96,7 +80,6 @@ export default function Contact() {
     }
     if (status === "error") {
       setStatus("idle");
-      setStatusMessage("");
     }
   };
 
@@ -115,76 +98,62 @@ export default function Contact() {
     setForm({ fullName: "", email: "", phone: "", company: "", subject: "", message: "", _gotcha: "" });
     setErrors({});
     setStatus("idle");
-    setStatusMessage("");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (status === "loading") return;
     if (!validate()) return;
 
     if (form._gotcha) {
-      setStatus("success");
-      setStatusMessage("");
+      resetForm();
       return;
     }
 
-    const fullName = sanitize(form.fullName);
-    const email = sanitize(form.email);
-    const phone = sanitize(form.phone);
-    const company = sanitize(form.company);
-    const subject = sanitize(form.subject);
-    const message = sanitize(form.message);
+    const fullName = form.fullName.trim();
+    const email = form.email.trim();
+    const phone = form.phone.trim();
+    const company = form.company.trim();
+    const subject = form.subject.trim();
+    const message = form.message.trim();
 
-    setStatus("loading");
-    setStatusMessage("");
+    const subjectLine = `New Website Enquiry — ${subject}`;
 
-    const endpoint = (import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined) || "";
-    const isDev = !endpoint;
+    const body = `DESIGNTECH ENGINEERING
+CONTACT ENQUIRY
 
-    try {
-      const payload = {
-        fullName,
-        email,
-        phone,
-        company,
-        subject,
-        message,
-        _replyto: email,
-        _subject: `New Website Enquiry — ${subject}`,
-        _format: "plain",
-      };
+--------------------------------
 
-      if (isDev) {
-        await new Promise((r) => setTimeout(r, 900));
-        // eslint-disable-next-line no-console
-        console.info("[DEV MODE] Contact form payload:", payload);
-        setStatus("success");
-        setStatusMessage(
-          "Development mode: Formspree endpoint not configured. Set VITE_FORMSPREE_ENDPOINT in .env to enable delivery."
-        );
-        return;
-      }
+Name
+${fullName}
 
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+Email
+${email}
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+Phone
+${phone}
 
-      setStatus("success");
-      setStatusMessage("");
-    } catch (err) {
-      setStatus("error");
-      setStatusMessage("");
-    }
+Company
+${company}
+
+Subject
+${subject}
+
+Message
+${message}
+
+--------------------------------`;
+
+    const mailtoUrl = `mailto:designtecheng.team@gmail.com?subject=${encodeURIComponent(
+      subjectLine
+    )}&body=${encodeURIComponent(body)}`;
+
+    const link = document.createElement("a");
+    link.href = mailtoUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setStatus("success");
   };
 
   /* ───── GSAP ANIMATIONS ───── */
@@ -323,15 +292,11 @@ export default function Contact() {
           <path d="M 14 24 L 21 31 L 34 17" stroke="#A87524" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      <h3 className="t-heading">ENQUIRY SENT</h3>
+      <h3 className="t-heading">EMAIL CLIENT OPENED</h3>
       <p className="t-body" style={{ textAlign: "center", maxWidth: "380px" }}>
-        Thank you for contacting Designtech Engineering. Our team will get back to you shortly.
+        Your email application has been opened.
+        Please review the enquiry and click Send.
       </p>
-      {statusMessage && (
-        <p className="contact-dev-note" style={{ textAlign: "center", maxWidth: "440px" }}>
-          {statusMessage}
-        </p>
-      )}
       <button
         type="button"
         className="btn btn-outline"
