@@ -1,0 +1,217 @@
+.bim-scene-container {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  background: #fbf9f5;
+  border: 1px solid var(--color-border, #e2ded7);
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.bim-canvas-mount {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  outline: none;
+}
+
+.bim-canvas-mount:active {
+  cursor: grabbing;
+}
+
+.bim-canvas-mount canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Top BIM Mode Bar */
+.bim-top-bar {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  right: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.bim-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--color-border, #e2ded7);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary, #1a202c);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.bim-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  animation: bimPulseLive 2s infinite ease-in-out;
+}
+
+@keyframes bimPulseLive {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.bim-mode-buttons {
+  display: flex;
+  gap: 0.35rem;
+  pointer-events: auto;
+}
+
+.bim-btn-pill {
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--color-border, #e2ded7);
+  color: var(--color-text-secondary, #64748b);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.bim-btn-pill:hover {
+  border-color: var(--color-gold, #a87524);
+  color: var(--color-text-primary, #1a202c);
+}
+
+.bim-btn-pill--active {
+  background: var(--color-gold, #a87524);
+  border-color: var(--color-gold, #a87524);
+  color: #ffffff;
+}
+
+/* Strata Legend */
+.bim-strata-legend {
+  position: absolute;
+  top: 3.5rem;
+  left: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.5rem 0.65rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-border, #e2ded7);
+  backdrop-filter: blur(6px);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 10;
+  max-width: 210px;
+}
+
+.bim-strata-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bim-strata-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.bim-strata-text {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary, #64748b);
+  white-space: nowrap;
+}
+
+.bim-strata-highlight {
+  color: var(--color-gold, #a87524);
+  font-weight: 600;
+}
+
+/* Hint overlay */
+.bim-hint {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(17, 24, 39, 0.78);
+  color: #ffffff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* Fallback */
+.bim-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  padding: 1rem;
+}
+
+.bim-fallback-img {
+  max-width: 100%;
+  max-height: 85%;
+  object-fit: contain;
+}
+
+.bim-fallback-caption {
+  margin-top: 0.5rem;
+  color: #fff;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .bim-scene-container {
+    height: 460px;
+  }
+  .bim-strata-legend {
+    display: none;
+  }
+  .bim-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .bim-mode-buttons {
+    margin-top: 0.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bim-scene-container {
+    height: 400px;
+  }
+}

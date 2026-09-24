@@ -64,7 +64,35 @@
   border-radius: var(--radius-sm, 4px);
   padding: 1.25rem 1.5rem;
   margin-bottom: 1.5rem;
+  position: relative;
+  /* Subtle horizontal rule engineering pattern */
+  background-image: linear-gradient(
+    to bottom,
+    rgba(168,117,36,0.04) 0%,
+    transparent 50%,
+    rgba(168,117,36,0.02) 100%
+  );
 }
+
+/* Engineering corner brackets on the data panel */
+.hts-metrics::before {
+  content: "";
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 16px; height: 16px;
+  border-top: 1.5px solid rgba(168,117,36,0.5);
+  border-left: 1.5px solid rgba(168,117,36,0.5);
+}
+
+.hts-metrics::after {
+  content: "";
+  position: absolute;
+  bottom: 4px; right: 4px;
+  width: 16px; height: 16px;
+  border-bottom: 1.5px solid rgba(168,117,36,0.5);
+  border-right: 1.5px solid rgba(168,117,36,0.5);
+}
+
 
 .hts-metric {
   display: flex;
@@ -108,14 +136,47 @@
   border-radius: var(--radius-sm, 4px);
   padding: 1.5rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Structural accent: thin gold left border that extends on hover */
+.hts-client-item::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 40%;
+  background: var(--color-gold, #A87524);
+  transition: height 0.35s var(--ease-out, cubic-bezier(0.16,1,0.3,1));
+}
+
+.hts-client-item:hover::before {
+  height: 100%;
+}
+
+/* Corner tick mark - engineering detail */
+.hts-client-item::after {
+  content: "";
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 10px; height: 10px;
+  border-top: 1px solid rgba(168,117,36,0.4);
+  border-right: 1px solid rgba(168,117,36,0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hts-client-item:hover::after {
+  opacity: 1;
 }
 
 .hts-client-item:hover {
   transform: translateY(-3px);
-  border-color: var(--color-gold, #A87524);
+  border-color: rgba(168,117,36,0.35);
   background: #FFFFFF;
-  box-shadow: 0 8px 24px rgba(32, 33, 36, 0.06);
+  box-shadow: 0 8px 24px rgba(32, 33, 36, 0.08);
 }
+
 
 .hts-client-top {
   display: flex;

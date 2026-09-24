@@ -21,7 +21,7 @@
   --color-border:           #D9D5CC;
   --color-border-strong:    #687078;
 
-  /* ── Footer Surface (now light, matching main palette) ── */
+  /* ── Footer Surface ── */
   --color-footer-bg:        #EFEBE3;
   --color-footer-text:      #202124;
   --color-footer-sub:       #687078;
@@ -80,12 +80,12 @@
   --dur-slow:    0.65s;
   --dur-xslow:   0.9s;
 
-  /* ── Layout ── */
+  /* ── Layout (Reduced empty gaps for premium architectural feel) ── */
   --container-max:    1400px;
   --nav-height:       72px;
-  --section-pad-lg:   4.75rem;  /* 76px desktop */
-  --section-pad-md:   3.75rem;  /* 60px tablet */
-  --section-pad-sm:   3rem;     /* 48px mobile */
+  --section-pad-lg:   3.75rem;  /* 60px desktop */
+  --section-pad-md:   2.75rem;  /* 44px tablet */
+  --section-pad-sm:   2.25rem;  /* 36px mobile */
   --section-pad-y:    var(--section-pad-lg);
 }
 
@@ -335,7 +335,7 @@ input, textarea, select {
   color: var(--color-gold-highlight);
 }
 
-/* --- TECHNICAL LINES (kept for backwards compatibility) --- */
+/* --- TECHNICAL LINES --- */
 .tech-line {
   position: absolute;
   background: var(--color-gold);
@@ -376,4 +376,198 @@ input, textarea, select {
 :focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────
+   ENGINEERING SCROLL REVEAL
+───────────────────────────────────────────────────── */
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.65s var(--ease-out);
+}
+
+.reveal-fade.is-visible {
+  opacity: 1;
+}
+
+/* Stagger children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.reveal-stagger.is-visible > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0ms; }
+.reveal-stagger.is-visible > *:nth-child(2) { opacity:1; transform:none; transition-delay: 80ms; }
+.reveal-stagger.is-visible > *:nth-child(3) { opacity:1; transform:none; transition-delay: 160ms; }
+.reveal-stagger.is-visible > *:nth-child(4) { opacity:1; transform:none; transition-delay: 240ms; }
+.reveal-stagger.is-visible > *:nth-child(5) { opacity:1; transform:none; transition-delay: 320ms; }
+.reveal-stagger.is-visible > *:nth-child(6) { opacity:1; transform:none; transition-delay: 400ms; }
+
+/* ─────────────────────────────────────────────────────
+   BLUEPRINT LINE-DRAW
+───────────────────────────────────────────────────── */
+
+.bp-line-draw {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  transition: stroke-dashoffset 1.4s var(--ease-out);
+}
+
+.bp-line-draw.is-drawn {
+  stroke-dashoffset: 0;
+}
+
+/* ─────────────────────────────────────────────────────
+   SECTION TRANSITIONS — Engineering dividers
+───────────────────────────────────────────────────── */
+
+.eng-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  overflow: hidden;
+}
+
+.eng-divider::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  opacity: 0.3;
+}
+
+.eng-divider-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.eng-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  opacity: 0.3;
+}
+
+/* ─────────────────────────────────────────────────────
+   STRUCTURAL CARD HOVER
+───────────────────────────────────────────────────── */
+
+.eng-card {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-card-bg);
+  overflow: hidden;
+  transition: border-color var(--dur-normal) var(--ease-out),
+              box-shadow   var(--dur-normal) var(--ease-out),
+              transform    var(--dur-normal) var(--ease-out);
+}
+
+.eng-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(168,117,36,0.03) 0%,
+    transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-normal) var(--ease-out);
+}
+
+.eng-card:hover {
+  border-color: rgba(168,117,36,0.4);
+  box-shadow: 0 6px 32px rgba(32,33,36,0.10),
+              0 0 0 1px rgba(168,117,36,0.08);
+  transform: translateY(-3px);
+}
+
+.eng-card:hover::before {
+  opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────
+   ENGINEERING TAG CHIP
+───────────────────────────────────────────────────── */
+
+.eng-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  border: 1px solid rgba(168,117,36,0.28);
+  padding: 0.25rem 0.65rem;
+  border-radius: 2px;
+  background: rgba(168,117,36,0.05);
+  transition: background var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+
+.eng-tag:hover {
+  background: rgba(168,117,36,0.1);
+  border-color: rgba(168,117,36,0.5);
+}
+
+/* ─────────────────────────────────────────────────────
+   TECHNICAL ANNOTATION
+───────────────────────────────────────────────────── */
+
+.tech-annotation {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tech-annotation::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────
+   SCROLL PROGRESS BAR
+───────────────────────────────────────────────────── */
+
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-highlight));
+  z-index: 10000;
+  transform-origin: left;
+  pointer-events: none;
+  transition: transform 0.1s linear;
 }

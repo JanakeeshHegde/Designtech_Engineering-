@@ -11,14 +11,29 @@ export default function HomeAboutTeaser() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(".hat-statement", { opacity: 0, y: 35 }, {
-        opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
-        scrollTrigger: { trigger: ".hat-inner", start: "top 82%" },
-      });
-      gsap.fromTo(".hat-content-right", { opacity: 0, y: 35 }, {
-        opacity: 1, y: 0, duration: 0.9, delay: 0.15, ease: "power3.out",
-        scrollTrigger: { trigger: ".hat-inner", start: "top 82%" },
-      });
+      gsap.fromTo(
+        ".hat-statement",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".hat-inner", start: "top 82%" },
+        }
+      );
+      gsap.fromTo(
+        ".hat-content-right",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          delay: 0.15,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".hat-inner", start: "top 82%" },
+        }
+      );
     }, ref);
     return () => ctx.revert();
   }, []);
@@ -58,7 +73,7 @@ export default function HomeAboutTeaser() {
 
               <div className="hat-action">
                 <Link to="/about" className="btn btn-outline hat-cta" aria-label="Learn more about Designtech Engineering">
-                  <span>DISCOVER OUR STORY & CAPABILITIES</span>
+                  <span>DISCOVER OUR STORY &amp; CAPABILITIES</span>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                     <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>

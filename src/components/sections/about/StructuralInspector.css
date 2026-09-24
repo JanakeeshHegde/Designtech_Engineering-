@@ -97,14 +97,71 @@
 .si-canvas {
   position: relative;
   border: 1px solid var(--color-border);
-  padding: 1.75rem;
+  padding: 1.5rem;
   background: #FFFFFF;
   opacity: 0;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
 }
 
-.si-svg { width: 100%; height: auto; }
+.si-toggle-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.75rem;
+}
+
+.si-toggle-btn {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.si-toggle-btn:hover {
+  border-color: var(--color-gold);
+  color: var(--color-text-primary);
+}
+
+.si-toggle-btn--active {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #FFFFFF;
+}
+
+.si-viewport-container {
+  width: 100%;
+  position: relative;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.si-3d-box {
+  width: 100%;
+  height: 560px;
+  position: relative;
+  border-radius: 4px;
+}
+
+.si-foundation-box {
+  height: 560px;
+}
+
+.si-3d-viewport canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
 
 .si-detail-label {
   font-family: var(--font-body);
@@ -117,4 +174,12 @@
 
 @media (max-width: 1024px) {
   .si-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .si-3d-box { height: 460px; }
+  .si-foundation-box { height: 460px; }
+}
+
+@media (max-width: 640px) {
+  .si-canvas { padding: 0.85rem; }
+  .si-3d-box { height: 400px; }
+  .si-foundation-box { height: 400px; }
 }

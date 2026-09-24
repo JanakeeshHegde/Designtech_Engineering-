@@ -51,8 +51,6 @@ const CLIENTS = [
   },
 ];
 
-
-
 export default function HomeTrustSection() {
   const ref = useRef<HTMLElement>(null);
 
@@ -82,18 +80,6 @@ export default function HomeTrustSection() {
         }
       );
 
-      gsap.fromTo(
-        ".hts-metric",
-        { opacity: 0, scale: 0.95 },
-        {
-          opacity: 1,
-          scale: 1,
-          stagger: 0.1,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: { trigger: ".hts-metrics", start: "top 90%", once: true },
-        }
-      );
     }, ref);
 
     const timer = setTimeout(() => ScrollTrigger.refresh(), 150);
@@ -109,9 +95,9 @@ export default function HomeTrustSection() {
         {/* Header */}
         <div className="hts-header">
           <div className="hts-header-left">
-            <span className="hts-eyebrow">CLIENT & TRUST ECOSYSTEM</span>
+            <span className="hts-eyebrow">CLIENT &amp; TRUST ECOSYSTEM</span>
             <h2 id="hts-heading" className="hts-headline">
-              TRUSTED BY INSTITUTIONS & INDUSTRY LEADERS
+              TRUSTED BY INSTITUTIONS &amp; INDUSTRY LEADERS
             </h2>
           </div>
           <p className="hts-header-desc">
@@ -119,7 +105,6 @@ export default function HomeTrustSection() {
             architectural collaboration across South India.
           </p>
         </div>
-       
 
         {/* Client Roster Grid */}
         <div className="hts-client-grid" role="list">

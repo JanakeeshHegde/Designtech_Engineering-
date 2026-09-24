@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { StructuralLayer } from "../../3d/StructuralInspector3D";
+import BIM3DViewer from "../../engineering3d/BIM3DViewer";
+import CAD2DViewer from "../../engineering3d/CAD2DViewer";
 import "./StructuralInspector.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type Layer = "foundation" | "columns" | "beams" | "slabs" | "roof" | "complete";
+type Layer = StructuralLayer;
 
 const LAYERS: { id: Layer; label: string; desc: string }[] = [
   { id: "foundation", label: "FOUNDATION", desc: "Raft / pile foundations transferring loads to bearing strata." },
@@ -16,33 +19,13 @@ const LAYERS: { id: Layer; label: string; desc: string }[] = [
   { id: "complete", label: "COMPLETE", desc: "Fully assembled structural frame — ready for construction." },
 ];
 
-const LAYER_ORDER: Layer[] = ["foundation", "columns", "beams", "slabs", "roof", "complete"];
-
 export default function StructuralInspector() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeLayer, setActiveLayer] = useState<Layer>("foundation");
-  const svgRef = useRef<SVGSVGElement>(null);
+  const [viewMode, setViewMode] = useState<"3d" | "2d">("3d");
 
   const activateLayer = (layer: Layer) => {
     setActiveLayer(layer);
-    const idx = LAYER_ORDER.indexOf(layer);
-
-    // Animate each layer
-    LAYER_ORDER.forEach((l, i) => {
-      const el = document.getElementById(`si-layer-${l}`);
-      if (!el) return;
-
-      const isVisible = layer === "complete" || i <= idx;
-      const isActive = l === layer;
-
-      gsap.to(el, {
-        opacity: isVisible ? (isActive ? 1 : 0.5) : 0.05,
-        y: isVisible ? 0 : 20,
-        duration: 0.5,
-        ease: "power2.out",
-        delay: i * 0.05,
-      });
-    });
   };
 
   useEffect(() => {
@@ -107,68 +90,33 @@ export default function StructuralInspector() {
             </div>
           </div>
 
-          {/* SVG Canvas */}
+          {/* Canvas Viewport (3D Interactive Model / 2D CAD Schematic) */}
           <div className="si-canvas" aria-label="Structural model visualization">
+            {/* View Mode Toggle */}
+            <div className="si-toggle-bar">
+              <button
+                className={`si-toggle-btn ${viewMode === "3d" ? "si-toggle-btn--active" : ""}`}
+                onClick={() => setViewMode("3d")}
+                aria-label="3D Model View"
+              >
+                3D BIM MODEL
+              </button>
+              <button
+                className={`si-toggle-btn ${viewMode === "2d" ? "si-toggle-btn--active" : ""}`}
+                onClick={() => setViewMode("2d")}
+                aria-label="2D CAD Schematic View"
+              >
+                2D CAD SCHEMATIC
+              </button>
+            </div>
 
-            <svg ref={svgRef} viewBox="0 0 480 480" fill="none" className="si-svg">
-              {/* Ground */}
-              <line x1="40" y1="430" x2="440" y2="430" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.2" strokeDasharray="4,4" />
-              <text x="10" y="435" fill="#A87524" fontSize="8" fontFamily="DM Mono,monospace" opacity="0.3">GL</text>
-
-              {/* Foundation */}
-              <g id="si-layer-foundation" opacity="0.05">
-                <rect x="80" y="390" width="320" height="40" stroke="#A87524" strokeWidth="1.5" fill="rgba(168, 117, 36,0.08)" />
-                <rect x="100" y="405" width="60" height="25" stroke="#A87524" strokeWidth="1" fill="rgba(168, 117, 36,0.05)" strokeDasharray="2,2" />
-                <rect x="210" y="405" width="60" height="25" stroke="#A87524" strokeWidth="1" fill="rgba(168, 117, 36,0.05)" strokeDasharray="2,2" />
-                <rect x="320" y="405" width="60" height="25" stroke="#A87524" strokeWidth="1" fill="rgba(168, 117, 36,0.05)" strokeDasharray="2,2" />
-                <text x="90" y="387" fill="#A87524" fontSize="8" fontFamily="DM Mono,monospace" opacity="0.6">FOUNDATION / RAFT</text>
-              </g>
-
-              {/* Columns */}
-              <g id="si-layer-columns" opacity="0.05">
-                {[120, 240, 360].map((x, i) => (
-                  <g key={i}>
-                    <rect x={x - 6} y="100" width="12" height="290" stroke="#A87524" strokeWidth="1" fill="rgba(168, 117, 36,0.12)" />
-                    <text x={x - 12} y="95" fill="#A87524" fontSize="7" fontFamily="DM Mono,monospace" opacity="0.5">C{i+1}</text>
-                  </g>
-                ))}
-              </g>
-
-              {/* Beams */}
-              <g id="si-layer-beams" opacity="0.05">
-                {[390, 300, 210, 130].map((y, i) => (
-                  <g key={i}>
-                    <rect x="110" y={y} width="260" height="10" stroke="#A87524" strokeWidth="1" fill="rgba(168, 117, 36,0.1)" />
-                    <text x="46" y={y + 8} fill="#A87524" fontSize="7" fontFamily="DM Mono,monospace" opacity="0.4">L{i + 1}</text>
-                  </g>
-                ))}
-              </g>
-
-              {/* Slabs */}
-              <g id="si-layer-slabs" opacity="0.05">
-                {[310, 220, 140].map((y, i) => (
-                  <rect key={i} x="110" y={y} width="260" height="80" stroke="#A87524" strokeWidth="0.5" fill="rgba(168, 117, 36,0.04)" strokeDasharray="3,3" />
-                ))}
-              </g>
-
-              {/* Roof */}
-              <g id="si-layer-roof" opacity="0.05">
-                <path d="M 100 130 L 240 70 L 380 130" stroke="#A87524" strokeWidth="2" fill="rgba(168, 117, 36,0.08)" />
-                <line x1="240" y1="70" x2="240" y2="130" stroke="#A87524" strokeWidth="1" strokeOpacity="0.4" strokeDasharray="3,3" />
-                <text x="200" y="65" fill="#A87524" fontSize="7" fontFamily="DM Mono,monospace" opacity="0.6">ROOF TRUSS</text>
-              </g>
-
-              {/* Complete highlight box */}
-              <g id="si-layer-complete" opacity="0.05">
-                <rect x="90" y="65" width="300" height="365" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" fill="none" strokeDasharray="6,6" />
-                <text x="360" y="85" fill="#A87524" fontSize="7" fontFamily="DM Mono,monospace" opacity="0.5">COMPLETE</text>
-              </g>
-
-              {/* Static dimension lines */}
-              <line x1="440" y1="100" x2="440" y2="430" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.2" strokeDasharray="2,4" />
-              <line x1="435" y1="100" x2="445" y2="100" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.2" />
-              <line x1="435" y1="430" x2="445" y2="430" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.2" />
-            </svg>
+            <div className="si-viewport-container">
+              {viewMode === "3d" ? (
+                <BIM3DViewer activeLayer={activeLayer} className="si-3d-box" />
+              ) : (
+                <CAD2DViewer activeLayer={activeLayer} className="si-3d-box" />
+              )}
+            </div>
           </div>
         </div>
       </div>

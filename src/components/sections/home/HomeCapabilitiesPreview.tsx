@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -35,19 +35,32 @@ const CAPABILITIES_LIST = [
 
 export default function HomeCapabilitiesPreview() {
   const ref = useRef<HTMLElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(".hcp-header-row", { opacity: 0, y: 25 }, {
-        opacity: 1, y: 0, duration: 0.8,
-        scrollTrigger: { trigger: ".hcp-header-row", start: "top 85%" },
-      });
+      gsap.fromTo(
+        ".hcp-header-row",
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          scrollTrigger: { trigger: ".hcp-header-row", start: "top 85%" },
+        }
+      );
 
-      gsap.fromTo(".hcp-list-item", { opacity: 0, y: 35 }, {
-        opacity: 1, y: 0, stagger: 0.12, duration: 0.8, ease: "power2.out",
-        scrollTrigger: { trigger: ".hcp-list", start: "top 80%" },
-      });
+      gsap.fromTo(
+        ".hcp-list-item",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.12,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: { trigger: ".hcp-list", start: "top 80%" },
+        }
+      );
     }, ref);
     return () => ctx.revert();
   }, []);
@@ -64,41 +77,33 @@ export default function HomeCapabilitiesPreview() {
             </h2>
           </div>
           <p className="hcp-header-desc">
-            End-to-end civil & structural consultancy ensuring architectural vision is built on
+            End-to-end civil &amp; structural consultancy ensuring architectural vision is built on
             uncompromised structural integrity and economic efficiency.
           </p>
         </div>
 
         {/* Vertical Editorial List */}
         <div className="hcp-list" role="list">
-          {CAPABILITIES_LIST.map((cap, idx) => {
-            const isHovered = activeIdx === idx;
-            return (
-              <div
-                key={cap.num}
-                className={`hcp-list-item ${isHovered ? "hcp-list-item--active" : ""}`}
-                role="listitem"
-                onMouseEnter={() => setActiveIdx(idx)}
-              >
-                <div className="hcp-item-num">{cap.num}</div>
+          {CAPABILITIES_LIST.map((cap) => (
+            <div key={cap.num} className="hcp-list-item" role="listitem">
+              <div className="hcp-item-num">{cap.num}</div>
 
-                <div className="hcp-item-main">
-                  <span className="hcp-item-category">{cap.category}</span>
-                  <h3 className="hcp-item-title">{cap.title}</h3>
-                </div>
-
-                <div className="hcp-item-desc">
-                  <p>{cap.desc}</p>
-                </div>
-
-                <div className="hcp-item-arrow" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
+              <div className="hcp-item-main">
+                <span className="hcp-item-category">{cap.category}</span>
+                <h3 className="hcp-item-title">{cap.title}</h3>
               </div>
-            );
-          })}
+
+              <div className="hcp-item-desc">
+                <p>{cap.desc}</p>
+              </div>
+
+              <div className="hcp-item-arrow" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Footer Action */}
