@@ -1,133 +1,50 @@
-/* ============================================================
-   PROJECTS PAGE — CINEMATIC PROJECT JOURNEY
-   ============================================================ */
-
 .projects-page {
-  background: var(--color-bg-primary, #F2EFE9);
+  background: var(--color-bg-primary);
   min-height: 100vh;
   position: relative;
 }
 
-/* ── Sector Filter Bar ── */
-.proj-filter-bar-section {
-  position: sticky;
-  top: var(--nav-height, 70px);
-  z-index: 75;
-  background: rgba(242, 239, 233, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--color-border, #D4CFC6);
-  padding: 0.85rem 0;
-  box-shadow: 0 4px 16px rgba(24, 25, 28, 0.04);
+.proj-editorial-section {
+  padding-top: 2.5rem;
+  padding-bottom: 5rem;
 }
 
-.proj-filter-container {
+.proj-editorial-meta-bar {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 1.5rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.proj-filter-label-group {
+.proj-meta-tag-group {
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-  border-right: 1px solid var(--color-border, #D4CFC6);
-  padding-right: 1.5rem;
+  gap: 0.25rem;
 }
 
-.proj-filter-tag {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.68rem;
+.proj-meta-active-count {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
-  color: var(--color-gold, #A87524);
-  text-transform: uppercase;
+  color: var(--color-text-primary);
+  letter-spacing: 0.04em;
 }
 
-.proj-filter-sub {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.58rem;
-  color: var(--color-text-secondary, #5A6270);
+.proj-meta-instruction {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--color-gold);
   letter-spacing: 0.08em;
-}
-
-.proj-filter-pills {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.proj-filter-pills::-webkit-scrollbar {
-  display: none;
-}
-
-.proj-filter-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 0.9rem;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border, #D4CFC6);
-  border-radius: 2px;
-  cursor: pointer;
-  white-space: nowrap;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--color-text-secondary, #5A6270);
-  user-select: none;
-  -webkit-user-select: none;
-  transition:
-    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease,
-    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (hover: hover) {
-  .proj-filter-pill:hover {
-    color: var(--color-gold, #A87524);
-    border-color: var(--color-gold, #A87524);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(168, 117, 36, 0.12);
-  }
-}
-
-.proj-filter-pill:active {
-  transform: scale(0.98);
-}
-
-.proj-filter-pill--active {
-  background: var(--color-gold, #A87524);
-  border-color: var(--color-gold, #A87524);
-  color: #FFFFFF;
-  box-shadow: 0 4px 16px rgba(168, 117, 36, 0.25);
-}
-
-.proj-filter-pill--active .proj-filter-pill-count {
-  background: rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
-}
-
-.proj-filter-pill-count {
-  font-size: 0.62rem;
-  font-weight: 700;
-  background: rgba(168, 117, 36, 0.1);
-  color: var(--color-gold, #A87524);
-  padding: 1px 5px;
-  border-radius: 2px;
-}
-
-/* ── Chapters Stream ── */
-.proj-chapters-stream {
+.proj-editorial-container {
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 .proj-empty-card {
@@ -135,35 +52,32 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5rem 2rem;
-  margin: 3rem auto;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border, #D4CFC6);
+  padding: 4rem 2rem;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
   gap: 1.5rem;
   text-align: center;
-  border-radius: 2px;
 }
 
-/* ── Bottom CTA Section ── */
+/* Bottom CTA Section */
 .proj-bottom-cta-section {
-  padding: 5rem 0 6.5rem;
-  background: var(--color-bg-secondary, #E8E4DC);
-  border-top: 1px solid var(--color-border, #D4CFC6);
+  padding: 4.5rem 0 6rem;
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
 }
 
 .proj-bottom-cta-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 3.5rem;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border, #D4CFC6);
-  border-left: 5px solid var(--color-gold, #A87524);
-  padding: 3.5rem 4rem;
-  box-shadow: 0 12px 40px rgba(24, 25, 28, 0.06);
+  gap: 3rem;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-left: 5px solid var(--color-gold);
+  padding: 3rem 3.5rem;
+  box-shadow: var(--shadow-card);
   position: relative;
   overflow: hidden;
-  border-radius: 2px;
 }
 
 .proj-bottom-cta-card::before {
@@ -171,9 +85,9 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 260px;
-  height: 260px;
-  background: radial-gradient(circle, rgba(168, 117, 36, 0.12) 0%, transparent 70%);
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, var(--color-gold-dim) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -184,16 +98,16 @@
 .proj-bottom-cta-title {
   font-size: clamp(1.75rem, 3.5vw, 2.5rem);
   line-height: 1.2;
-  color: var(--color-text-primary, #18191C);
+  color: var(--color-text-primary);
   margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
 
 .proj-bottom-cta-desc {
   max-width: 600px;
-  color: var(--color-text-secondary, #5A6270);
+  color: var(--color-text-secondary);
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 .proj-bottom-cta-buttons {
@@ -210,28 +124,11 @@
   padding: 0.85rem 1.5rem;
 }
 
-/* ============================================================
-   RESPONSIVE LAYOUT
-   ============================================================ */
-
 @media (max-width: 992px) {
-  .proj-filter-container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
-  }
-
-  .proj-filter-label-group {
-    border-right: none;
-    border-bottom: 1px solid var(--color-border, #D4CFC6);
-    padding-right: 0;
-    padding-bottom: 0.5rem;
-  }
-
   .proj-bottom-cta-card {
     flex-direction: column;
     align-items: flex-start;
-    padding: 2.5rem 2rem;
+    padding: 2.25rem 2rem;
     gap: 2rem;
   }
 
@@ -246,8 +143,14 @@
 }
 
 @media (max-width: 640px) {
-  .proj-filter-bar-section {
-    padding: 0.65rem 0;
+  .proj-editorial-section {
+    padding-top: 1.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .proj-editorial-meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .proj-bottom-cta-buttons {

@@ -1,10 +1,14 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { allProjects, PROJECT_CATEGORIES } from "../data/projects";
 import ProjectsHero from "../components/projects/ProjectsHero";
-import ProjectCinematicChapter from "../components/projects/ProjectCinematicChapter";
-import ProjectChapterProgress from "../components/projects/ProjectChapterProgress";
+import ProjectStickyIndex from "../components/projects/ProjectStickyIndex";
+import ProjectEditorialCaseStudy from "../components/projects/ProjectEditorialCaseStudy";
 import "./ProjectsPage.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
@@ -13,7 +17,7 @@ export default function ProjectsPage() {
 
   // Set page title for SEO
   useEffect(() => {
-    document.title = "Cinematic Projects Journey & Structural Portfolio | Designtech Engineering";
+    document.title = "Projects Archive & Structural Portfolio | Designtech Engineering";
   }, []);
 
   // Compute category counts
@@ -44,7 +48,7 @@ export default function ProjectsPage() {
     }
   }, [filteredProjects]);
 
-  // IntersectionObserver scroll-spy to update the active project chapter
+  // Scroll-spy with IntersectionObserver to highlight active project in sticky index
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -52,12 +56,18 @@ export default function ProjectsPage() {
           if (entry.isIntersecting) {
             const id = entry.target.id.replace("project-", "");
             setActiveProjectId(id);
+
+            // Auto-scroll the horizontal rail item into view smoothly
+            const railBtn = document.getElementById(`idx-btn-${id}`);
+            if (railBtn) {
+              railBtn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            }
           }
         });
       },
       {
-        rootMargin: "-20% 0px -40% 0px",
-        threshold: 0.15,
+        rootMargin: "-20% 0px -60% 0px",
+        threshold: 0.1,
       }
     );
 
@@ -69,78 +79,87 @@ export default function ProjectsPage() {
     return () => observer.disconnect();
   }, [filteredProjects]);
 
-  // Smooth scroll jump to project chapter
+  // Smooth scroll jump to project from sticky index
   const handleScrollToProject = (id: string) => {
     setActiveProjectId(id);
     const el = document.getElementById(`project-${id}`);
     if (el) {
-      const yOffset = -80; // offset for navbar
+      const yOffset = -140; // accommodate sticky nav + sticky index bar
       const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
+  // GSAP animation for initial load and category filtering
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".proj-case-study",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".proj-editorial-container",
+            start: "top 85%",
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [selectedCategory]);
+
   return (
     <main id="main-content" className="projects-page" ref={containerRef}>
-      {/* 01 — Cinematic Hero Header */}
+      {/* 01 — Hero Header */}
       <ProjectsHero
         totalProjects={allProjects.length}
         totalCategories={PROJECT_CATEGORIES.length - 1}
       />
 
-      {/* 02 — Category Filter Bar */}
-      <section className="proj-filter-bar-section" aria-label="Project classifications filter">
-        <div className="container proj-filter-container">
-          <div className="proj-filter-label-group">
-            <span className="proj-filter-tag">SECTOR FILTER</span>
-            <span className="proj-filter-sub">SELECT CLASSIFICATION</span>
-          </div>
-
-          <div className="proj-filter-pills" role="tablist">
-            {PROJECT_CATEGORIES.map((cat) => {
-              const isActive = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  className={`proj-filter-pill ${isActive ? "proj-filter-pill--active" : ""}`}
-                  onClick={() => setSelectedCategory(cat)}
-                >
-                  <span className="proj-filter-pill-text">{cat}</span>
-                  <span className="proj-filter-pill-count">
-                    {categoryCounts[cat] ?? 0}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 03 — Chapter Progress Navigator (Desktop vertical track + Mobile bar) */}
-      <ProjectChapterProgress
+      {/* 02 — Sticky Category & Project Index Bar */}
+      <ProjectStickyIndex
         projects={filteredProjects}
         activeProjectId={activeProjectId}
         onSelectProject={handleScrollToProject}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        categories={PROJECT_CATEGORIES}
+        categoryCounts={categoryCounts}
       />
 
-      {/* 04 — Cinematic Project Chapters Sequence */}
-      <div className="proj-chapters-stream" role="feed" aria-busy="false">
-        {filteredProjects.map((project, idx) => (
-          <ProjectCinematicChapter
-            key={project.id}
-            project={project}
-            index={idx}
-          />
-        ))}
+      {/* 03 — Editorial Engineering Case Studies Collection */}
+      <section className="proj-editorial-section container" aria-label="Civil and structural engineering project portfolio">
+        <div className="proj-editorial-meta-bar">
+          <div className="proj-meta-tag-group">
+            <span className="section-number">ENGINEERING ARCHIVE</span>
+            <span className="proj-meta-active-count">
+              DISPLAYING {filteredProjects.length} OF {allProjects.length} DOCUMENTED STRUCTURES
+            </span>
+          </div>
+
+          <span className="proj-meta-instruction">
+            SCROLL TO EXPLORE OR JUMP VIA STICKY PROJECT INDEX
+          </span>
+        </div>
+
+        <div className="proj-editorial-container" role="list">
+          {filteredProjects.map((project, idx) => (
+            <ProjectEditorialCaseStudy
+              key={project.id}
+              project={project}
+              index={idx}
+            />
+          ))}
+        </div>
 
         {filteredProjects.length === 0 && (
-          <div className="proj-empty-card container">
-            <p className="t-body">
-              No engineering projects found for classification &ldquo;{selectedCategory}&rdquo;.
-            </p>
+          <div className="proj-empty-card">
+            <p className="t-body">No engineering projects found for classification &ldquo;{selectedCategory}&rdquo;.</p>
             <button
               type="button"
               className="btn btn-outline"
@@ -150,9 +169,9 @@ export default function ProjectsPage() {
             </button>
           </div>
         )}
-      </div>
+      </section>
 
-      {/* 05 — Architectural Consultation Action Banner */}
+      {/* 04 — Engineering Consultation Bottom Action Card */}
       <section className="proj-bottom-cta-section">
         <div className="container">
           <div className="proj-bottom-cta-card">
