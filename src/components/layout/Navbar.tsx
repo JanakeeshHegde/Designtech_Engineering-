@@ -49,6 +49,12 @@ export default function Navbar() {
           ))}
         </ul>
 
+        {/* Desktop CTA */}
+        <Link to="/contact" className="navbar-cta" aria-label="Start a project with Designtech Engineering">
+          Start a Project
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </Link>
+
         {/* Mobile hamburger */}
         <div className="navbar-actions">
           <button
@@ -81,6 +87,13 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
+          <div className="mobile-menu-footer">
+            <p className="mobile-menu-contact">designtecheng.team@gmail.com</p>
+            <p className="mobile-menu-contact">
+              <a href="tel:+919035761979">9035761979</a> &nbsp;/&nbsp;
+              <a href="tel:+919880593211">9880593211</a>
+            </p>
+          </div>
         </div>
       )}
     </header>

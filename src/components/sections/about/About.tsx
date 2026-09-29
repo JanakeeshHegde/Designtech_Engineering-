@@ -68,6 +68,48 @@ export default function About() {
 
   return (
     <section id="about" ref={sectionRef} className="about section" aria-labelledby="about-heading">
+      {/* Background Architectural Blueprint Linework */}
+      <div className="about-blueprint-backdrop" aria-hidden="true">
+        <svg className="about-blueprint-svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="about-fine-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(168,117,36,0.06)" strokeWidth="0.5" />
+            </pattern>
+            <pattern id="about-major-grid" width="200" height="200" patternUnits="userSpaceOnUse">
+              <rect width="200" height="200" fill="url(#about-fine-grid)" />
+              <path d="M 200 0 L 0 0 0 200" fill="none" stroke="rgba(168,117,36,0.14)" strokeWidth="1" />
+              <circle cx="0" cy="0" r="2" fill="rgba(168,117,36,0.25)" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#about-major-grid)" />
+          
+          <g className="about-blueprint-lines" stroke="rgba(168,117,36,0.2)" strokeWidth="0.8">
+            <line x1="80" y1="0" x2="80" y2="900" strokeDasharray="6 6" />
+            <line x1="480" y1="0" x2="480" y2="900" strokeDasharray="6 6" />
+            <line x1="920" y1="0" x2="920" y2="900" strokeDasharray="6 6" />
+            <line x1="1360" y1="0" x2="1360" y2="900" strokeDasharray="6 6" />
+            
+            <line x1="0" y1="140" x2="1440" y2="140" strokeDasharray="8 4" opacity="0.6" />
+            <line x1="0" y1="460" x2="1440" y2="460" strokeDasharray="8 4" opacity="0.6" />
+            <line x1="0" y1="780" x2="1440" y2="780" strokeDasharray="8 4" opacity="0.6" />
+            
+            <path d="M 980 180 L 1380 180 L 1380 620 L 980 620 Z" stroke="rgba(24,25,28,0.06)" strokeWidth="1" fill="none" />
+            <line x1="980" y1="180" x2="1380" y2="620" stroke="rgba(24,25,28,0.04)" strokeWidth="0.8" />
+            <line x1="1380" y1="180" x2="980" y2="620" stroke="rgba(24,25,28,0.04)" strokeWidth="0.8" />
+            
+            <path d="M 50 50 L 70 50 M 50 50 L 50 70" stroke="rgba(168,117,36,0.35)" strokeWidth="1.2" />
+            <path d="M 1390 50 L 1370 50 M 1390 50 L 1390 70" stroke="rgba(168,117,36,0.35)" strokeWidth="1.2" />
+            <path d="M 50 850 L 70 850 M 50 850 L 50 830" stroke="rgba(168,117,36,0.35)" strokeWidth="1.2" />
+            <path d="M 1390 850 L 1370 850 M 1390 850 L 1390 830" stroke="rgba(168,117,36,0.35)" strokeWidth="1.2" />
+          </g>
+          
+          <text x="80" y="30" fill="rgba(168,117,36,0.35)" fontSize="9" fontFamily="DM Mono,monospace" textAnchor="middle">AXIS X-01</text>
+          <text x="480" y="30" fill="rgba(168,117,36,0.35)" fontSize="9" fontFamily="DM Mono,monospace" textAnchor="middle">AXIS X-02</text>
+          <text x="920" y="30" fill="rgba(168,117,36,0.35)" fontSize="9" fontFamily="DM Mono,monospace" textAnchor="middle">AXIS X-03</text>
+          <text x="1360" y="30" fill="rgba(168,117,36,0.35)" fontSize="9" fontFamily="DM Mono,monospace" textAnchor="middle">AXIS X-04</text>
+        </svg>
+      </div>
+
       <div className="container">
         {/* Editorial Section Header */}
         <div className="about-header">

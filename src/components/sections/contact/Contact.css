@@ -3,7 +3,7 @@
    ============================================================ */
 
 .contact {
-  background: var(--color-bg-primary, #F7F5F0);
+  background: var(--color-bg-primary, #F2EFE9);
   padding: var(--section-pad-y) 0;
 }
 
@@ -387,15 +387,66 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
 }
 
-.form-submit:hover:not(:disabled) {
-  background: var(--color-gold-highlight, #C99A45);
-  border-color: var(--color-gold-highlight, #C99A45);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(168, 117, 36, 0.25);
+.form-submit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.form-submit svg {
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .form-submit:hover:not(:disabled) {
+    background: var(--color-gold-highlight, #C99A45);
+    border-color: var(--color-gold-highlight, #C99A45);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 117, 36, 0.28);
+  }
+
+  .form-submit:hover:not(:disabled)::before {
+    transform: translateX(100%);
+  }
+
+  .form-submit:hover:not(:disabled) svg {
+    transform: translateX(4px);
+  }
+}
+
+.form-submit:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(168, 117, 36, 0.12);
+  transition-duration: 0.1s;
+}
+
+.form-submit:focus-visible {
+  outline: 2px solid var(--color-gold, #A87524);
+  outline-offset: 3px;
 }
 
 .form-submit:disabled {

@@ -1,39 +1,84 @@
 /* ============================================================
-   ABOUT COMPONENT — EDITORIAL ARCHITECTURAL LAYOUT
+   ABOUT COMPONENT — EDITORIAL ARCHITECTURAL LAYOUT v2
    ============================================================ */
 
 .about {
-  background: var(--color-bg-primary, #F7F5F0);
+  background: var(--color-bg-primary, #F2EFE9);
   padding: var(--section-pad-y) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background Blueprint Drafting Grid & Elevation */
+.about-blueprint-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+}
+
+.about-blueprint-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.about-blueprint-lines line,
+.about-blueprint-lines path {
+  transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-blueprint-lines line,
+  .about-blueprint-lines path {
+    transition: none;
+  }
+}
+
+.about .container {
+  position: relative;
+  z-index: 1;
 }
 
 .about-header {
   display: flex;
   align-items: center;
   gap: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .about-eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-gold, #A87524);
   white-space: nowrap;
 }
 
+.about-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  background: var(--color-gold, #A87524);
+}
+
 .about-header-rule {
   height: 1px;
-  background: var(--color-border, #D9D5CC);
+  background: var(--color-border, #D4CFC6);
   flex-grow: 1;
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  gap: clamp(2rem, 4vw, 4rem);
   align-items: start;
 }
 
@@ -46,16 +91,16 @@
 .about-title {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.125rem;
+  margin-bottom: 1.5rem;
 }
 
 .about-title-line {
-  font-family: var(--font-display);
+  font-family: var(--font-display, sans-serif);
   font-size: clamp(2.5rem, 4.2vw, 4.25rem);
   font-weight: 800;
   line-height: 1.02;
   letter-spacing: -0.03em;
-  color: var(--color-text-primary, #202124);
+  color: var(--color-text-primary, #18191C);
 }
 
 .about-title-accent {
@@ -63,33 +108,34 @@
 }
 
 .about-text-block {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .about-lead {
-  font-family: var(--font-body);
+  font-family: var(--font-body, sans-serif);
   font-size: clamp(1.125rem, 1.35vw, 1.25rem);
-  line-height: 1.7;
-  font-weight: 500;
-  color: var(--color-text-primary, #202124);
-  margin-bottom: 1.125rem;
+  line-height: 1.75;
+  font-weight: 600;
+  color: var(--color-text-primary, #18191C);
+  margin-bottom: 1.25rem;
 }
 
 .about-body-p {
-  font-family: var(--font-body);
+  font-family: var(--font-body, sans-serif);
   font-size: 1.05rem;
-  line-height: 1.65;
-  color: var(--color-text-secondary, #687078);
+  line-height: 1.75;
+  color: var(--color-text-secondary, #5A6270);
 }
 
 /* Office Location Card */
 .about-office-card {
-  padding: 1.5rem;
-  background: var(--color-bg-secondary, #EFEBE3);
-  border: 1px solid var(--color-border, #D9D5CC);
-  border-radius: var(--radius-sm, 4px);
+  padding: 1.65rem 1.75rem;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border, #D4CFC6);
+  border-radius: var(--radius-sm, 3px);
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-subtle, 0 1px 12px rgba(24,25,28,0.05));
 }
 
 .about-office-card::before {
@@ -110,91 +156,94 @@
 }
 
 .about-office-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono, monospace);
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-gold, #A87524);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
 }
 
 .about-office-city {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--color-text-primary, #202124);
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary, #18191C);
 }
 
 .about-office-address {
   font-style: normal;
-  font-family: var(--font-body);
+  font-family: var(--font-body, sans-serif);
   font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--color-text-secondary, #687078);
+  line-height: 1.65;
+  color: var(--color-text-secondary, #5A6270);
 }
 
 /* --- Right Column --- */
 .about-drawing-col {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 /* Visual drawing container */
 .about-visual {
   background: #FFFFFF;
-  border: 1px solid var(--color-border, #D9D5CC);
-  border-radius: var(--radius-sm, 4px);
-  padding: 1.25rem 1.5rem 1.5rem;
-  box-shadow: var(--shadow-subtle, 0 2px 16px rgba(32,33,36,0.06));
+  border: 1px solid var(--color-border, #D4CFC6);
+  border-radius: var(--radius-sm, 3px);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-lift, 0 8px 48px rgba(24,25,28,0.12));
   position: relative;
   overflow: hidden;
-  /* Subtle blueprint dot grid background */
   background-image:
-    radial-gradient(circle, rgba(168,117,36,0.15) 1px, transparent 1px);
+    radial-gradient(circle, rgba(168,117,36,0.12) 1px, transparent 1px);
   background-size: 24px 24px;
-  background-position: 0 0;
 }
 
-/* Engineering corner marks on visual panel */
 .about-visual::before {
   content: "";
   position: absolute;
-  top: 0; left: 0;
-  width: 12px; height: 12px;
+  top: 12px;
+  left: 12px;
+  width: 14px;
+  height: 14px;
   border-top: 1.5px solid var(--color-gold, #A87524);
   border-left: 1.5px solid var(--color-gold, #A87524);
-  opacity: 0.6;
 }
 
-/* Inner white area to ensure SVG readability over the grid */
-.about-svg-wrap {
-  background: rgba(255,255,255,0.92);
-  border-radius: 2px;
-  padding: 0.5rem;
+.about-visual::after {
+  content: "";
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 14px;
+  height: 14px;
+  border-bottom: 1.5px solid var(--color-gold, #A87524);
+  border-right: 1.5px solid var(--color-gold, #A87524);
 }
 
 .about-visual-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(217, 213, 204, 0.6);
-  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--color-border, #D4CFC6);
+  padding-bottom: 0.75rem;
   margin-bottom: 1.25rem;
 }
 
 .about-visual-tag,
 .about-visual-scale {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono, monospace);
   font-size: 0.65rem;
-  font-weight: 500;
-  color: var(--color-text-secondary, #687078);
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--color-gold, #A87524);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .about-svg {
   width: 100%;
-  max-width: 320px;
+  max-width: 340px;
   margin: 0 auto;
   display: block;
 }
@@ -203,61 +252,52 @@
 .about-values-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
 .about-value-item {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1.5rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--color-border, #D9D5CC);
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--color-border, #D4CFC6);
   align-items: start;
 }
 
 .about-value-item:first-child {
-  border-top: 1px solid var(--color-border, #D9D5CC);
+  border-top: 1px solid var(--color-border, #D4CFC6);
 }
 
 .about-value-num {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono, monospace);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-gold, #A87524);
   letter-spacing: 0.08em;
-  padding-top: 0.15rem;
+  background: rgba(168,117,36,0.08);
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
 }
 
 .about-value-title {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--color-text-primary, #202124);
+  font-family: var(--font-display, sans-serif);
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-primary, #18191C);
   margin-bottom: 0.4rem;
 }
 
 .about-value-desc {
-  font-family: var(--font-body);
+  font-family: var(--font-body, sans-serif);
   font-size: 0.925rem;
-  line-height: 1.6;
-  color: var(--color-text-secondary, #687078);
+  line-height: 1.65;
+  color: var(--color-text-secondary, #5A6270);
 }
 
-/* Responsive */
 @media (max-width: 992px) {
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .about-header {
-    margin-bottom: 1.5rem;
-  }
-
-  .about-office-card {
-    padding: 1.25rem;
+    gap: 2.5rem;
   }
 }

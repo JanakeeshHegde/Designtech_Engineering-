@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import About from "../components/sections/about/About";
 import Capabilities from "../components/sections/about/Capabilities";
 import EngineeringProcess from "../components/sections/about/EngineeringProcess";
-import StructuralInspector from "../components/sections/about/StructuralInspector";
-import EngineeringJourney from "../components/sections/about/EngineeringJourney";
 import ClientEcosystem from "../components/sections/about/ClientEcosystem";
 import "./AboutPage.css";
 
 export default function AboutPage() {
   useEffect(() => {
-    document.title = "About Designtech Engineering | Engineering Expertise & Projects";
+    document.title = "About Designtech Engineering | Civil & Structural Consultancy";
   }, []);
 
   return (
@@ -42,20 +40,7 @@ export default function AboutPage() {
         <Capabilities />
       </div>
 
-      {/* 03.5 — Structural Inspector */}
-      <StructuralInspector />
-
-      {/* 04 — Engineering Journey / All Projects */}
-      <div id="engineering-journey">
-        <EngineeringJourney
-          onScrollToProject={(id) => {
-            const el = document.getElementById(`project-${id}`);
-            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-          }}
-        />
-      </div>
-
-      {/* 05 — Clients */}
+      {/* 04 — Clients */}
       <div id="clients">
         <ClientEcosystem />
       </div>
@@ -68,13 +53,13 @@ export default function AboutPage() {
             <Link to="/sectors" className="btn btn-outline">
               VIEW SECTORS
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
             <Link to="/contact" className="btn btn-primary">
               START A PROJECT
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
           </div>

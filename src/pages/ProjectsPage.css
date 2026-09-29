@@ -1,0 +1,158 @@
+.projects-page {
+  background: var(--color-bg-primary);
+  min-height: 100vh;
+  position: relative;
+}
+
+.proj-editorial-section {
+  padding-top: 2.5rem;
+  padding-bottom: 5rem;
+}
+
+.proj-editorial-meta-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.proj-meta-tag-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.proj-meta-active-count {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: 0.04em;
+}
+
+.proj-meta-instruction {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--color-gold);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.proj-editorial-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.proj-empty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  gap: 1.5rem;
+  text-align: center;
+}
+
+/* Bottom CTA Section */
+.proj-bottom-cta-section {
+  padding: 4.5rem 0 6rem;
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+}
+
+.proj-bottom-cta-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-left: 5px solid var(--color-gold);
+  padding: 3rem 3.5rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.proj-bottom-cta-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, var(--color-gold-dim) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.proj-bottom-cta-text {
+  flex: 1;
+}
+
+.proj-bottom-cta-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1.2;
+  color: var(--color-text-primary);
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.proj-bottom-cta-desc {
+  max-width: 600px;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.proj-bottom-cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-shrink: 0;
+  min-width: 240px;
+}
+
+.proj-bcta-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .proj-bottom-cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2.25rem 2rem;
+    gap: 2rem;
+  }
+  .proj-bottom-cta-buttons {
+    width: 100%;
+    flex-direction: row;
+  }
+  .proj-bcta-btn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .proj-editorial-section {
+    padding-top: 1.5rem;
+    padding-bottom: 3.5rem;
+  }
+  .proj-editorial-meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .proj-bottom-cta-buttons {
+    flex-direction: column;
+  }
+  .proj-bcta-btn {
+    width: 100%;
+  }
+}

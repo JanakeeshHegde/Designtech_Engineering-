@@ -7,6 +7,7 @@ import PageTransition from "./components/common/PageTransition";
 import Footer from "./components/layout/Footer";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
+import ProjectsPage from "./pages/ProjectsPage";
 import SectorsPage from "./pages/SectorsPage";
 import ContactPage from "./pages/ContactPage";
 
@@ -65,6 +66,7 @@ function AppInner() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/sectors" element={<SectorsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             {/* Catch-all → home */}

@@ -102,6 +102,53 @@ export default function Sectors() {
 
   return (
     <section id="sectors" ref={sectionRef} className="sectors section" aria-labelledby="sectors-heading">
+      {/* Background Architectural Plan & Elevation Geometry */}
+      <div className="sectors-arch-backdrop" aria-hidden="true">
+        <svg className="sectors-arch-svg" viewBox="0 0 1440 1200" fill="none" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="sec-plan-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(168,117,36,0.04)" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#sec-plan-grid)" />
+          
+          <g className="sectors-arch-lines" stroke="rgba(168,117,36,0.16)" strokeWidth="0.8">
+            {/* Grid Axes */}
+            <line x1="160" y1="0" x2="160" y2="1200" strokeDasharray="8 6" />
+            <line x1="640" y1="0" x2="640" y2="1200" strokeDasharray="8 6" />
+            <line x1="1120" y1="0" x2="1120" y2="1200" strokeDasharray="8 6" />
+            
+            {/* Level Datums */}
+            <line x1="0" y1="200" x2="1440" y2="200" strokeDasharray="4 4" opacity="0.5" />
+            <line x1="0" y1="500" x2="1440" y2="500" strokeDasharray="4 4" opacity="0.5" />
+            <line x1="0" y1="800" x2="1440" y2="800" strokeDasharray="4 4" opacity="0.5" />
+            <line x1="0" y1="1100" x2="1440" y2="1100" strokeDasharray="4 4" opacity="0.5" />
+            
+            {/* Floor Plan & Elevation Outlines */}
+            <rect x="160" y="200" width="480" height="300" stroke="rgba(24,25,28,0.06)" strokeWidth="1" fill="none" />
+            <rect x="640" y="500" width="480" height="300" stroke="rgba(24,25,28,0.06)" strokeWidth="1" fill="none" />
+            <rect x="160" y="800" width="480" height="300" stroke="rgba(24,25,28,0.06)" strokeWidth="1" fill="none" />
+            
+            {/* Dimension Lines */}
+            <line x1="160" y1="170" x2="640" y2="170" stroke="rgba(168,117,36,0.25)" strokeWidth="0.8" />
+            <line x1="160" y1="164" x2="160" y2="176" stroke="rgba(168,117,36,0.25)" strokeWidth="0.8" />
+            <line x1="640" y1="164" x2="640" y2="176" stroke="rgba(168,117,36,0.25)" strokeWidth="0.8" />
+            
+            <line x1="640" y1="470" x2="1120" y2="470" stroke="rgba(168,117,36,0.25)" strokeWidth="0.8" />
+            <line x1="640" y1="464" x2="640" y2="476" stroke="rgba(168,117,36,0.25)" strokeWidth="0.8" />
+            <line x1="1120" y1="464" x2="1120" y2="476" stroke="rgba(168,117,36,0.25)" strokeWidth="0.8" />
+          </g>
+
+          <text x="400" y="160" fill="rgba(168,117,36,0.3)" fontSize="8" fontFamily="DM Mono,monospace" textAnchor="middle">SPAN: 16.00 M</text>
+          <text x="880" y="460" fill="rgba(168,117,36,0.3)" fontSize="8" fontFamily="DM Mono,monospace" textAnchor="middle">SPAN: 16.00 M</text>
+          
+          <text x="40" y="204" fill="rgba(168,117,36,0.3)" fontSize="8" fontFamily="DM Mono,monospace">EL. +03.60M</text>
+          <text x="40" y="504" fill="rgba(168,117,36,0.3)" fontSize="8" fontFamily="DM Mono,monospace">EL. +07.20M</text>
+          <text x="40" y="804" fill="rgba(168,117,36,0.3)" fontSize="8" fontFamily="DM Mono,monospace">EL. +10.80M</text>
+          <text x="40" y="1104" fill="rgba(168,117,36,0.3)" fontSize="8" fontFamily="DM Mono,monospace">EL. +14.40M</text>
+        </svg>
+      </div>
+
       <div className="container">
         {/* Header */}
         <div className="sectors-header">

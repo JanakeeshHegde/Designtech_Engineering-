@@ -138,7 +138,7 @@ export default function ProjectChapter({ project, index }: Props) {
               </div>
             ) : (
               <div className="pc-hero-img">
-                <ProjectImage src={project.heroImage} alt={project.title} />
+                <ProjectImage src={project.heroImage || ""} alt={project.title} />
               </div>
             )}
 

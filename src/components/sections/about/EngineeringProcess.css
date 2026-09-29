@@ -1,95 +1,108 @@
+/* ============================================================
+   ENGINEERING PROCESS COMPONENT v2
+   ============================================================ */
+
 .eng-process {
-  background: var(--color-bg-primary);
+  background: var(--color-bg-primary, #F2EFE9);
   position: relative;
+  padding: var(--section-pad-y) 0;
 }
 
-.process-header { opacity: 0; }
+.process-header {
+  opacity: 0;
+  margin-bottom: 2rem;
+}
 
 .process-track {
   position: relative;
   height: 2px;
-  background: var(--color-border);
-  margin: 1.75rem 0 0.25rem;
+  background: var(--color-border, #D4CFC6);
+  margin: 1.75rem 0 0.5rem;
   overflow: hidden;
 }
 
 .process-connector {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, var(--color-gold), var(--color-gold-highlight));
+  background: linear-gradient(to right, var(--color-gold, #A87524), var(--color-gold-highlight, #C99A45));
   transform-origin: left;
-  box-shadow: 0 0 6px var(--color-gold-glow);
+  box-shadow: 0 0 8px rgba(168,117,36,0.3);
 }
 
 .process-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0;
-  background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  background: #FFFFFF;
+  border: 1px solid var(--color-border, #D4CFC6);
+  border-radius: var(--radius-sm, 3px);
+  box-shadow: var(--shadow-subtle, 0 1px 12px rgba(24,25,28,0.05));
+  overflow: hidden;
 }
 
 .process-stage {
-  padding: 1.75rem 1.5rem 1.5rem;
-  border-right: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+  padding: 2.25rem 2rem;
+  border-right: 1px solid var(--color-border, #D4CFC6);
+  border-bottom: 1px solid var(--color-border, #D4CFC6);
   position: relative;
   opacity: 0;
-  transition: background 0.3s, transform 0.2s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .process-stage:hover {
-  background: rgba(239, 235, 227, 0.4);
+  background: rgba(168,117,36,0.03);
 }
 
 .process-stage:nth-child(3n) { border-right: none; }
 .process-stage:nth-child(4), .process-stage:nth-child(5), .process-stage:nth-child(6) { border-bottom: none; }
 
 .process-stage-num {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--color-gold);
-  letter-spacing: 0.2em;
-  margin-bottom: 0.75rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--color-gold, #A87524);
+  letter-spacing: 0.16em;
+  margin-bottom: 1rem;
 }
 
 .process-stage-icon {
   width: 80px;
   height: 80px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .process-stage-label {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  color: var(--color-gold);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--color-gold, #A87524);
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
 
 .process-stage-title {
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--color-text-primary);
+  font-family: var(--font-display, sans-serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary, #18191C);
   margin-bottom: 0.75rem;
   text-transform: uppercase;
 }
 
 .process-stage-desc {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--color-text-secondary, #5A6270);
 }
 
 @media (max-width: 1024px) {
   .process-grid { grid-template-columns: repeat(2, 1fr); }
-  .process-stage:nth-child(3n) { border-right: 1px solid var(--color-border); }
+  .process-stage:nth-child(3n) { border-right: 1px solid var(--color-border, #D4CFC6); }
   .process-stage:nth-child(2n) { border-right: none; }
   .process-stage:nth-child(5), .process-stage:nth-child(6) { border-bottom: none; }
-  .process-stage:nth-child(4) { border-bottom: 1px solid var(--color-border); }
+  .process-stage:nth-child(4) { border-bottom: 1px solid var(--color-border, #D4CFC6); }
 }
 
 @media (max-width: 640px) {

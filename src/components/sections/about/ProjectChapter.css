@@ -10,11 +10,11 @@
 }
 
 .pc--even {
-  background: var(--color-bg-primary, #F7F5F0);
+  background: var(--color-bg-primary, #F2EFE9);
 }
 
 .pc--odd {
-  background: var(--color-bg-secondary, #EFEBE3);
+  background: var(--color-bg-secondary, #E8E4DC);
 }
 
 .pc-inner {

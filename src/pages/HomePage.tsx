@@ -3,7 +3,6 @@ import Hero from "../components/sections/home/Hero";
 import HomeAboutTeaser from "../components/sections/home/HomeAboutTeaser";
 import HomeCapabilitiesPreview from "../components/sections/home/HomeCapabilitiesPreview";
 import HomeFieldsPreview from "../components/sections/home/HomeFieldsPreview";
-import HomeFeaturedProjects from "../components/sections/home/HomeFeaturedProjects";
 import HomeTrustSection from "../components/sections/home/HomeTrustSection";
 import HomeContactCTA from "../components/sections/home/HomeContactCTA";
 
@@ -23,19 +22,16 @@ export default function HomePage() {
       {/* 02 — Company Introduction */}
       <HomeAboutTeaser />
 
-      {/* 03 — Expertise */}
+      {/* 03 — Core Expertise / Precision Capabilities */}
       <HomeCapabilitiesPreview />
 
       {/* 04 — Fields of Operation */}
       <HomeFieldsPreview />
 
-      {/* 05 — Selected Project Experience */}
-      <HomeFeaturedProjects />
-
-      {/* 06 — Client / Trust Section */}
+      {/* 05 — Client / Trust Section */}
       <HomeTrustSection />
 
-      {/* 07 — Contact CTA */}
+      {/* 06 — Contact CTA */}
       <HomeContactCTA />
     </main>
   );

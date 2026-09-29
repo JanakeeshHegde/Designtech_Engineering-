@@ -109,6 +109,30 @@ export default function HomeFieldsPreview() {
 
   return (
     <section ref={ref} id="fields-preview" className="hfpw section" aria-labelledby="hfpw-heading">
+      {/* Background Architectural Plan & Elevation Geometry */}
+      <div className="hfpw-arch-backdrop" aria-hidden="true">
+        <svg className="hfpw-arch-svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="hfpw-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+              <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(168,117,36,0.04)" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hfpw-grid)" />
+          
+          <g className="hfpw-arch-lines" stroke="rgba(168,117,36,0.16)" strokeWidth="0.8">
+            <line x1="180" y1="0" x2="180" y2="900" strokeDasharray="6 6" />
+            <line x1="720" y1="0" x2="720" y2="900" strokeDasharray="6 6" />
+            <line x1="1260" y1="0" x2="1260" y2="900" strokeDasharray="6 6" />
+            
+            <line x1="0" y1="160" x2="1440" y2="160" strokeDasharray="8 4" opacity="0.5" />
+            <line x1="0" y1="540" x2="1440" y2="540" strokeDasharray="8 4" opacity="0.5" />
+          </g>
+
+          <text x="188" y="152" fill="rgba(168,117,36,0.25)" fontSize="8" fontFamily="DM Mono,monospace">ZONE A [RESIDENTIAL / COMMERCIAL]</text>
+          <text x="728" y="152" fill="rgba(168,117,36,0.25)" fontSize="8" fontFamily="DM Mono,monospace">ZONE B [INDUSTRIAL &amp; UTILITY]</text>
+        </svg>
+      </div>
+
       <div className="container">
         <div className="hfpw-header-row">
           <div className="hfpw-header-left">

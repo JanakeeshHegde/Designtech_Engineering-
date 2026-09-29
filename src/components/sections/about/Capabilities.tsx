@@ -159,6 +159,46 @@ export default function Capabilities() {
 
   return (
     <section id="capabilities" ref={sectionRef} className="capabilities section" aria-labelledby="cap-heading">
+      {/* Background Structural Grid & Engineering Geometry */}
+      <div className="cap-structural-backdrop" aria-hidden="true">
+        <svg className="cap-structural-svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="cap-node-grid" width="120" height="120" patternUnits="userSpaceOnUse">
+              <path d="M 120 0 L 0 0 0 120" fill="none" stroke="rgba(168,117,36,0.06)" strokeWidth="0.75" />
+              {/* Connection Node */}
+              <circle cx="0" cy="0" r="3" fill="rgba(168,117,36,0.15)" stroke="rgba(168,117,36,0.3)" strokeWidth="0.5" />
+              <line x1="-6" y1="0" x2="6" y2="0" stroke="rgba(168,117,36,0.3)" strokeWidth="0.5" />
+              <line x1="0" y1="-6" x2="0" y2="6" stroke="rgba(168,117,36,0.3)" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#cap-node-grid)" />
+          
+          {/* Major Structural Framing Linework */}
+          <g className="cap-structural-lines" stroke="rgba(168,117,36,0.2)" strokeWidth="0.8">
+            <line x1="240" y1="0" x2="240" y2="900" strokeDasharray="8 6" />
+            <line x1="720" y1="0" x2="720" y2="900" strokeDasharray="8 6" />
+            <line x1="1200" y1="0" x2="1200" y2="900" strokeDasharray="8 6" />
+            
+            <line x1="0" y1="240" x2="1440" y2="240" strokeDasharray="8 6" />
+            <line x1="0" y1="600" x2="1440" y2="600" strokeDasharray="8 6" />
+            
+            {/* Structural Moment Frame & Diagonal Bracing */}
+            <path d="M 240 240 L 720 240 L 720 600 L 240 600 Z" stroke="rgba(24,25,28,0.08)" strokeWidth="1.2" fill="none" />
+            <line x1="240" y1="240" x2="720" y2="600" stroke="rgba(168,117,36,0.12)" strokeWidth="0.8" strokeDasharray="4 4" />
+            <line x1="720" y1="240" x2="240" y2="600" stroke="rgba(168,117,36,0.12)" strokeWidth="0.8" strokeDasharray="4 4" />
+            
+            <path d="M 720 240 L 1200 240 L 1200 600 L 720 600 Z" stroke="rgba(24,25,28,0.08)" strokeWidth="1.2" fill="none" />
+            <line x1="720" y1="240" x2="1200" y2="600" stroke="rgba(168,117,36,0.12)" strokeWidth="0.8" strokeDasharray="4 4" />
+            <line x1="1200" y1="240" x2="720" y2="600" stroke="rgba(168,117,36,0.12)" strokeWidth="0.8" strokeDasharray="4 4" />
+          </g>
+
+          {/* Node Callout Marks */}
+          <text x="248" y="232" fill="rgba(168,117,36,0.35)" fontSize="8" fontFamily="DM Mono,monospace">NODE N-1 [COL-C1]</text>
+          <text x="728" y="232" fill="rgba(168,117,36,0.35)" fontSize="8" fontFamily="DM Mono,monospace">NODE N-2 [COL-C2]</text>
+          <text x="1208" y="232" fill="rgba(168,117,36,0.35)" fontSize="8" fontFamily="DM Mono,monospace">NODE N-3 [COL-C3]</text>
+        </svg>
+      </div>
+
       <div className="container">
         {/* Header */}
         <div className="cap-header">
