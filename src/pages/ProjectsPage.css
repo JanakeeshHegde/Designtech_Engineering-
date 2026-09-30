@@ -115,7 +115,7 @@
   flex-direction: column;
   gap: 1rem;
   flex-shrink: 0;
-  min-width: 240px;
+  min-width: min(240px, 100%);
 }
 
 .proj-bcta-btn {

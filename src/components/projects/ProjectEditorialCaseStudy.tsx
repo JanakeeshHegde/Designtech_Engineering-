@@ -18,6 +18,8 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
   const hasImage = allImages.length > 0;
   const [activeImage, setActiveImage] = useState<string>(allImages[0] || "");
   const [imgError, setImgError] = useState(false);
+  const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set());
+  const availableImages = allImages.filter((image) => !failedImages.has(image));
   const [viewMode, setViewMode] = useState<"media" | "beforeAfter">(
     project.hasBeforeAfter && project.beforeImage && project.afterImage ? "beforeAfter" : "media"
   );
@@ -25,6 +27,7 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
   useEffect(() => {
     setActiveImage(allImages[0] || "");
     setImgError(false);
+    setFailedImages(new Set());
   }, [project.id, allImages.length]);
 
   return (
@@ -163,11 +166,11 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           </div>
 
           {/* Editorial Thumbnail Gallery (if multiple images exist) */}
-          {allImages.length > 1 && (
+          {availableImages.length > 1 && (
             <div className="proj-cs-gallery">
               <span className="proj-cs-gallery-heading">DOCUMENTATION VIEWS &amp; DRAWINGS:</span>
               <div className="proj-cs-thumbs">
-                {allImages.map((img, i) => (
+                {availableImages.map((img, i) => (
                   <button
                     key={i}
                     type="button"
@@ -182,8 +185,8 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                     <img
                       src={img}
                       alt=""
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = "none";
+                      onError={() => {
+                        setFailedImages((previous) => new Set(previous).add(img));
                       }}
                     />
                     <span className="proj-cs-thumb-idx">{i + 1}</span>

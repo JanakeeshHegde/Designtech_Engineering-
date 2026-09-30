@@ -22,6 +22,7 @@ const rawProjectImages = import.meta.glob<string>(
 
 // Map of projectId -> { main: string[]; gallery: string[]; all: string[] }
 const projectImageMap: Record<string, { main: string[]; gallery: string[]; all: string[] }> = {};
+const projectImageUrlMap = new Map<string, string>();
 
 for (const path in rawProjectImages) {
   // Path format: "/public/projects/<projectId>/<folder>/<fileName>"
@@ -41,7 +42,14 @@ for (const path in rawProjectImages) {
       projectImageMap[projectId].gallery.push(webUrl);
     }
     projectImageMap[projectId].all.push(webUrl);
+    projectImageUrlMap.set(webUrl.toLowerCase(), webUrl);
   }
+}
+
+function resolveProjectImage(image: string): string {
+  const trimmed = image.trim();
+  if (!trimmed.startsWith("/projects/")) return trimmed;
+  return projectImageUrlMap.get(trimmed.toLowerCase()) || "";
 }
 
 /**
@@ -55,7 +63,8 @@ for (const path in rawProjectImages) {
 export function getProjectMainImage(project: Project): string {
   const explicit = project.mainImage || project.heroImage;
   if (explicit && explicit.trim().length > 0) {
-    return explicit;
+    const resolved = resolveProjectImage(explicit);
+    if (resolved) return resolved;
   }
   const discoveredMain = projectImageMap[project.id]?.main;
   if (discoveredMain && discoveredMain.length > 0) {
@@ -73,11 +82,11 @@ export const getProjectHeroImage = getProjectMainImage;
  * Get all gallery (secondary) images for a project.
  */
 export function getProjectGalleryImages(project: Project): string[] {
-  const explicit = (project.gallery || []).filter((img) => Boolean(img && img.trim().length > 0));
-  if (explicit.length > 0) {
-    return explicit;
-  }
-  return projectImageMap[project.id]?.gallery || [];
+  const explicit = (project.gallery || [])
+    .map(resolveProjectImage)
+    .filter(Boolean);
+  const discovered = projectImageMap[project.id]?.gallery || [];
+  return [...new Set([...explicit, ...discovered])];
 }
 
 /**
@@ -106,8 +115,9 @@ export function getProjectAllImages(project: Project): string[] {
     ...(project.completedImages || []),
   ];
   extras.forEach((img) => {
-    if (img && img.trim().length > 0 && !images.includes(img)) {
-      images.push(img);
+    const resolved = img ? resolveProjectImage(img) : "";
+    if (resolved && !images.includes(resolved)) {
+      images.push(resolved);
     }
   });
 

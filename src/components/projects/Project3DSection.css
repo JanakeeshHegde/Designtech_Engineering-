@@ -17,6 +17,13 @@
   grid-template-columns: 320px 1fr;
   gap: 2rem;
   align-items: stretch;
+  min-width: 0;
+}
+
+.proj-3d-grid > *,
+.proj-3d-viewport-wrap,
+.proj-3d-canvas-container {
+  min-width: 0;
 }
 
 .proj-3d-controls {
@@ -145,5 +152,18 @@
   }
   .proj-3d-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .proj-3d-section {
+    padding: 1rem;
+  }
+
+  .proj-3d-viewport-bar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+    overflow-wrap: anywhere;
   }
 }

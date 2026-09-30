@@ -352,6 +352,7 @@ input, textarea, select {
     color 0.25s ease,
     box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, box-shadow;
+  max-width: 100%;
 }
 
 /* Subtle Technical Light Sweep on Button Face */
@@ -501,6 +502,18 @@ a.btn:focus-visible {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .btn {
+    min-height: 48px;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.35;
+    letter-spacing: 0.09em;
   }
 }
 

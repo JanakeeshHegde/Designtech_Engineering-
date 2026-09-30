@@ -221,13 +221,12 @@
 .proj-cs-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   filter: grayscale(0.1) contrast(1.05);
   transition: transform 0.6s var(--ease-out), filter 0.3s ease;
 }
 
 .proj-case-study:hover .proj-cs-img {
-  transform: scale(1.03);
   filter: grayscale(0) contrast(1.08);
 }
 
@@ -311,7 +310,7 @@
 .proj-cs-thumb-btn img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   filter: grayscale(0.2);
 }
 

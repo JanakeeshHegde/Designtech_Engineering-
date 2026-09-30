@@ -32,12 +32,15 @@ export default function ProjectDetailModal({
     project.hasBeforeAfter ? "beforeAfter" : "media"
   );
   const [imgError, setImgError] = useState(false);
+  const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set());
+  const availableImages = allImages.filter((image) => !failedImages.has(image));
 
   // Sync active image when project changes
   useEffect(() => {
     setActiveImage(allImages[0] || "");
     setActiveTab(project.hasBeforeAfter ? "beforeAfter" : "media");
     setImgError(false);
+    setFailedImages(new Set());
   }, [project, allImages.length]);
 
   // Keyboard accessibility: ESC to close, Arrow keys to navigate
@@ -241,11 +244,11 @@ export default function ProjectDetailModal({
               </div>
 
               {/* Multi-Image Thumbnail Gallery */}
-              {allImages.length > 1 && (
+              {availableImages.length > 1 && (
                 <div className="pdm-gallery-strip">
                   <span className="pdm-gallery-label">PROJECT DRAWINGS &amp; PHOTOGRAPHS:</span>
                   <div className="pdm-thumbnails">
-                    {allImages.map((img, i) => (
+                    {availableImages.map((img, i) => (
                       <button
                         key={i}
                         type="button"
@@ -259,8 +262,8 @@ export default function ProjectDetailModal({
                         <img
                           src={img}
                           alt={`${project.title} view ${i + 1}`}
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = "none";
+                          onError={() => {
+                            setFailedImages((previous) => new Set(previous).add(img));
                           }}
                         />
                         <span className="pdm-thumb-num">{i + 1}</span>

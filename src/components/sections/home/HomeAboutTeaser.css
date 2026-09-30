@@ -277,5 +277,17 @@
 
   .hat-header-row {
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .hat-eyebrow {
+    white-space: normal;
+    max-width: 100%;
+    letter-spacing: 0.12em;
+  }
+
+  .hat-rule {
+    flex-basis: 2rem;
   }
 }

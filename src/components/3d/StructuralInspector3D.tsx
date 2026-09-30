@@ -140,15 +140,14 @@ export default function StructuralInspector3D({ activeLayer, className = "" }: P
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
 
-    const onResize = () => {
-      if (!container) return;
-      const w = container.clientWidth;
-      const h = container.clientHeight;
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      const { width: w, height: h } = entry.contentRect;
+      if (w <= 0 || h <= 0) return;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
-    };
-    window.addEventListener("resize", onResize);
+    });
+    resizeObserver.observe(container);
 
     const animate = () => {
       if (!isAliveRef.current) return;
@@ -190,7 +189,7 @@ export default function StructuralInspector3D({ activeLayer, className = "" }: P
       domEl.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
-      window.removeEventListener("resize", onResize);
+      resizeObserver.disconnect();
       if (container.contains(domEl)) {
         container.removeChild(domEl);
       }
