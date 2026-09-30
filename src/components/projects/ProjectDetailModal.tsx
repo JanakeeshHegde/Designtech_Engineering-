@@ -4,7 +4,6 @@ import type { Project } from "../../data/projects";
 import { getProjectAllImages } from "../../utils/projectImages";
 import BeforeAfter from "../common/BeforeAfter";
 import StructuralInspector3D from "../3d/StructuralInspector3D";
-import ProjectTechnicalOverlay from "./ProjectTechnicalOverlay";
 import "./ProjectDetailModal.css";
 
 interface Props {
@@ -201,17 +200,7 @@ export default function ProjectDetailModal({
               <div className="pdm-viewport">
                 {activeTab === "media" && (
                   <div className="pdm-image-stage">
-                    <ProjectTechnicalOverlay projectNumber={project.number} category={project.category} />
-                    {imgError ? (
-                      <div className="pdm-img-fallback img-fallback">
-                        <svg width="56" height="56" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                          <rect x="4" y="8" width="40" height="32" stroke="#A87524" strokeWidth="1" strokeOpacity="0.4" fill="none" />
-                          <line x1="4" y1="8" x2="44" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-                          <line x1="44" y1="8" x2="4" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-                        </svg>
-                        <span className="t-label" style={{ marginTop: "0.5rem" }}>DRAWING / PHOTO ARCHIVED</span>
-                      </div>
-                    ) : (
+                    {!imgError && (
                       <img
                         src={activeImage}
                         alt={`${project.title} detailed visual`}
@@ -249,25 +238,27 @@ export default function ProjectDetailModal({
                   <span className="pdm-gallery-label">PROJECT DRAWINGS &amp; PHOTOGRAPHS:</span>
                   <div className="pdm-thumbnails">
                     {availableImages.map((img, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        className={`pdm-thumb-btn ${activeImage === img && activeTab === "media" ? "pdm-thumb-btn--active" : ""}`}
-                        onClick={() => {
-                          setActiveImage(img);
-                          setActiveTab("media");
-                          setImgError(false);
-                        }}
-                      >
-                        <img
-                          src={img}
-                          alt={`${project.title} view ${i + 1}`}
-                          onError={() => {
-                            setFailedImages((previous) => new Set(previous).add(img));
+                      <div className="pdm-thumb-item" key={img}>
+                        <button
+                          type="button"
+                          className={`pdm-thumb-btn ${activeImage === img && activeTab === "media" ? "pdm-thumb-btn--active" : ""}`}
+                          onClick={() => {
+                            setActiveImage(img);
+                            setActiveTab("media");
+                            setImgError(false);
                           }}
-                        />
+                          aria-label={`View image ${i + 1} for ${project.title}`}
+                        >
+                          <img
+                            src={img}
+                            alt={`${project.title} view ${i + 1}`}
+                            onError={() => {
+                              setFailedImages((previous) => new Set(previous).add(img));
+                            }}
+                          />
+                        </button>
                         <span className="pdm-thumb-num">{i + 1}</span>
-                      </button>
+                      </div>
                     ))}
                   </div>
                 </div>

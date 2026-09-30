@@ -12,19 +12,10 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
   const [error, setError] = useState(false);
 
   if (error) {
-    return (
-      <div className="pc-img-fallback img-fallback" aria-label={alt}>
-        <div className="pc-img-fallback-inner">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <rect x="4" y="8" width="40" height="32" stroke="#A87524" strokeWidth="1" strokeOpacity="0.4" fill="none" />
-            <line x1="4" y1="8" x2="44" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-            <line x1="44" y1="8" x2="4" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-          </svg>
-          <span className="t-label" style={{ marginTop: "0.5rem" }}>IMAGE PENDING</span>
-        </div>
-      </div>
-    );
+    return null;
   }
+
+  if (!src) return null;
 
   return (
     <img

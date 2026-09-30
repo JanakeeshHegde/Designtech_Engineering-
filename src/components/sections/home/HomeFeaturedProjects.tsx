@@ -245,12 +245,6 @@ export default function HomeFeaturedProjects() {
             {/* ── COLUMN: LARGE ARCHITECTURAL VISUAL STAGE ── */}
             <div className="hfp-visual-col">
               <div className="hfp-viewport-frame">
-                {/* CAD Corner Crosshairs */}
-                <div className="hfp-corner hfp-corner--tl">+</div>
-                <div className="hfp-corner hfp-corner--tr">+</div>
-                <div className="hfp-corner hfp-corner--bl">+</div>
-                <div className="hfp-corner hfp-corner--br">+</div>
-
                 {/* Viewport Action Bar */}
                 <div className="hfp-viewport-controls">
                   <span className="hfp-vp-indicator">
@@ -270,43 +264,18 @@ export default function HomeFeaturedProjects() {
                         afterLabel="COMPLETED"
                       />
                     </div>
-                  ) : !mainImg || imgErrors[currentProject.id] ? (
-                    <div className="hfp-fallback-view img-fallback">
-                      <svg width="56" height="56" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                        <rect x="4" y="8" width="40" height="32" stroke="#A87524" strokeWidth="1" strokeOpacity="0.4" fill="none" />
-                        <line x1="4" y1="8" x2="44" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-                        <line x1="44" y1="8" x2="4" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-                        <circle cx="24" cy="24" r="8" stroke="#A87524" strokeWidth="0.8" strokeOpacity="0.4" />
-                      </svg>
-                      <span className="hfp-fallback-text">STRUCTURAL BLUEPRINT SHEET #{currentProject.number}</span>
-                    </div>
-                  ) : (
+                  ) : mainImg && !imgErrors[currentProject.id] ? (
                     <img
                       src={mainImg}
                       alt={`${currentProject.title} architectural view`}
                       className="hfp-stage-img"
                       onError={() => handleImgError(currentProject.id)}
                     />
-                  )}
+                  ) : null}
 
-                  {/* Wireframe Grid Matrix Overlay */}
-                  <div className="hfp-wireframe-overlay" aria-hidden="true" />
-
-                  {/* Axis Dimension Callout Lines */}
-                  <div className="hfp-axis-callout hfp-axis-callout--bottom" aria-hidden="true">
-                    <span className="hfp-axis-tick">|</span>
-                    <span className="hfp-axis-line" />
-                    <span className="hfp-axis-label">GRID-SPAN: {currentProject.number} // AXIS X-X</span>
-                    <span className="hfp-axis-line" />
-                    <span className="hfp-axis-tick">|</span>
-                  </div>
                 </div>
 
                 {/* Bottom Dimension Indicator */}
-                <div className="hfp-viewport-footer">
-                  <span className="hfp-vp-sub">STRUCTURAL MODEL 2.5D ELEVATION</span>
-                  <span className="hfp-vp-coord">LAT 12.9716° N / LON 77.5946° E</span>
-                </div>
               </div>
             </div>
           </div>

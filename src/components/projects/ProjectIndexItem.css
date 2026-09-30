@@ -232,6 +232,17 @@
   margin-bottom: 0.75rem;
 }
 
+.proj-item-media-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+}
+
 .proj-item-title {
   font-size: 1.375rem;
   font-weight: 700;

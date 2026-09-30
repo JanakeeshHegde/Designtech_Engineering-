@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Project } from "../../data/projects";
 import { getProjectAllImages } from "../../utils/projectImages";
-import ProjectTechnicalOverlay from "./ProjectTechnicalOverlay";
 import BeforeAfter from "../common/BeforeAfter";
 import "./ProjectEditorialCaseStudy.css";
 
@@ -104,11 +103,9 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           )}
 
           {/* Large Architectural Frame */}
-          <div className="proj-cs-frame">
-            <ProjectTechnicalOverlay projectNumber={project.number} category={project.category} />
-
-            {hasImage && !imgError ? (
-              viewMode === "beforeAfter" && project.beforeImage && project.afterImage ? (
+          {hasImage && !imgError && (
+            <div className={`proj-cs-frame ${viewMode === "beforeAfter" ? "proj-cs-ba-frame" : ""}`}>
+              {viewMode === "beforeAfter" && project.beforeImage && project.afterImage ? (
                 <div className="proj-cs-ba-wrap">
                   <BeforeAfter
                     beforeSrc={project.beforeImage}
@@ -123,47 +120,14 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                   alt={`${project.title} architectural view`}
                   loading="lazy"
                   className="proj-cs-img"
-                  onError={() => setImgError(true)}
+                  onError={() => {
+                    setImgError(true);
+                    setFailedImages((previous) => new Set(previous).add(activeImage));
+                  }}
                 />
-              )
-            ) : (
-              <div className="proj-cs-drafting-canvas" aria-hidden="true">
-                <svg className="proj-cs-drafting-svg" viewBox="0 0 480 330" fill="none">
-                  {/* Grid Lines */}
-                  <defs>
-                    <pattern id={`cs-grid-${project.id}`} width="30" height="30" patternUnits="userSpaceOnUse">
-                      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(168,117,36,0.08)" strokeWidth="0.5" />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill={`url(#cs-grid-${project.id})`} />
-
-                  {/* Structural Framing Outline */}
-                  <rect x="35" y="35" width="410" height="260" stroke="rgba(168,117,36,0.3)" strokeWidth="1" strokeDasharray="6 4" fill="rgba(168,117,36,0.02)" />
-                  <rect x="55" y="55" width="370" height="220" stroke="rgba(24,25,28,0.08)" strokeWidth="0.8" fill="none" />
-
-                  {/* Axis Crosshairs */}
-                  <line x1="240" y1="20" x2="240" y2="310" stroke="rgba(168,117,36,0.2)" strokeWidth="0.8" strokeDasharray="4 4" />
-                  <line x1="20" y1="165" x2="460" y2="165" stroke="rgba(168,117,36,0.2)" strokeWidth="0.8" strokeDasharray="4 4" />
-
-                  {/* Structural Center Watermark & Metadata */}
-                  <circle cx="240" cy="165" r="45" stroke="rgba(168,117,36,0.25)" strokeWidth="1" />
-                  <circle cx="240" cy="165" r="38" stroke="rgba(168,117,36,0.15)" strokeWidth="0.5" strokeDasharray="3 3" />
-                  
-                  <text x="240" y="160" fill="var(--color-gold, #A87524)" fontSize="11" fontFamily="DM Mono, monospace" fontWeight="700" textAnchor="middle" letterSpacing="0.1em">
-                    {project.number}
-                  </text>
-                  <text x="240" y="176" fill="var(--color-text-secondary, #5A6270)" fontSize="7.5" fontFamily="DM Mono, monospace" textAnchor="middle" letterSpacing="0.08em">
-                    {project.category.toUpperCase()} // ARCHIVE
-                  </text>
-
-                  {/* Bottom Sheet Spec Marker */}
-                  <text x="425" y="265" fill="var(--color-gold, #A87524)" fontSize="7" fontFamily="DM Mono, monospace" textAnchor="end">
-                    STRUCTURAL RECORD
-                  </text>
-                </svg>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           {/* Editorial Thumbnail Gallery (if multiple images exist) */}
           {availableImages.length > 1 && (
@@ -171,26 +135,27 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
               <span className="proj-cs-gallery-heading">DOCUMENTATION VIEWS &amp; DRAWINGS:</span>
               <div className="proj-cs-thumbs">
                 {availableImages.map((img, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    className={`proj-cs-thumb-btn ${activeImage === img && viewMode === "media" ? "proj-cs-thumb-btn--active" : ""}`}
-                    onClick={() => {
-                      setActiveImage(img);
-                      setViewMode("media");
-                      setImgError(false);
-                    }}
-                    aria-label={`View image ${i + 1} for ${project.title}`}
-                  >
-                    <img
-                      src={img}
-                      alt=""
-                      onError={() => {
-                        setFailedImages((previous) => new Set(previous).add(img));
+                  <div className="proj-cs-thumb-item" key={img}>
+                    <button
+                      type="button"
+                      className={`proj-cs-thumb-btn ${activeImage === img && viewMode === "media" ? "proj-cs-thumb-btn--active" : ""}`}
+                      onClick={() => {
+                        setActiveImage(img);
+                        setViewMode("media");
+                        setImgError(false);
                       }}
-                    />
+                      aria-label={`View image ${i + 1} for ${project.title}`}
+                    >
+                      <img
+                        src={img}
+                        alt=""
+                        onError={() => {
+                          setFailedImages((previous) => new Set(previous).add(img));
+                        }}
+                      />
+                    </button>
                     <span className="proj-cs-thumb-idx">{i + 1}</span>
-                  </button>
+                  </div>
                 ))}
               </div>
             </div>

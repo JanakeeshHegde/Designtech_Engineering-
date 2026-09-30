@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Project } from "../../data/projects";
-import ProjectTechnicalOverlay from "./ProjectTechnicalOverlay";
+import { getProjectMainImage } from "../../utils/projectImages";
 import "./ProjectBlueprintGrid.css";
 
 interface Props {
@@ -20,6 +20,7 @@ export default function ProjectBlueprintGrid({ projects, onSelectProject }: Prop
 
 function BlueprintCard({ project, onSelect }: { project: Project; onSelect: () => void }) {
   const [imgError, setImgError] = useState(false);
+  const mainImage = getProjectMainImage(project);
 
   return (
     <article
@@ -42,27 +43,15 @@ function BlueprintCard({ project, onSelect }: { project: Project; onSelect: () =
       </div>
 
       {/* Visual Frame */}
-      <div className="proj-bp-media">
-        <ProjectTechnicalOverlay projectNumber={project.number} />
-        {imgError ? (
-          <div className="proj-bp-fallback img-fallback">
-            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-              <rect x="4" y="8" width="40" height="32" stroke="#A87524" strokeWidth="1" strokeOpacity="0.4" fill="none" />
-              <line x1="4" y1="8" x2="44" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-              <line x1="44" y1="8" x2="4" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-            </svg>
-            <span className="proj-bp-fallback-label">PROJECT #{project.number}</span>
-          </div>
-        ) : (
+      {mainImage && !imgError && <div className="proj-bp-media">
           <img
-            src={project.heroImage}
+            src={mainImage}
             alt={project.title}
             loading="lazy"
             className="proj-bp-img"
             onError={() => setImgError(true)}
           />
-        )}
-      </div>
+        </div>}
 
       {/* Content */}
       <div className="proj-bp-content">

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { Project } from "../../data/projects";
 import { getProjectMainImage, getProjectAllImages } from "../../utils/projectImages";
-import ProjectTechnicalOverlay from "./ProjectTechnicalOverlay";
 import "./ProjectIndexItem.css";
 
 interface Props {
@@ -71,21 +70,9 @@ export default function ProjectIndexItem({ project, onSelectProject }: Props) {
 
         {/* ── CENTER COLUMN: Technical Visual Framing ── */}
         <div className="proj-item-center">
-          <div className="proj-item-frame">
-            <ProjectTechnicalOverlay projectNumber={project.number} category={project.category} />
-
-            {/* Media Image / Fallback */}
-            {!mainImg || imgError ? (
-              <div className="proj-item-fallback img-fallback">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                  <rect x="4" y="8" width="40" height="32" stroke="#A87524" strokeWidth="1" strokeOpacity="0.4" fill="none" />
-                  <line x1="4" y1="8" x2="44" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-                  <line x1="44" y1="8" x2="4" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
-                  <circle cx="24" cy="24" r="6" stroke="#A87524" strokeWidth="0.8" strokeOpacity="0.4" />
-                </svg>
-                <span className="proj-item-fallback-txt">STRUCTURAL BLUEPRINT ARCHIVE</span>
-              </div>
-            ) : (
+          {mainImg && !imgError && (
+            <div className="proj-item-frame">
+            {/* Image only */}
               <img
                 src={mainImg}
                 alt={project.title}
@@ -93,38 +80,8 @@ export default function ProjectIndexItem({ project, onSelectProject }: Props) {
                 className="proj-item-img"
                 onError={() => setImgError(true)}
               />
-            )}
-
-            {/* Badges on Visual */}
-            <div className="proj-item-visual-badges" aria-hidden="true">
-              {totalImages > 1 && (
-                <span className="proj-badge proj-badge--media">
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                    <rect x="1" y="2" width="10" height="8" rx="1" stroke="currentColor" strokeWidth="1" />
-                    <circle cx="4" cy="4.5" r="1" fill="currentColor" />
-                    <path d="M1 9l3-3 3 3 4-4" stroke="currentColor" strokeWidth="1" />
-                  </svg>
-                  {totalImages} VIEWS
-                </span>
-              )}
-
-              {project.hasBeforeAfter && (
-                <span className="proj-badge proj-badge--compare">
-                  BEFORE &amp; AFTER
-                </span>
-              )}
             </div>
-
-            {/* Hover Inspect CTA Overlay */}
-            <div className="proj-item-inspect-overlay">
-              <span className="proj-item-inspect-btn">
-                <span>INSPECT SPECIFICATION</span>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </div>
-          </div>
+          )}
         </div>
 
         {/* ── RIGHT COLUMN: Project Data & Key Parameters ── */}
@@ -139,6 +96,13 @@ export default function ProjectIndexItem({ project, onSelectProject }: Props) {
               </div>
             )}
           </div>
+
+          {(totalImages > 1 || project.hasBeforeAfter) && (
+            <div className="proj-item-media-details">
+              {totalImages > 1 && <span>{totalImages} VIEWS</span>}
+              {project.hasBeforeAfter && <span>BEFORE &amp; AFTER</span>}
+            </div>
+          )}
 
           {/* Description Excerpt if present */}
           {project.description && (
