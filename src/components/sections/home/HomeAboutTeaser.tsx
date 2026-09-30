@@ -81,7 +81,7 @@ export default function HomeAboutTeaser() {
           <div className="hat-header-row">
             <span className="hat-eyebrow">WHO WE ARE</span>
             <div className="hat-rule" aria-hidden="true" />
-            <span className="hat-telemetry" aria-hidden="true">12.9716° N, 77.5946° E &bull; DT-ENG-01</span>
+            <span className="hat-telemetry" aria-hidden="true">12.9716° N, 77.5946° E</span>
           </div>
 
           <div className="hat-grid">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Project } from "../../data/projects";
+import { getProjectMainImage, getProjectAllImages } from "../../utils/projectImages";
 import ProjectTechnicalOverlay from "./ProjectTechnicalOverlay";
 import "./ProjectIndexItem.css";
 
@@ -13,7 +14,8 @@ export default function ProjectIndexItem({ project, onSelectProject }: Props) {
   const [imgError, setImgError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const totalImages = (project.gallery?.length || 0) + (project.constructionImages?.length || 0) + 1;
+  const mainImg = getProjectMainImage(project);
+  const totalImages = getProjectAllImages(project).length;
 
   return (
     <article
@@ -53,7 +55,7 @@ export default function ProjectIndexItem({ project, onSelectProject }: Props) {
 
           <div className="proj-item-dwg-meta">
             <span className="proj-item-dwg-label">ARCHIVE REF</span>
-            <span className="proj-item-dwg-val">DT-{project.number}</span>
+            <span className="proj-item-dwg-val">{project.number}</span>
           </div>
 
           {project.location && (
@@ -73,7 +75,7 @@ export default function ProjectIndexItem({ project, onSelectProject }: Props) {
             <ProjectTechnicalOverlay projectNumber={project.number} category={project.category} />
 
             {/* Media Image / Fallback */}
-            {imgError ? (
+            {!mainImg || imgError ? (
               <div className="proj-item-fallback img-fallback">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
                   <rect x="4" y="8" width="40" height="32" stroke="#A87524" strokeWidth="1" strokeOpacity="0.4" fill="none" />
@@ -85,7 +87,7 @@ export default function ProjectIndexItem({ project, onSelectProject }: Props) {
               </div>
             ) : (
               <img
-                src={project.heroImage}
+                src={mainImg}
                 alt={project.title}
                 loading="lazy"
                 className="proj-item-img"
@@ -215,9 +217,9 @@ export default function ProjectIndexItem({ project, onSelectProject }: Props) {
 
       {/* Structural Datum Axis Line */}
       <div className="proj-item-datum-line" aria-hidden="true">
-        <span className="proj-datum-mark proj-datum-mark--start">⌖ GRID-AXIS DT-{project.number}</span>
+        <span className="proj-datum-mark proj-datum-mark--start">⌖ GRID-AXIS {project.number}</span>
         <span className="proj-datum-bar" />
-        <span className="proj-datum-mark proj-datum-mark--end">IS-CODE COMPLIANT ⌖</span>
+        <span className="proj-datum-mark proj-datum-mark--end">STRUCTURAL RECORD ⌖</span>
       </div>
     </article>
   );

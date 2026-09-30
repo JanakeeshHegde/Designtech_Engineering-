@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { Project } from "../../data/projects";
+import { getProjectAllImages } from "../../utils/projectImages";
 import BeforeAfter from "../common/BeforeAfter";
 import StructuralInspector3D from "../3d/StructuralInspector3D";
 import ProjectTechnicalOverlay from "./ProjectTechnicalOverlay";
@@ -23,16 +24,10 @@ export default function ProjectDetailModal({
   currentIndex,
   totalCount,
 }: Props) {
-  // Collect all available media items for this project
-  const allImages: string[] = [
-    project.heroImage,
-    ...(project.gallery || []),
-    ...(project.constructionImages || []),
-    ...(project.completedImages || []),
-  ].filter((img): img is string => Boolean(img && img.trim().length > 0))
-   .filter((img, index, self) => self.indexOf(img) === index); // unique
+  // Collect all available media items for this project (explicit + auto-discovered)
+  const allImages = getProjectAllImages(project);
 
-  const [activeImage, setActiveImage] = useState<string>(project.heroImage || "");
+  const [activeImage, setActiveImage] = useState<string>(allImages[0] || "");
   const [activeTab, setActiveTab] = useState<"media" | "beforeAfter" | "3d">(
     project.hasBeforeAfter ? "beforeAfter" : "media"
   );
@@ -40,10 +35,10 @@ export default function ProjectDetailModal({
 
   // Sync active image when project changes
   useEffect(() => {
-    setActiveImage(project.heroImage || "");
+    setActiveImage(allImages[0] || "");
     setActiveTab(project.hasBeforeAfter ? "beforeAfter" : "media");
     setImgError(false);
-  }, [project]);
+  }, [project, allImages.length]);
 
   // Keyboard accessibility: ESC to close, Arrow keys to navigate
   useEffect(() => {
@@ -85,7 +80,7 @@ export default function ProjectDetailModal({
         <div className="pdm-header-bar">
           <div className="pdm-dwg-meta">
             <span className="pdm-dwg-status">● DRAWING ARCHIVE ACTIVE</span>
-            <span className="pdm-dwg-ref">DWG: DT-{project.number} // {project.category.toUpperCase()}</span>
+            <span className="pdm-dwg-ref">{project.category.toUpperCase()} // PROJECT {project.number}</span>
             {currentIndex !== undefined && totalCount !== undefined && (
               <span className="pdm-dwg-index">RECORD {currentIndex + 1} OF {totalCount}</span>
             )}
@@ -281,7 +276,6 @@ export default function ProjectDetailModal({
               <div className="pdm-specs-sheet">
                 <div className="pdm-sheet-header">
                   <span className="pdm-sheet-title">STRUCTURAL SPECIFICATION SHEET</span>
-                  <span className="pdm-sheet-code">DT-ENG-REV01</span>
                 </div>
 
                 {/* Description */}

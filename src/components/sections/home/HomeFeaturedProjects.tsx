@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { featuredProjects, allProjects } from "../../../data/projects";
+import { getProjectMainImage } from "../../../utils/projectImages";
 import BeforeAfter from "../../common/BeforeAfter";
 import "./HomeFeaturedProjects.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 4 main featured projects derived strictly from centralized data
+// Exactly 4 featured projects derived strictly from centralized data
 const HOME_PROJECTS = featuredProjects.length >= 4 
   ? featuredProjects.slice(0, 4) 
   : allProjects.slice(0, 4);
@@ -16,35 +17,37 @@ const HOME_PROJECTS = featuredProjects.length >= 4
 export default function HomeFeaturedProjects() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [wireframeMode, setWireframeMode] = useState<boolean>(false);
   const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
 
   const currentProject = HOME_PROJECTS[activeIndex] || HOME_PROJECTS[0];
+  const mainImg = getProjectMainImage(currentProject);
+  const isEven = activeIndex % 2 === 0;
 
-  // GSAP initial reveal
+  // Initial scroll reveal for section
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".cad-stage-header",
+        ".hfp-header",
         { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
           duration: 0.8,
-          scrollTrigger: { trigger: ".cad-stage-header", start: "top 85%", once: true },
+          scrollTrigger: { trigger: ".hfp-header", start: "top 85%", once: true },
         }
       );
 
       gsap.fromTo(
-        ".cad-drawing-board",
+        ".hfp-showcase-board",
         { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
           duration: 0.9,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".cad-drawing-board", start: "top 80%", once: true },
+          scrollTrigger: { trigger: ".hfp-showcase-board", start: "top 80%", once: true },
         }
       );
     }, sectionRef);
@@ -52,19 +55,27 @@ export default function HomeFeaturedProjects() {
     return () => ctx.revert();
   }, []);
 
-  // Smooth transition when switching projects
+  // Animate transition when active project changes
   const handleSelectProject = (index: number) => {
     if (index === activeIndex) return;
 
     if (stageRef.current) {
       gsap.fromTo(
         stageRef.current,
-        { opacity: 0.2, y: 15 },
+        { opacity: 0.15, y: isEven ? 20 : -20 },
         { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }
       );
     }
+
+    if (lineRef.current) {
+      gsap.fromTo(
+        lineRef.current,
+        { scaleX: 0, transformOrigin: isEven ? "left" : "right" },
+        { scaleX: 1, duration: 0.5, ease: "power2.out" }
+      );
+    }
+
     setActiveIndex(index);
-    setWireframeMode(false);
   };
 
   const handleImgError = (id: string) => {
@@ -75,43 +86,38 @@ export default function HomeFeaturedProjects() {
     <section
       ref={sectionRef}
       id="home-featured-projects"
-      className="cad-stage-section"
-      aria-labelledby="cad-stage-heading"
+      className="hfp-section"
+      aria-labelledby="hfp-heading"
     >
-      {/* Background CAD linework */}
-      <div className="cad-stage-bg-grid" aria-hidden="true" />
+      {/* Background CAD linework grid */}
+      <div className="hfp-bg-grid" aria-hidden="true" />
 
       <div className="container">
         {/* Section Header */}
-        <div className="cad-stage-header section-header">
-          <div className="section-number">FEATURED WORK</div>
-          <h2 id="cad-stage-heading" className="t-display-md cad-stage-title">
-            LANDMARK STRUCTURAL PROJECTS
+        <div className="hfp-header section-header">
+          <div className="section-number">04 // FEATURED WORK</div>
+          <h2 id="hfp-heading" className="t-display-md hfp-title">
+            FEATURED PROJECTS
           </h2>
           <div className="section-divider" />
-          <p className="t-body cad-stage-subtitle">
-            A curated preview of landmark civil &amp; structural engineering developments engineered for permanence, constructability, and structural safety.
-          </p>
         </div>
 
-        {/* ── THE INTERACTIVE CAD DRAWING BOARD ── */}
-        <div className="cad-drawing-board">
-          {/* Top Board Frame Header / Sheet Title Block */}
-          <div className="cad-board-top-bar">
-            <div className="cad-board-datum-left">
-              <span className="cad-board-status-dot">●</span>
-              <span className="cad-board-dwg-title">DESIGNTECH ENGINEERING // FEATURED PROJECT STAGE</span>
-              <span className="cad-board-scale">SCALE: 1:100</span>
+        {/* ── THE EDITORIAL ENGINEERING SHOWCASE BOARD ── */}
+        <div className="hfp-showcase-board">
+          {/* Top Sheet Status Datum Strip */}
+          <div className="hfp-board-top-bar">
+            <div className="hfp-datum-left">
+              <span className="hfp-status-dot">●</span>
+              <span className="hfp-dwg-title">DESIGNTECH ENGINEERING // FEATURED PROJECTS</span>
             </div>
 
-            <div className="cad-board-datum-right">
-              <span className="cad-board-spec-code">SPEC: IS-456 / IS-800 / NBC-2016</span>
-              <span className="cad-board-sheet-no">SHEET {currentProject.number} OF 04</span>
+            <div className="hfp-datum-right">
+              <span className="hfp-sheet-counter">PROJECT 0{activeIndex + 1} OF 04</span>
             </div>
           </div>
 
-          {/* Project Selector Ribbon (01 to 04) */}
-          <div className="cad-selector-ribbon" role="tablist" aria-label="Select drawing sheet">
+          {/* Project Sheet Selector Ribbon (01 to 04) */}
+          <div className="hfp-selector-ribbon" role="tablist" aria-label="Select featured project sheet">
             {HOME_PROJECTS.map((p, i) => {
               const isSelected = activeIndex === i;
               return (
@@ -119,43 +125,52 @@ export default function HomeFeaturedProjects() {
                   key={p.id}
                   role="tab"
                   aria-selected={isSelected}
-                  className={`cad-ribbon-tab ${isSelected ? "cad-ribbon-tab--active" : ""}`}
+                  className={`hfp-ribbon-tab ${isSelected ? "hfp-ribbon-tab--active" : ""}`}
                   onClick={() => handleSelectProject(i)}
                 >
-                  <div className="cad-ribbon-tab-inner">
-                    <span className="cad-ribbon-num">{p.number}</span>
-                    <div className="cad-ribbon-text">
-                      <span className="cad-ribbon-cat">{p.category}</span>
-                      <span className="cad-ribbon-title">{p.title}</span>
+                  <div className="hfp-ribbon-tab-inner">
+                    <span className="hfp-ribbon-num">{p.number}</span>
+                    <div className="hfp-ribbon-text">
+                      <span className="hfp-ribbon-cat">{p.category}</span>
+                      <span className="hfp-ribbon-title">{p.title}</span>
                     </div>
                   </div>
-                  {isSelected && <span className="cad-ribbon-active-bar" aria-hidden="true" />}
+                  {isSelected && <span className="hfp-ribbon-active-bar" aria-hidden="true" />}
                 </button>
               );
             })}
           </div>
 
-          {/* Main Drawing Stage (Two-Column Layout) */}
-          <div ref={stageRef} className="cad-stage-content">
-            {/* ── LEFT: SPECIFICATIONS & HUD DATA ── */}
-            <div className="cad-hud-column">
-              <div className="cad-hud-sheet">
-                {/* Meta Stamp */}
-                <div className="cad-hud-meta-row">
-                  <div className="cad-hud-cat-badge">{currentProject.category}</div>
-                  <div className="cad-hud-dwg-ref">DWG: DT-{currentProject.number}</div>
-                  <div className="cad-hud-approved-badge">VERIFIED RCC / PEB</div>
+          {/* Main Alternating Editorial Presentation Stage */}
+          <div
+            ref={stageRef}
+            className={`hfp-stage-content ${isEven ? "hfp-stage--even" : "hfp-stage--odd"}`}
+          >
+            {/* ── COLUMN: SPECIFICATIONS & HUD DATA ── */}
+            <div className="hfp-info-col">
+              <div className="hfp-info-sheet">
+                {/* Big Watermark Number & Datum Line */}
+                <div className="hfp-num-row">
+                  <div className="hfp-big-number">
+                    <span>{currentProject.number}</span>
+                  </div>
+                  <div className="hfp-num-meta">
+                    <span className="hfp-category-badge">{currentProject.category}</span>
+                  </div>
                 </div>
 
+                {/* Connecting Engineering Datum Line */}
+                <div ref={lineRef} className="hfp-datum-line" aria-hidden="true" />
+
                 {/* Project Title */}
-                <h3 className="t-heading cad-hud-project-title">
+                <h3 className="t-heading hfp-project-title">
                   {currentProject.title}
                 </h3>
 
                 {/* Location & Typology Sub-bar */}
-                <div className="cad-hud-sub-bar">
+                <div className="hfp-sub-bar">
                   {currentProject.location && (
-                    <span className="cad-hud-loc">
+                    <span className="hfp-loc-tag">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                         <path d="M6 1.5a3.5 3.5 0 0 0-3.5 3.5c0 2.5 3.5 5.5 3.5 5.5s3.5-3 3.5-5.5a3.5 3.5 0 0 0-3.5-3.5z" stroke="currentColor" strokeWidth="1.2" />
                         <circle cx="6" cy="5" r="1.2" fill="currentColor" />
@@ -164,68 +179,61 @@ export default function HomeFeaturedProjects() {
                     </span>
                   )}
                   {currentProject.type && (
-                    <span className="cad-hud-type">{currentProject.type}</span>
+                    <span className="hfp-type-tag">{currentProject.type}</span>
                   )}
                 </div>
 
-                {/* Description */}
-                {currentProject.description && (
-                  <p className="t-body cad-hud-description">
-                    {currentProject.description}
-                  </p>
-                )}
-
                 {/* Technical Parameters Table */}
-                <dl className="cad-hud-params-grid">
+                <dl className="hfp-params-grid">
                   {currentProject.client && (
-                    <div className="cad-hud-param-cell">
-                      <dt className="cad-hud-dt">CLIENT</dt>
-                      <dd className="cad-hud-dd">{currentProject.client}</dd>
+                    <div className="hfp-param-cell">
+                      <dt className="hfp-dt">CLIENT</dt>
+                      <dd className="hfp-dd">{currentProject.client}</dd>
                     </div>
                   )}
                   {currentProject.floors && (
-                    <div className="cad-hud-param-cell">
-                      <dt className="cad-hud-dt">LEVELS / FLOORS</dt>
-                      <dd className="cad-hud-dd">{currentProject.floors}</dd>
+                    <div className="hfp-param-cell">
+                      <dt className="hfp-dt">LEVELS / FLOORS</dt>
+                      <dd className="hfp-dd">{currentProject.floors}</dd>
                     </div>
                   )}
                   {currentProject.builtUpArea && (
-                    <div className="cad-hud-param-cell">
-                      <dt className="cad-hud-dt">BUILT-UP AREA</dt>
-                      <dd className="cad-hud-dd">{currentProject.builtUpArea}</dd>
+                    <div className="hfp-param-cell">
+                      <dt className="hfp-dt">BUILT-UP AREA</dt>
+                      <dd className="hfp-dd">{currentProject.builtUpArea}</dd>
                     </div>
                   )}
                   {currentProject.location && (
-                    <div className="cad-hud-param-cell">
-                      <dt className="cad-hud-dt">GEOGRAPHY</dt>
-                      <dd className="cad-hud-dd">{currentProject.location}</dd>
+                    <div className="hfp-param-cell">
+                      <dt className="hfp-dt">GEOGRAPHY</dt>
+                      <dd className="hfp-dd">{currentProject.location}</dd>
                     </div>
                   )}
                 </dl>
 
-                {/* Key Facilities & Technical Provisions */}
+                {/* Structural Highlights & Facilities */}
                 {((currentProject.facilities && currentProject.facilities.length > 0) ||
                   (currentProject.technicalHighlights && currentProject.technicalHighlights.length > 0)) && (
-                  <div className="cad-hud-features">
-                    <span className="cad-hud-feat-label">STRUCTURAL HIGHLIGHTS:</span>
-                    <div className="cad-hud-chips">
+                  <div className="hfp-highlights">
+                    <span className="hfp-feat-label">STRUCTURAL HIGHLIGHTS:</span>
+                    <div className="hfp-chips">
                       {currentProject.technicalHighlights?.map((t) => (
-                        <span key={t} className="cad-chip cad-chip--tech">{t}</span>
+                        <span key={t} className="hfp-chip hfp-chip--tech">{t}</span>
                       ))}
                       {currentProject.facilities?.slice(0, 3).map((f) => (
-                        <span key={f} className="cad-chip">{f}</span>
+                        <span key={f} className="hfp-chip">{f}</span>
                       ))}
                     </div>
                   </div>
                 )}
 
                 {/* Direct Action Link to Archive */}
-                <div className="cad-hud-cta-wrap">
+                <div className="hfp-cta-wrap">
                   <Link
                     to={`/projects?id=${currentProject.id}`}
-                    className="btn btn-outline cad-hud-inspect-btn"
+                    className="btn btn-outline hfp-inspect-btn"
                   >
-                    <span>INSPECT FULL DRAWING IN ARCHIVE</span>
+                    <span>INSPECT FULL CASE STUDY IN ARCHIVE</span>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                       <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -234,44 +242,27 @@ export default function HomeFeaturedProjects() {
               </div>
             </div>
 
-            {/* ── RIGHT: LARGE BLUEPRINT VISUAL STAGE ── */}
-            <div className="cad-visual-column">
-              <div className="cad-viewport-frame">
+            {/* ── COLUMN: LARGE ARCHITECTURAL VISUAL STAGE ── */}
+            <div className="hfp-visual-col">
+              <div className="hfp-viewport-frame">
                 {/* CAD Corner Crosshairs */}
-                <div className="cad-corner cad-corner--tl">+</div>
-                <div className="cad-corner cad-corner--tr">+</div>
-                <div className="cad-corner cad-corner--bl">+</div>
-                <div className="cad-corner cad-corner--br">+</div>
+                <div className="hfp-corner hfp-corner--tl">+</div>
+                <div className="hfp-corner hfp-corner--tr">+</div>
+                <div className="hfp-corner hfp-corner--bl">+</div>
+                <div className="hfp-corner hfp-corner--br">+</div>
 
                 {/* Viewport Action Bar */}
-                <div className="cad-viewport-controls">
-                  <span className="cad-vp-indicator">
+                <div className="hfp-viewport-controls">
+                  <span className="hfp-vp-indicator">
                     ⌖ VISUAL ELEVATION {currentProject.number}
                   </span>
                   
-                  {/* Mode Toggles */}
-                  <div className="cad-vp-toggles">
-                    <button
-                      type="button"
-                      className={`cad-vp-mode-btn ${!wireframeMode ? "cad-vp-mode-btn--active" : ""}`}
-                      onClick={() => setWireframeMode(false)}
-                    >
-                      RENDER
-                    </button>
-                    <button
-                      type="button"
-                      className={`cad-vp-mode-btn ${wireframeMode ? "cad-vp-mode-btn--active" : ""}`}
-                      onClick={() => setWireframeMode(true)}
-                    >
-                      CAD BLUEPRINT
-                    </button>
-                  </div>
                 </div>
 
                 {/* Main Media Image / Before-After / Blueprint */}
-                <div className={`cad-media-container ${wireframeMode ? "cad-media-container--wireframe" : ""}`}>
-                  {currentProject.hasBeforeAfter && currentProject.beforeImage && currentProject.afterImage && !wireframeMode ? (
-                    <div className="cad-ba-container">
+                <div className="hfp-media-container">
+                  {currentProject.hasBeforeAfter && currentProject.beforeImage && currentProject.afterImage ? (
+                    <div className="hfp-ba-wrap">
                       <BeforeAfter
                         beforeSrc={currentProject.beforeImage}
                         afterSrc={currentProject.afterImage}
@@ -279,53 +270,53 @@ export default function HomeFeaturedProjects() {
                         afterLabel="COMPLETED"
                       />
                     </div>
-                  ) : imgErrors[currentProject.id] ? (
-                    <div className="cad-fallback-view img-fallback">
+                  ) : !mainImg || imgErrors[currentProject.id] ? (
+                    <div className="hfp-fallback-view img-fallback">
                       <svg width="56" height="56" viewBox="0 0 48 48" fill="none" aria-hidden="true">
                         <rect x="4" y="8" width="40" height="32" stroke="#A87524" strokeWidth="1" strokeOpacity="0.4" fill="none" />
                         <line x1="4" y1="8" x2="44" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
                         <line x1="44" y1="8" x2="4" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
                         <circle cx="24" cy="24" r="8" stroke="#A87524" strokeWidth="0.8" strokeOpacity="0.4" />
                       </svg>
-                      <span className="cad-fallback-text">STRUCTURAL BLUEPRINT SHEET #{currentProject.number}</span>
+                      <span className="hfp-fallback-text">STRUCTURAL BLUEPRINT SHEET #{currentProject.number}</span>
                     </div>
                   ) : (
                     <img
-                      src={currentProject.heroImage}
-                      alt={currentProject.title}
-                      className="cad-stage-img"
+                      src={mainImg}
+                      alt={`${currentProject.title} architectural view`}
+                      className="hfp-stage-img"
                       onError={() => handleImgError(currentProject.id)}
                     />
                   )}
 
                   {/* Wireframe Grid Matrix Overlay */}
-                  <div className="cad-wireframe-grid" aria-hidden="true" />
+                  <div className="hfp-wireframe-overlay" aria-hidden="true" />
 
                   {/* Axis Dimension Callout Lines */}
-                  <div className="cad-axis-callout cad-axis-callout--bottom" aria-hidden="true">
-                    <span className="cad-axis-tick">|</span>
-                    <span className="cad-axis-line" />
-                    <span className="cad-axis-label">GRID-SPAN: DT-{currentProject.number} // AXIS X-X</span>
-                    <span className="cad-axis-line" />
-                    <span className="cad-axis-tick">|</span>
+                  <div className="hfp-axis-callout hfp-axis-callout--bottom" aria-hidden="true">
+                    <span className="hfp-axis-tick">|</span>
+                    <span className="hfp-axis-line" />
+                    <span className="hfp-axis-label">GRID-SPAN: {currentProject.number} // AXIS X-X</span>
+                    <span className="hfp-axis-line" />
+                    <span className="hfp-axis-tick">|</span>
                   </div>
                 </div>
 
                 {/* Bottom Dimension Indicator */}
-                <div className="cad-viewport-footer">
-                  <span className="cad-vp-sub">STRUCTURAL MODEL 2.5D ELEVATION</span>
-                  <span className="cad-vp-coord">LAT 12.9716° N / LON 77.5946° E</span>
+                <div className="hfp-viewport-footer">
+                  <span className="hfp-vp-sub">STRUCTURAL MODEL 2.5D ELEVATION</span>
+                  <span className="hfp-vp-coord">LAT 12.9716° N / LON 77.5946° E</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Board Bottom Navigation & Master CTA */}
-          <div className="cad-board-bottom-bar">
-            <div className="cad-board-nav-arrows">
+          <div className="hfp-board-bottom-bar">
+            <div className="hfp-board-nav-arrows">
               <button
                 type="button"
-                className="cad-arrow-btn"
+                className="hfp-arrow-btn"
                 onClick={() => handleSelectProject((activeIndex - 1 + HOME_PROJECTS.length) % HOME_PROJECTS.length)}
                 aria-label="Previous featured project"
               >
@@ -335,12 +326,12 @@ export default function HomeFeaturedProjects() {
                 <span>PREV SHEET</span>
               </button>
 
-              <div className="cad-pagination-dots">
+              <div className="hfp-pagination-dots">
                 {HOME_PROJECTS.map((_, i) => (
                   <button
                     key={i}
                     type="button"
-                    className={`cad-dot ${activeIndex === i ? "cad-dot--active" : ""}`}
+                    className={`hfp-dot ${activeIndex === i ? "hfp-dot--active" : ""}`}
                     onClick={() => handleSelectProject(i)}
                     aria-label={`Go to project sheet ${i + 1}`}
                   />
@@ -349,7 +340,7 @@ export default function HomeFeaturedProjects() {
 
               <button
                 type="button"
-                className="cad-arrow-btn"
+                className="hfp-arrow-btn"
                 onClick={() => handleSelectProject((activeIndex + 1) % HOME_PROJECTS.length)}
                 aria-label="Next featured project"
               >
@@ -360,7 +351,7 @@ export default function HomeFeaturedProjects() {
               </button>
             </div>
 
-            <Link to="/projects" className="btn btn-primary cad-master-cta">
+            <Link to="/projects" className="btn btn-primary hfp-master-cta">
               <span>VIEW ALL PROJECTS</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                 <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

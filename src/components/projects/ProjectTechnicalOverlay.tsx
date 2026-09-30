@@ -38,7 +38,7 @@ export default function ProjectTechnicalOverlay({ projectNumber, category, class
       {/* Datum Coordinate Stamp */}
       {projectNumber && (
         <div className="tech-stamp">
-          <span className="tech-stamp-code">DWG-REF: DT-{projectNumber}</span>
+          <span className="tech-stamp-code">PROJECT {projectNumber}</span>
           {category && <span className="tech-stamp-cat">[{category.toUpperCase()}]</span>}
         </div>
       )}

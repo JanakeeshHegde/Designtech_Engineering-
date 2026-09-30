@@ -38,7 +38,7 @@ function BlueprintCard({ project, onSelect }: { project: Project; onSelect: () =
       {/* Blueprint Header Strip */}
       <div className="proj-bp-top">
         <span className="proj-bp-cat">{project.category}</span>
-        <span className="proj-bp-num">DT-{project.number}</span>
+        <span className="proj-bp-num">{project.number}</span>
       </div>
 
       {/* Visual Frame */}
@@ -51,7 +51,7 @@ function BlueprintCard({ project, onSelect }: { project: Project; onSelect: () =
               <line x1="4" y1="8" x2="44" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
               <line x1="44" y1="8" x2="4" y2="40" stroke="#A87524" strokeWidth="0.5" strokeOpacity="0.3" />
             </svg>
-            <span className="proj-bp-fallback-label">CAD DWG #{project.number}</span>
+            <span className="proj-bp-fallback-label">PROJECT #{project.number}</span>
           </div>
         ) : (
           <img

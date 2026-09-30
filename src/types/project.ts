@@ -11,6 +11,7 @@ export interface Project {
   description?: string;
   facilities?: string[];
   technicalHighlights?: string[];
+  mainImage?: string;
   heroImage?: string;
   gallery?: string[];
   constructionImages?: string[];

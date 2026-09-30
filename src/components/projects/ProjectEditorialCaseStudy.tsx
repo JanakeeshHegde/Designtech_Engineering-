@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Project } from "../../data/projects";
+import { getProjectAllImages } from "../../utils/projectImages";
 import ProjectTechnicalOverlay from "./ProjectTechnicalOverlay";
 import BeforeAfter from "../common/BeforeAfter";
 import "./ProjectEditorialCaseStudy.css";
@@ -12,21 +13,19 @@ interface Props {
 export default function ProjectEditorialCaseStudy({ project, index }: Props) {
   const isEven = index % 2 === 0;
 
-  // Gather unique available images for this project
-  const allImages: string[] = [
-    project.heroImage,
-    ...(project.gallery || []),
-    ...(project.constructionImages || []),
-    ...(project.completedImages || []),
-  ].filter((img): img is string => Boolean(img && img.trim().length > 0))
-   .filter((img, idx, self) => self.indexOf(img) === idx);
-
+  // Gather unique available images for this project (both explicit and auto-discovered)
+  const allImages = getProjectAllImages(project);
   const hasImage = allImages.length > 0;
   const [activeImage, setActiveImage] = useState<string>(allImages[0] || "");
   const [imgError, setImgError] = useState(false);
   const [viewMode, setViewMode] = useState<"media" | "beforeAfter">(
     project.hasBeforeAfter && project.beforeImage && project.afterImage ? "beforeAfter" : "media"
   );
+
+  useEffect(() => {
+    setActiveImage(allImages[0] || "");
+    setImgError(false);
+  }, [project.id, allImages.length]);
 
   return (
     <article
@@ -148,16 +147,13 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                   <circle cx="240" cy="165" r="38" stroke="rgba(168,117,36,0.15)" strokeWidth="0.5" strokeDasharray="3 3" />
                   
                   <text x="240" y="160" fill="var(--color-gold, #A87524)" fontSize="11" fontFamily="DM Mono, monospace" fontWeight="700" textAnchor="middle" letterSpacing="0.1em">
-                    DT-{project.number}
+                    {project.number}
                   </text>
                   <text x="240" y="176" fill="var(--color-text-secondary, #5A6270)" fontSize="7.5" fontFamily="DM Mono, monospace" textAnchor="middle" letterSpacing="0.08em">
                     {project.category.toUpperCase()} // ARCHIVE
                   </text>
 
                   {/* Bottom Sheet Spec Marker */}
-                  <text x="55" y="265" fill="var(--color-text-secondary, #5A6270)" fontSize="7" fontFamily="DM Mono, monospace">
-                    SCALE: 1:100 // IS-456 COMPLIANT
-                  </text>
                   <text x="425" y="265" fill="var(--color-gold, #A87524)" fontSize="7" fontFamily="DM Mono, monospace" textAnchor="end">
                     STRUCTURAL RECORD
                   </text>
