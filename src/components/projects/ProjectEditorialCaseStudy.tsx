@@ -14,20 +14,31 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
 
   // Gather unique available images for this project (both explicit and auto-discovered)
   const allImages = getProjectAllImages(project);
-  const hasImage = allImages.length > 0;
   const [activeImage, setActiveImage] = useState<string>(allImages[0] || "");
-  const [imgError, setImgError] = useState(false);
   const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set());
   const availableImages = allImages.filter((image) => !failedImages.has(image));
+  const hasValidImage = availableImages.length > 0 && Boolean(activeImage);
+
   const [viewMode, setViewMode] = useState<"media" | "beforeAfter">(
     project.hasBeforeAfter && project.beforeImage && project.afterImage ? "beforeAfter" : "media"
   );
 
   useEffect(() => {
     setActiveImage(allImages[0] || "");
-    setImgError(false);
     setFailedImages(new Set());
   }, [project.id, allImages.length]);
+
+  const handleImageError = (failedSrc: string) => {
+    setFailedImages((prev) => {
+      const next = new Set(prev);
+      next.add(failedSrc);
+      return next;
+    });
+    const remaining = allImages.filter((img) => img !== failedSrc && !failedImages.has(img));
+    if (remaining.length > 0) {
+      setActiveImage(remaining[0]);
+    }
+  };
 
   return (
     <article
@@ -35,13 +46,6 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
       className={`proj-case-study ${isEven ? "proj-case-study--even" : "proj-case-study--odd"}`}
       aria-labelledby={`case-title-${project.id}`}
     >
-      {/* Background Architectural Accent */}
-      <div
-        className="proj-cs-bg-accent"
-        style={{ background: project.accentColor ? `${project.accentColor}05` : "transparent" }}
-        aria-hidden="true"
-      />
-
       {/* Top Engineering Classification Strip */}
       <div className="proj-cs-top-strip">
         <div className="proj-cs-top-left">
@@ -64,7 +68,7 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           {project.location && (
             <span className="proj-cs-loc-tag">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M6 1.5a3.5 3.5 0 0 0-3.5 3.5c0 2.5 3.5 5.5 3.5 5.5s3.5-3 3.5-5.5a3.5 3.5 0 0 0-3.5-3.5z" stroke="currentColor" strokeWidth="1" />
+                <path d="M6 1.5a3.5 3.5 0 0 0-3.5 3.5c0 2.5 3.5 5.5 3.5 5.5s3.5-3 3.5-5.5a3.5 3.5 0 0 0-3.5-3.5z" stroke="currentColor" strokeWidth="1.2" />
                 <circle cx="6" cy="5" r="1.2" fill="currentColor" />
               </svg>
               {project.location}
@@ -79,7 +83,7 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
         {/* ── VISUAL / MEDIA PRESENTATION ── */}
         <div className="proj-cs-media-col">
           {/* Media Switcher Tab (if Before & After exists) */}
-          {hasImage && project.hasBeforeAfter && project.beforeImage && project.afterImage && (
+          {hasValidImage && project.hasBeforeAfter && project.beforeImage && project.afterImage && (
             <div className="proj-cs-media-tabs" role="tablist">
               <button
                 type="button"
@@ -103,9 +107,9 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           )}
 
           {/* Large Architectural Frame */}
-          {hasImage && !imgError && (
-            <div className={`proj-cs-frame ${viewMode === "beforeAfter" ? "proj-cs-ba-frame" : ""}`}>
-              {viewMode === "beforeAfter" && project.beforeImage && project.afterImage ? (
+          <div className={`proj-cs-frame ${viewMode === "beforeAfter" ? "proj-cs-ba-frame" : ""}`}>
+            {hasValidImage ? (
+              viewMode === "beforeAfter" && project.beforeImage && project.afterImage ? (
                 <div className="proj-cs-ba-wrap">
                   <BeforeAfter
                     beforeSrc={project.beforeImage}
@@ -120,14 +124,21 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                   alt={`${project.title} architectural view`}
                   loading="lazy"
                   className="proj-cs-img"
-                  onError={() => {
-                    setImgError(true);
-                    setFailedImages((previous) => new Set(previous).add(activeImage));
-                  }}
+                  onError={() => handleImageError(activeImage)}
                 />
-              )}
-            </div>
-          )}
+              )
+            ) : (
+              /* Clean neutral architectural empty state when image is not yet uploaded */
+              <div className="proj-cs-empty-state" aria-hidden="true">
+                <div className="proj-cs-empty-blueprint-grid" />
+                <div className="proj-cs-empty-content">
+                  <span className="proj-cs-empty-number">{project.number}</span>
+                  <span className="proj-cs-empty-title">{project.title}</span>
+                  <span className="proj-cs-empty-tag">ARCHITECTURAL SCHEMATIC // RECORD</span>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Editorial Thumbnail Gallery (if multiple images exist) */}
           {availableImages.length > 1 && (
@@ -142,19 +153,17 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                       onClick={() => {
                         setActiveImage(img);
                         setViewMode("media");
-                        setImgError(false);
                       }}
                       aria-label={`View image ${i + 1} for ${project.title}`}
                     >
                       <img
                         src={img}
                         alt=""
-                        onError={() => {
-                          setFailedImages((previous) => new Set(previous).add(img));
-                        }}
+                        className="proj-cs-thumb-img"
+                        onError={() => handleImageError(img)}
                       />
                     </button>
-                    <span className="proj-cs-thumb-idx">{i + 1}</span>
+                    <span className="proj-cs-thumb-idx">0{i + 1}</span>
                   </div>
                 ))}
               </div>
@@ -251,7 +260,6 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           </div>
         </div>
       </div>
-
     </article>
   );
 }

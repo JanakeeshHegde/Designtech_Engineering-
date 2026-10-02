@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { allProjects, PROJECT_CATEGORIES } from "../data/projects";
@@ -66,7 +65,7 @@ export default function ProjectsPage() {
         });
       },
       {
-        rootMargin: "-20% 0px -60% 0px",
+        rootMargin: "-15% 0px -60% 0px",
         threshold: 0.1,
       }
     );
@@ -90,36 +89,44 @@ export default function ProjectsPage() {
     }
   };
 
-  // GSAP animation for initial load and category filtering
+  // GSAP animation per card for smooth progressive loading
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".proj-case-study",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.12,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".proj-editorial-container",
-            start: "top 85%",
-          },
-        }
-      );
+      const cards = gsap.utils.toArray<HTMLElement>(".proj-case-study");
+      cards.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0.3, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              once: true,
+            },
+          }
+        );
+      });
     }, containerRef);
 
-    return () => ctx.revert();
+    // Refresh scroll triggers after layout stabilizes
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, [selectedCategory]);
 
   return (
     <main id="main-content" className="projects-page" ref={containerRef}>
       {/* 01 — Hero Header */}
-      <ProjectsHero
-        totalProjects={allProjects.length}
-        totalCategories={PROJECT_CATEGORIES.length - 1}
-      />
+      <ProjectsHero />
 
       {/* 02 — Sticky Category & Project Index Bar */}
       <ProjectStickyIndex
@@ -169,36 +176,6 @@ export default function ProjectsPage() {
             </button>
           </div>
         )}
-      </section>
-
-      {/* 04 — Engineering Consultation Bottom Action Card */}
-      <section className="proj-bottom-cta-section">
-        <div className="container">
-          <div className="proj-bottom-cta-card">
-            <div className="proj-bottom-cta-text">
-              <div className="section-number">STRUCTURAL CONSULTATION</div>
-              <h2 className="t-display-md proj-bottom-cta-title">
-                HAVE A CIVIL OR STRUCTURAL PROJECT IN MIND?
-              </h2>
-              <div className="section-divider" />
-              <p className="t-body proj-bottom-cta-desc">
-                Engage Designtech Engineering for concept-to-execution structural analysis, peer reviews, foundation design, and PEB engineering.
-              </p>
-            </div>
-
-            <div className="proj-bottom-cta-buttons">
-              <Link to="/contact" className="btn btn-primary proj-bcta-btn">
-                <span>START A PROJECT</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-              <Link to="/about" className="btn btn-outline proj-bcta-btn">
-                <span>OUR EXPERTISE</span>
-              </Link>
-            </div>
-          </div>
-        </div>
       </section>
     </main>
   );

@@ -1,113 +1,66 @@
 /* ============================================================
-   SECTORS COMPONENT — ALTERNATING EDITORIAL CHAPTERS v2
+   SECTORS — Specialized Sectors & Fields of Operation
    ============================================================ */
 
 .sectors {
-  background: var(--color-bg-primary, #F2EFE9);
-  padding: var(--section-pad-y) 0;
-  border-bottom: 1px solid var(--color-border, #D4CFC6);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Background Architectural Plan & Elevation Geometry */
-.sectors-arch-backdrop {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.6;
-}
-
-.sectors-arch-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.sectors .container {
-  position: relative;
-  z-index: 1;
+  background: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .sectors-header {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 2rem;
-  margin-bottom: 2.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--color-border, #D4CFC6);
-}
-
-.sectors-header-left {
-  flex-shrink: 0;
+  margin-bottom: 4rem;
 }
 
 .sectors-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
+  font-family: var(--font-mono);
+  font-size: 0.725rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-gold, #A87524);
+  color: var(--color-gold);
+  display: block;
   margin-bottom: 0.5rem;
 }
 
-.sectors-eyebrow::before {
-  content: "";
-  display: inline-block;
-  width: 14px;
-  height: 2px;
-  background: var(--color-gold, #A87524);
-}
-
 .sectors-headline {
-  font-family: var(--font-display, sans-serif);
-  font-size: clamp(2rem, 3.2vw, 3rem);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  color: var(--color-text-primary, #18191C);
+  color: var(--color-text-primary);
+  letter-spacing: -0.025em;
 }
 
 .sectors-header-rule {
+  flex: 1;
   height: 1px;
-  background: var(--color-border, #D4CFC6);
-  flex-grow: 1;
+  background: linear-gradient(90deg, var(--color-gold-border), var(--color-border), transparent);
 }
-
-/* ------------------------------------------------------------
-   CHAPTERS LIST
-   ------------------------------------------------------------ */
 
 .sectors-chapters {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 3.5rem;
 }
 
 .sector-chapter {
   display: grid;
   grid-template-columns: 1.25fr 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
+  gap: clamp(2.5rem, 5vw, 5rem);
   align-items: center;
-  padding: 3.5rem 0;
-  border-bottom: 1px solid var(--color-border, #D4CFC6);
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(2rem, 4vw, 3.5rem);
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.35s var(--ease-out);
 }
 
-.sector-chapter:first-child {
-  padding-top: 0;
+.sector-chapter:hover {
+  border-color: var(--color-gold);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
 }
 
-.sector-chapter:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-/* Reverse alternating layout */
 .sector-chapter--reverse {
   grid-template-columns: 1fr 1.25fr;
 }
@@ -120,56 +73,47 @@
   order: 1;
 }
 
-/* --- Content Block --- */
-.sector-ch-content {
-  display: flex;
-  flex-direction: column;
-}
-
 .sector-ch-meta {
   display: flex;
-  align-items: baseline;
-  gap: 1.25rem;
-  margin-bottom: 1rem;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .sector-ch-num {
-  font-family: var(--font-mono, monospace);
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--color-gold, #A87524);
-  line-height: 1;
-  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  background: var(--color-gold-dim);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-xs);
 }
 
 .sector-ch-sub {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-gold, #A87524);
-  background: rgba(168,117,36,0.08);
-  padding: 0.25rem 0.6rem;
-  border-radius: 2px;
+  color: var(--color-text-tertiary);
 }
 
 .sector-ch-title {
-  font-family: var(--font-display, sans-serif);
-  font-size: clamp(1.85rem, 2.8vw, 2.75rem);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.025em;
-  color: var(--color-text-primary, #18191C);
-  margin-bottom: 1.15rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  margin-bottom: 1.25rem;
+  line-height: 1.25;
 }
 
 .sector-ch-desc {
-  font-family: var(--font-body, sans-serif);
-  font-size: clamp(1.025rem, 1.2vw, 1.15rem);
+  font-size: 1.025rem;
   line-height: 1.75;
-  color: var(--color-text-secondary, #5A6270);
-  margin-bottom: 1.5rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.75rem;
 }
 
 .sector-ch-tags {
@@ -178,121 +122,56 @@
   gap: 0.6rem;
 }
 
-.sector-ch-tag {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.45rem 0.95rem;
-  background: var(--color-bg-secondary, #E8E4DC);
-  border: 1px solid var(--color-border, #D4CFC6);
-  border-radius: var(--radius-sm, 3px);
-  color: var(--color-text-primary, #18191C);
-  letter-spacing: 0.04em;
-  transition: all 0.25s ease;
-}
-
-.sector-ch-tag:hover {
-  border-color: var(--color-gold, #A87524);
-  color: var(--color-gold, #A87524);
-  background: #FFFFFF;
-}
-
-/* --- Visual Card --- */
-.sector-ch-visual {
-  width: 100%;
-}
-
+/* ── Sector Visual Card ── */
 .sector-visual-card {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border, #D4CFC6);
-  border-radius: var(--radius-sm, 3px);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-lift, 0 8px 48px rgba(24,25,28,0.12));
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-  position: relative;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   overflow: hidden;
-}
-
-.sector-visual-card::before,
-.sector-visual-card::after {
-  content: "";
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-color: var(--color-gold, #A87524);
-  border-style: solid;
-  opacity: 0.5;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.sector-visual-card::before {
-  top: 8px; left: 8px;
-  border-width: 1.5px 0 0 1.5px;
-}
-
-.sector-visual-card::after {
-  bottom: 8px; right: 8px;
-  border-width: 0 1.5px 1.5px 0;
-}
-
-.sector-chapter:hover .sector-visual-card {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 36px rgba(24,25,28,0.14);
-  border-color: rgba(168,117,36,0.45);
-}
-
-.sector-chapter:hover .sector-visual-card::before,
-.sector-chapter:hover .sector-visual-card::after {
-  opacity: 1;
 }
 
 .sector-card-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid var(--color-border, #D4CFC6);
-  margin-bottom: 1.25rem;
+  padding: 0.9rem 1.25rem;
+  background: rgba(18, 20, 26, 0.03);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.sector-card-id,
+.sector-card-id {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
 .sector-card-status {
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--color-text-secondary, #5A6270);
-  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-tertiary);
 }
 
 .sector-card-viewport {
-  width: 100%;
-  min-height: 220px;
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-bg-primary, #F2EFE9);
-  border: 1px solid var(--color-border, #D4CFC6);
-  border-radius: 2px;
-  padding: 1.25rem;
+  background: #FFFFFF;
 }
 
 .sector-svg {
   width: 100%;
-  max-width: 280px;
+  max-width: 260px;
   height: auto;
 }
 
-/* ------------------------------------------------------------
-   RESPONSIVE
-   ------------------------------------------------------------ */
-
-@media (max-width: 992px) {
+@media (max-width: 960px) {
   .sector-chapter,
   .sector-chapter--reverse {
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding: 2.5rem 0;
   }
 
   .sector-chapter--reverse .sector-ch-content {

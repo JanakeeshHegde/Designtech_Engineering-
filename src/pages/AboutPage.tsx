@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import About from "../components/sections/about/About";
-import Capabilities from "../components/sections/about/Capabilities";
+import EngineeringJourney from "../components/sections/about/EngineeringJourney";
 import EngineeringProcess from "../components/sections/about/EngineeringProcess";
 import ClientEcosystem from "../components/sections/about/ClientEcosystem";
 import "./AboutPage.css";
@@ -30,17 +30,17 @@ export default function AboutPage() {
         <About />
       </div>
 
-      {/* 02 — Our Approach / Engineering Process */}
+      {/* 02 — Featured Engineering Journey */}
+      <div id="engineering-journey">
+        <EngineeringJourney />
+      </div>
+
+      {/* 03 — Process / From Soil to Skyline */}
       <div id="engineering-process">
         <EngineeringProcess />
       </div>
 
-      {/* 03 — Expertise & Capabilities */}
-      <div id="expertise">
-        <Capabilities />
-      </div>
-
-      {/* 04 — Clients */}
+      {/* 04 — Client Ecosystem */}
       <div id="clients">
         <ClientEcosystem />
       </div>
@@ -51,13 +51,13 @@ export default function AboutPage() {
           <div className="section-divider" />
           <div className="about-page-cta-row">
             <Link to="/sectors" className="btn btn-outline">
-              VIEW SECTORS
+              <span>VIEW SECTORS</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                 <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
             <Link to="/contact" className="btn btn-primary">
-              START A PROJECT
+              <span>START A PROJECT</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                 <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

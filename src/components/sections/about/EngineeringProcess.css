@@ -1,112 +1,105 @@
 /* ============================================================
-   ENGINEERING PROCESS COMPONENT v2
+   ENGINEERING PROCESS — Architectural Process & Stages
    ============================================================ */
 
 .eng-process {
-  background: var(--color-bg-primary, #F2EFE9);
-  position: relative;
-  padding: var(--section-pad-y) 0;
-}
-
-.process-header {
-  opacity: 0;
-  margin-bottom: 2rem;
+  background: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .process-track {
   position: relative;
   height: 2px;
-  background: var(--color-border, #D4CFC6);
-  margin: 1.75rem 0 0.5rem;
+  background: var(--color-border);
+  margin: 2rem 0 3rem;
   overflow: hidden;
+  border-radius: 1px;
 }
 
 .process-connector {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, var(--color-gold, #A87524), var(--color-gold-highlight, #C99A45));
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-highlight));
   transform-origin: left;
-  box-shadow: 0 0 8px rgba(168,117,36,0.3);
+  box-shadow: 0 0 10px var(--color-gold-glow);
 }
 
 .process-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border, #D4CFC6);
-  border-radius: var(--radius-sm, 3px);
-  box-shadow: var(--shadow-subtle, 0 1px 12px rgba(24,25,28,0.05));
-  overflow: hidden;
+  gap: 1.5rem;
 }
 
 .process-stage {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: 2.25rem 2rem;
-  border-right: 1px solid var(--color-border, #D4CFC6);
-  border-bottom: 1px solid var(--color-border, #D4CFC6);
   position: relative;
-  opacity: 0;
-  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.35s var(--ease-out);
+  display: flex;
+  flex-direction: column;
 }
 
 .process-stage:hover {
-  background: rgba(168,117,36,0.03);
+  border-color: var(--color-gold);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-4px);
 }
 
-.process-stage:nth-child(3n) { border-right: none; }
-.process-stage:nth-child(4), .process-stage:nth-child(5), .process-stage:nth-child(6) { border-bottom: none; }
-
 .process-stage-num {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: var(--color-gold, #A87524);
-  letter-spacing: 0.16em;
-  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.825rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  background: var(--color-gold-dim);
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-xs);
+  margin-bottom: 1.25rem;
 }
 
 .process-stage-icon {
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   margin-bottom: 1.25rem;
 }
 
 .process-stage-label {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  color: var(--color-gold, #A87524);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  color: var(--color-gold);
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
 
 .process-stage-title {
-  font-family: var(--font-display, sans-serif);
+  font-family: var(--font-heading);
   font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  color: var(--color-text-primary, #18191C);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
   margin-bottom: 0.75rem;
-  text-transform: uppercase;
 }
 
 .process-stage-desc {
-  font-family: var(--font-body, sans-serif);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   line-height: 1.65;
-  color: var(--color-text-secondary, #5A6270);
+  color: var(--color-text-secondary);
 }
 
 @media (max-width: 1024px) {
-  .process-grid { grid-template-columns: repeat(2, 1fr); }
-  .process-stage:nth-child(3n) { border-right: 1px solid var(--color-border, #D4CFC6); }
-  .process-stage:nth-child(2n) { border-right: none; }
-  .process-stage:nth-child(5), .process-stage:nth-child(6) { border-bottom: none; }
-  .process-stage:nth-child(4) { border-bottom: 1px solid var(--color-border, #D4CFC6); }
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 640px) {
-  .process-grid { grid-template-columns: 1fr; }
-  .process-stage { border-right: none; }
-  .process-stage:last-child { border-bottom: none; }
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
 }

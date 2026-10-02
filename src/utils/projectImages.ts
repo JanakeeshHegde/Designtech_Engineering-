@@ -7,10 +7,9 @@ import type { Project } from "../types/project";
  * 
  * public/projects/<project-slug>/
  *   ├── main/
- *   │   └── main.webp (or main.jpg, main.png, or first uploaded main image)
+ *   │   └── main.jpg (or main.png, main.webp, etc.)
  *   └── gallery/
- *       ├── 01.webp (or .jpg, .png)
- *       ├── 02.webp
+ *       ├── 01.jpg
  *       └── ...
  */
 
@@ -47,29 +46,48 @@ for (const path in rawProjectImages) {
 }
 
 function resolveProjectImage(image: string): string {
+  if (!image) return "";
   const trimmed = image.trim();
+  if (!trimmed) return "";
   if (!trimmed.startsWith("/projects/")) return trimmed;
-  return projectImageUrlMap.get(trimmed.toLowerCase()) || "";
+  // Return resolved URL or the direct valid public path
+  return projectImageUrlMap.get(trimmed.toLowerCase()) || trimmed;
 }
 
 /**
  * Get primary / main image for a project.
  * 
  * Priority:
- * 1. Explicit project.mainImage or project.heroImage if specified
- * 2. First valid image inside public/projects/<projectId>/main/
- * 3. Empty string if no main image exists (preserves clean neutral empty CAD state)
+ * 1. First image inside public/projects/<projectId>/main/
+ * 2. Explicit project.mainImage or project.heroImage if specified
+ * 3. First valid gallery image if main is absent
+ * 4. Empty string if no image exists (clean neutral empty state)
  */
 export function getProjectMainImage(project: Project): string {
+  // Check discovered main image
+  const discoveredMain = projectImageMap[project.id]?.main;
+  if (discoveredMain && discoveredMain.length > 0) {
+    return discoveredMain[0];
+  }
+
+  // Check explicit mainImage
   const explicit = project.mainImage || project.heroImage;
   if (explicit && explicit.trim().length > 0) {
     const resolved = resolveProjectImage(explicit);
     if (resolved) return resolved;
   }
-  const discoveredMain = projectImageMap[project.id]?.main;
-  if (discoveredMain && discoveredMain.length > 0) {
-    return discoveredMain[0];
+
+  // Fallback to first gallery image if main folder is not present
+  const discoveredGallery = projectImageMap[project.id]?.gallery;
+  if (discoveredGallery && discoveredGallery.length > 0) {
+    return discoveredGallery[0];
   }
+
+  if (project.gallery && project.gallery.length > 0 && project.gallery[0]) {
+    const resolvedGallery = resolveProjectImage(project.gallery[0]);
+    if (resolvedGallery) return resolvedGallery;
+  }
+
   return "";
 }
 
@@ -86,7 +104,11 @@ export function getProjectGalleryImages(project: Project): string[] {
     .map(resolveProjectImage)
     .filter(Boolean);
   const discovered = projectImageMap[project.id]?.gallery || [];
-  return [...new Set([...explicit, ...discovered])];
+  
+  // Exclude primary main image from gallery list to prevent duplication
+  const primaryImg = getProjectMainImage(project);
+  const allGallery = [...new Set([...explicit, ...discovered])];
+  return allGallery.filter((img) => img !== primaryImg);
 }
 
 /**

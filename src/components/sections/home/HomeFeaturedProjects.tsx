@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { featuredProjects, allProjects } from "../../../data/projects";
-import { getProjectMainImage } from "../../../utils/projectImages";
+import { getProjectAllImages } from "../../../utils/projectImages";
 import BeforeAfter from "../../common/BeforeAfter";
 import "./HomeFeaturedProjects.css";
 
@@ -17,13 +17,32 @@ const HOME_PROJECTS = featuredProjects.length >= 4
 export default function HomeFeaturedProjects() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
-
   const currentProject = HOME_PROJECTS[activeIndex] || HOME_PROJECTS[0];
-  const mainImg = getProjectMainImage(currentProject);
+  const allImages = getProjectAllImages(currentProject);
+  const [activeImage, setActiveImage] = useState<string>(allImages[0] || "");
+  const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set());
   const isEven = activeIndex % 2 === 0;
+
+  useEffect(() => {
+    const imgs = getProjectAllImages(currentProject);
+    setActiveImage(imgs[0] || "");
+  }, [currentProject.id, activeIndex]);
+
+  const handleImageError = (failedSrc: string) => {
+    setFailedImages((prev) => {
+      const next = new Set(prev);
+      next.add(failedSrc);
+      return next;
+    });
+    const remaining = allImages.filter((img) => img !== failedSrc && !failedImages.has(img));
+    if (remaining.length > 0) {
+      setActiveImage(remaining[0]);
+    }
+  };
+
+  const availableImages = allImages.filter((img) => !failedImages.has(img));
+  const hasValidImage = availableImages.length > 0 && Boolean(activeImage);
 
   // Initial scroll reveal for section
   useEffect(() => {
@@ -41,7 +60,7 @@ export default function HomeFeaturedProjects() {
 
       gsap.fromTo(
         ".hfp-showcase-board",
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 35 },
         {
           opacity: 1,
           y: 0,
@@ -62,36 +81,21 @@ export default function HomeFeaturedProjects() {
     if (stageRef.current) {
       gsap.fromTo(
         stageRef.current,
-        { opacity: 0.15, y: isEven ? 20 : -20 },
-        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }
-      );
-    }
-
-    if (lineRef.current) {
-      gsap.fromTo(
-        lineRef.current,
-        { scaleX: 0, transformOrigin: isEven ? "left" : "right" },
-        { scaleX: 1, duration: 0.5, ease: "power2.out" }
+        { opacity: 0.2, y: 15 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
       );
     }
 
     setActiveIndex(index);
   };
 
-  const handleImgError = (id: string) => {
-    setImgErrors((prev) => ({ ...prev, [id]: true }));
-  };
-
   return (
     <section
       ref={sectionRef}
       id="home-featured-projects"
-      className="hfp-section"
+      className="hfp-section section"
       aria-labelledby="hfp-heading"
     >
-      {/* Background CAD linework grid */}
-      <div className="hfp-bg-grid" aria-hidden="true" />
-
       <div className="container">
         {/* Section Header */}
         <div className="hfp-header section-header">
@@ -104,7 +108,7 @@ export default function HomeFeaturedProjects() {
 
         {/* ── THE EDITORIAL ENGINEERING SHOWCASE BOARD ── */}
         <div className="hfp-showcase-board">
-          {/* Top Sheet Status Datum Strip */}
+          {/* Top Status Strip */}
           <div className="hfp-board-top-bar">
             <div className="hfp-datum-left">
               <span className="hfp-status-dot">●</span>
@@ -116,7 +120,7 @@ export default function HomeFeaturedProjects() {
             </div>
           </div>
 
-          {/* Project Sheet Selector Ribbon (01 to 04) */}
+          {/* Project Selector Ribbon */}
           <div className="hfp-selector-ribbon" role="tablist" aria-label="Select featured project sheet">
             {HOME_PROJECTS.map((p, i) => {
               const isSelected = activeIndex === i;
@@ -135,35 +139,31 @@ export default function HomeFeaturedProjects() {
                       <span className="hfp-ribbon-title">{p.title}</span>
                     </div>
                   </div>
-                  {isSelected && <span className="hfp-ribbon-active-bar" aria-hidden="true" />}
                 </button>
               );
             })}
           </div>
 
-          {/* Main Alternating Editorial Presentation Stage */}
+          {/* Presentation Stage */}
           <div
             ref={stageRef}
             className={`hfp-stage-content ${isEven ? "hfp-stage--even" : "hfp-stage--odd"}`}
           >
-            {/* ── COLUMN: SPECIFICATIONS & HUD DATA ── */}
+            {/* ── COLUMN 1: SPECIFICATIONS & HUD DATA ── */}
             <div className="hfp-info-col">
               <div className="hfp-info-sheet">
-                {/* Big Watermark Number & Datum Line */}
+                {/* Big Number & Category Badge */}
                 <div className="hfp-num-row">
                   <div className="hfp-big-number">
                     <span>{currentProject.number}</span>
                   </div>
                   <div className="hfp-num-meta">
-                    <span className="hfp-category-badge">{currentProject.category}</span>
+                    <span className="badge">{currentProject.category}</span>
                   </div>
                 </div>
 
-                {/* Connecting Engineering Datum Line */}
-                <div ref={lineRef} className="hfp-datum-line" aria-hidden="true" />
-
                 {/* Project Title */}
-                <h3 className="t-heading hfp-project-title">
+                <h3 className="t-display-sm hfp-project-title">
                   {currentProject.title}
                 </h3>
 
@@ -218,10 +218,10 @@ export default function HomeFeaturedProjects() {
                     <span className="hfp-feat-label">STRUCTURAL HIGHLIGHTS:</span>
                     <div className="hfp-chips">
                       {currentProject.technicalHighlights?.map((t) => (
-                        <span key={t} className="hfp-chip hfp-chip--tech">{t}</span>
+                        <span key={t} className="tag-chip">{t}</span>
                       ))}
                       {currentProject.facilities?.slice(0, 3).map((f) => (
-                        <span key={f} className="hfp-chip">{f}</span>
+                        <span key={f} className="tag-chip">{f}</span>
                       ))}
                     </div>
                   </div>
@@ -242,18 +242,9 @@ export default function HomeFeaturedProjects() {
               </div>
             </div>
 
-            {/* ── COLUMN: LARGE ARCHITECTURAL VISUAL STAGE ── */}
+            {/* ── COLUMN 2: ARCHITECTURAL VISUAL STAGE ── */}
             <div className="hfp-visual-col">
               <div className="hfp-viewport-frame">
-                {/* Viewport Action Bar */}
-                <div className="hfp-viewport-controls">
-                  <span className="hfp-vp-indicator">
-                    ⌖ VISUAL ELEVATION {currentProject.number}
-                  </span>
-                  
-                </div>
-
-                {/* Main Media Image / Before-After / Blueprint */}
                 <div className="hfp-media-container">
                   {currentProject.hasBeforeAfter && currentProject.beforeImage && currentProject.afterImage ? (
                     <div className="hfp-ba-wrap">
@@ -264,18 +255,43 @@ export default function HomeFeaturedProjects() {
                         afterLabel="COMPLETED"
                       />
                     </div>
-                  ) : mainImg && !imgErrors[currentProject.id] ? (
+                  ) : hasValidImage ? (
                     <img
-                      src={mainImg}
+                      src={activeImage}
                       alt={`${currentProject.title} architectural view`}
                       className="hfp-stage-img"
-                      onError={() => handleImgError(currentProject.id)}
+                      loading="lazy"
+                      onError={() => handleImageError(activeImage)}
                     />
-                  ) : null}
-
+                  ) : (
+                    <div className="hfp-no-img-placeholder">
+                      <span className="t-mono">{currentProject.title}</span>
+                      <span className="t-label">ARCHITECTURAL SCHEMATIC</span>
+                    </div>
+                  )}
                 </div>
 
-                {/* Bottom Dimension Indicator */}
+                {/* Thumbnail views strip if multiple images exist */}
+                {availableImages.length > 1 && (
+                  <div className="hfp-thumb-row" role="tablist" aria-label="Project views">
+                    {availableImages.map((img, idx) => (
+                      <button
+                        key={img}
+                        type="button"
+                        className={`hfp-thumb-btn ${activeImage === img ? "hfp-thumb-btn--active" : ""}`}
+                        onClick={() => setActiveImage(img)}
+                        aria-label={`View ${idx + 1}`}
+                      >
+                        <img
+                          src={img}
+                          alt=""
+                          className="hfp-thumb-img"
+                          onError={() => handleImageError(img)}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>

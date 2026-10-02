@@ -11,18 +11,32 @@ export default function HomeContactCTA() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(".hcc-text", { opacity: 0, y: 40 }, {
-        opacity: 1, y: 0, duration: 1, ease: "power3.out",
-        scrollTrigger: { trigger: ref.current, start: "top 78%" },
-      });
+      gsap.fromTo(
+        ".hcc-text",
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ref.current, start: "top 78%" },
+        }
+      );
 
-      // Collapsing lines animation
-      gsap.fromTo(".hcc-line", { scaleX: 1 }, {
-        scaleX: 0.2, stagger: { each: 0.08, from: "center" }, duration: 1.2,
-        ease: "power2.inOut", transformOrigin: "center",
-        scrollTrigger: { trigger: ref.current, start: "top 70%", scrub: 1 },
-      });
+      gsap.fromTo(
+        ".hcc-line",
+        { scaleX: 1 },
+        {
+          scaleX: 0.2,
+          stagger: { each: 0.08, from: "center" },
+          duration: 1.2,
+          ease: "power2.inOut",
+          transformOrigin: "center",
+          scrollTrigger: { trigger: ref.current, start: "top 70%", scrub: 1 },
+        }
+      );
     }, ref);
+
     return () => ctx.revert();
   }, []);
 

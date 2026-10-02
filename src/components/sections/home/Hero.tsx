@@ -1,51 +1,83 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import gsap from "gsap";
 import "./Hero.css";
-
 
 interface Props {
   onEnter: () => void;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   COMPONENT
-───────────────────────────────────────────────────────── */
 export default function Hero({ onEnter }: Props) {
+  const heroRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.defaultMuted = true;
+      videoRef.current.play().catch(() => {});
+    }
+
+    const ctx = gsap.context(() => {
+      // Cinematic Entrance Timeline
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl.fromTo(
+        ".hero-line",
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.9, ease: "power3.out" }
+      )
+      .fromTo(
+        ".hero-sub",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7 },
+        "-=0.5"
+      )
+      .fromTo(
+        ".hero-cta-row",
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7 },
+        "-=0.4"
+      );
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
+      ref={heroRef}
       id="hero"
       className="hero"
       aria-labelledby="hero-headline"
     >
-
-      {/* ── LAYER 0: Background Video ── */}
-      <div className="hero-bg-wrap" aria-hidden="true">
+      {/* ── LAYER 0: Architectural Hero Video ── */}
+      <div className="hero-video-wrap" aria-hidden="true">
         <video
-          className="hero-bg-video"
-          src="/hero.mp4"
+          ref={videoRef}
+          className="hero-video"
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
-          aria-hidden="true"
-        />
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
       </div>
 
-      {/* ── LAYER 1: Cinematic Dark Gradient Overlay ── */}
+      {/* ── LAYER 1: Subtle Cinematic Depth Overlay for Text Legibility ── */}
       <div className="hero-gradient-overlay" aria-hidden="true" />
 
-      {/* ── LAYER 1b: Vignette ── */}
-      <div className="hero-vignette" aria-hidden="true" />
+      {/* ── LAYER 2: Foreground Structural Framing Silhouette ── */}
+      <div className="hero-framing-silhouette" aria-hidden="true">
+        <div className="hero-frame-beam-top" />
+        <div className="hero-frame-col-left" />
+      </div>
 
-      {/* ── LAYER 1c: Sunset Enhancement ── */}
-      <div className="hero-sunset-overlay" aria-hidden="true" />
-
-      {/* ── LAYER 3: Atmospheric Particles ── */}
-
-      {/* ── LAYER 10: Hero Content ── */}
-      <div className="hero-content-wrap">
+      {/* ── LAYER 3: Locked Hero Content ── */}
+      <div className="hero-content-wrap container">
         <div className="hero-left-inner">
-
           <h1 id="hero-headline" className="hero-headline" aria-label="Engineering that endures.">
             <span className="hero-line">ENGINEERING</span>
             <span className="hero-line">THAT</span>
@@ -63,37 +95,24 @@ export default function Hero({ onEnter }: Props) {
               onClick={onEnter}
               aria-label="Explore our engineering work"
             >
-              Explore Our Work
+              <span>Explore Our Work</span>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
             <Link
               to="/about"
-              className="hero-cta-secondary"
+              className="btn btn-dark-outline hero-cta-secondary"
               aria-label="Learn about Designtech Engineering"
             >
-              Our Story
+              <span>Our Story</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                 <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
           </div>
-
-          <div className="hero-address" aria-label="Office location">
-            <span className="hero-address-dot" aria-hidden="true" />
-            <span className="hero-address-text">Bengaluru, India</span>
-          </div>
         </div>
       </div>
-
-      {/* ── INITIAL REVEAL MASK ── */}
-
-      {/* Scroll indicator */}
-      <div className="hero-scroll-hint" aria-hidden="true">
-        <span className="scroll-hint-text">SCROLL TO EXPLORE</span>
-      </div>
-
     </section>
   );
 }

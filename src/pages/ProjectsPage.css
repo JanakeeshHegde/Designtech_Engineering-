@@ -1,113 +1,79 @@
+/* ============================================================
+   PROJECTS PAGE — Layout & Consultation Card (Light Architectural Theme)
+   ============================================================ */
+
 .projects-page {
-  background: var(--color-bg-primary);
+  background: var(--color-bg-secondary, #F0ECE4);
   min-height: 100vh;
-  position: relative;
 }
 
 .proj-editorial-section {
-  padding-top: 2.5rem;
+  padding-top: 3rem;
   padding-bottom: 5rem;
 }
 
 .proj-editorial-meta-bar {
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
-  padding-bottom: 1.25rem;
+  align-items: center;
   margin-bottom: 3rem;
-  border-bottom: 1px solid var(--color-border);
   flex-wrap: wrap;
   gap: 1rem;
 }
 
 .proj-meta-tag-group {
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 .proj-meta-active-count {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: 0.04em;
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #4E5666);
 }
 
 .proj-meta-instruction {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--color-gold);
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 0.68rem;
+  color: var(--color-text-tertiary, #7D8799);
   letter-spacing: 0.08em;
-  font-weight: 600;
 }
 
-.proj-editorial-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.proj-empty-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  gap: 1.5rem;
-  text-align: center;
-}
-
-/* Bottom CTA Section */
+/* Bottom CTA Card - Light Architectural Palette */
 .proj-bottom-cta-section {
-  padding: 4.5rem 0 6rem;
-  background: var(--color-bg-secondary);
-  border-top: 1px solid var(--color-border);
+  padding-bottom: 6rem;
 }
 
 .proj-bottom-cta-card {
+  background: var(--color-card-bg, #FFFFFF);
+  color: var(--color-text-primary, #12141A);
+  border: 1px solid var(--color-border, #DFD9CE);
+  border-radius: var(--radius-lg, 14px);
+  padding: clamp(2.5rem, 5vw, 4.5rem);
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 3rem;
-  background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  border-left: 5px solid var(--color-gold);
-  padding: 3rem 3.5rem;
-  box-shadow: var(--shadow-card);
-  position: relative;
-  overflow: hidden;
-}
-
-.proj-bottom-cta-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, var(--color-gold-dim) 0%, transparent 70%);
-  pointer-events: none;
+  box-shadow: var(--shadow-card, 0 10px 36px rgba(10, 13, 20, 0.07));
 }
 
 .proj-bottom-cta-text {
-  flex: 1;
+  max-width: 680px;
 }
 
 .proj-bottom-cta-title {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  line-height: 1.2;
-  color: var(--color-text-primary);
+  color: var(--color-text-primary, #12141A);
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  line-height: 1.1;
 }
 
 .proj-bottom-cta-desc {
-  max-width: 600px;
-  color: var(--color-text-secondary);
-  font-size: 1rem;
-  line-height: 1.6;
+  color: var(--color-text-secondary, #4E5666);
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
 .proj-bottom-cta-buttons {
@@ -115,44 +81,21 @@
   flex-direction: column;
   gap: 1rem;
   flex-shrink: 0;
-  min-width: min(240px, 100%);
 }
 
 .proj-bcta-btn {
   width: 100%;
-  justify-content: center;
-  padding: 0.85rem 1.5rem;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 960px) {
   .proj-bottom-cta-card {
     flex-direction: column;
     align-items: flex-start;
-    padding: 2.25rem 2rem;
-    gap: 2rem;
   }
+
   .proj-bottom-cta-buttons {
     width: 100%;
     flex-direction: row;
-  }
-  .proj-bcta-btn {
-    flex: 1;
-  }
-}
-
-@media (max-width: 640px) {
-  .proj-editorial-section {
-    padding-top: 1.5rem;
-    padding-bottom: 3.5rem;
-  }
-  .proj-editorial-meta-bar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .proj-bottom-cta-buttons {
-    flex-direction: column;
-  }
-  .proj-bcta-btn {
-    width: 100%;
+    flex-wrap: wrap;
   }
 }

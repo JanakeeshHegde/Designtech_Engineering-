@@ -5,7 +5,6 @@ import HomeCapabilitiesPreview from "../components/sections/home/HomeCapabilitie
 import HomeFieldsPreview from "../components/sections/home/HomeFieldsPreview";
 import HomeTrustSection from "../components/sections/home/HomeTrustSection";
 import HomeFeaturedProjects from "../components/sections/home/HomeFeaturedProjects";
-import HomeContactCTA from "../components/sections/home/HomeContactCTA";
 
 export default function HomePage() {
   useEffect(() => {
@@ -34,9 +33,6 @@ export default function HomePage() {
 
       {/* 06 — Client / Trust Section */}
       <HomeTrustSection />
-
-      {/* 07 — Contact CTA */}
-      <HomeContactCTA />
     </main>
   );
 }

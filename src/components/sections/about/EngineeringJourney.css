@@ -1,121 +1,130 @@
+/* ============================================================
+   ENGINEERING JOURNEY — Architecture in Motion Methodology
+   ============================================================ */
+
 .eng-journey {
-  background: var(--color-bg-primary);
-  padding: var(--section-pad-y) 0;
-  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-secondary, #F0ECE4);
+  border-bottom: 1px solid var(--color-border, #DFD9CE);
 }
 
-.ej-intro {
-  display: flex;
-  flex-direction: column;
+.ej-title {
+  color: var(--color-text-primary, #12141A);
+  letter-spacing: -0.025em;
 }
 
-.ej-header {
-  margin-bottom: 3rem;
-}
-
-/* Methodology Steps */
 .ej-journey-steps {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  margin-bottom: 3.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 3.5rem;
 }
 
 .ej-journey-step {
+  background: var(--color-card-bg, #FFFFFF);
+  border: 1px solid var(--color-border, #DFD9CE);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.75rem;
   display: flex;
-  gap: 1.5rem;
-  background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  padding: 2rem;
-  box-shadow: var(--shadow-card);
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-subtle, 0 2px 14px rgba(10, 13, 20, 0.04));
   position: relative;
-  transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+  overflow: hidden;
+  transition: all 0.35s var(--ease-out);
 }
 
 .ej-journey-step:hover {
-  transform: translateY(-3px);
-  border-color: var(--color-gold);
+  border-color: var(--color-gold, #B78736);
+  box-shadow: 0 10px 30px rgba(183, 135, 54, 0.14);
+  transform: translateY(-4px);
+}
+
+.ej-step-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-gold, #B78736), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ej-journey-step:hover .ej-step-edge {
+  opacity: 1;
+}
+
+.ej-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
 }
 
 .ej-step-num {
-  font-family: var(--font-display);
-  font-size: 2.25rem;
-  font-weight: 800;
-  color: var(--color-gold);
-  line-height: 1;
-  flex-shrink: 0;
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-gold, #B78736);
 }
 
-.ej-step-content {
+.ej-step-phase {
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary, #7D8799);
+  background: var(--color-bg-secondary, #F0ECE4);
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-xs, 2px);
+}
+
+.ej-step-visual-box {
+  background: var(--color-bg-primary, #FAF8F5);
+  border: 1px solid var(--color-border, #DFD9CE);
+  border-radius: var(--radius-xs, 2px);
+  padding: 1rem 0.5rem;
+  margin-bottom: 1.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.ej-visual-svg {
+  width: 100%;
+  max-height: 80px;
+  transition: transform 0.35s ease;
+}
+
+.ej-journey-step:hover .ej-visual-svg {
+  transform: scale(1.05);
 }
 
 .ej-step-title {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 0.88rem;
   font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: 0.04em;
-  margin: 0;
+  letter-spacing: 0.06em;
+  color: var(--color-text-primary, #12141A);
+  margin-bottom: 0.85rem;
+  line-height: 1.4;
 }
 
 .ej-step-desc {
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-  margin: 0;
+  color: var(--color-text-secondary, #4E5666);
+  line-height: 1.65;
 }
 
-/* Projects Link Card on About Page */
-.ej-projects-link-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  border-left: 4px solid var(--color-gold);
-  padding: 2.25rem 2.5rem;
-  box-shadow: var(--shadow-card);
-  position: relative;
-  overflow: hidden;
+@media (max-width: 1100px) {
+  .ej-journey-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.ej-projects-link-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 160px;
-  height: 160px;
-  background: radial-gradient(circle, var(--color-gold-dim) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.ej-plc-text {
-  flex: 1;
-}
-
-.ej-plc-btn {
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-@media (max-width: 900px) {
+@media (max-width: 640px) {
   .ej-journey-steps {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-  .ej-projects-link-card {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.75rem 1.5rem;
-    gap: 1.5rem;
-  }
-  .ej-plc-btn {
-    width: 100%;
-    justify-content: center;
   }
 }
