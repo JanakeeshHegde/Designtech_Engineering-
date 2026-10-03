@@ -5,7 +5,9 @@ import { useLocation } from "react-router-dom";
  * After a route change settles, if the URL has a hash (#section-id)
  * this hook scrolls smoothly to that element.
  */
-export function useHashScroll() {
+export function useHashScroll(
+  scrollTo: (target: string | number | HTMLElement, options?: { offset?: number }) => void
+) {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
@@ -20,14 +22,13 @@ export function useHashScroll() {
     const attempt = (retries = 8) => {
       const el = document.getElementById(id);
       if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 80);
+        const navbarHeight = document.querySelector<HTMLElement>(".navbar")?.offsetHeight ?? 0;
+        setTimeout(() => scrollTo(el, { offset: -(navbarHeight + 16) }), 450);
       } else if (retries > 0) {
         setTimeout(() => attempt(retries - 1), 100);
       }
     };
 
     attempt();
-  }, [pathname, hash]);
+  }, [pathname, hash, scrollTo]);
 }

@@ -3,15 +3,28 @@
    ============================================================ */
 
 .eng-process {
-  background: var(--color-bg-primary);
+  background: linear-gradient(160deg, #FAF8F5 0%, #F5F0E8 50%, #EFE9DE 100%);
   border-bottom: 1px solid var(--color-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.eng-process::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 30%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(183, 135, 54, 0.05) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .process-track {
   position: relative;
   height: 2px;
   background: var(--color-border);
-  margin: 2rem 0 3rem;
+  margin: 1.25rem 0 2rem;
   overflow: hidden;
   border-radius: 1px;
 }
@@ -31,65 +44,105 @@
 }
 
 .process-stage {
-  background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 2.25rem 2rem;
+  background: var(--color-card-bg, #FFFFFF);
+  border: 1px solid var(--color-border, #DFD9CE);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.5rem;
   position: relative;
-  box-shadow: var(--shadow-subtle);
+  box-shadow: var(--shadow-subtle, 0 2px 12px rgba(10, 13, 20, 0.04));
   transition: all 0.35s var(--ease-out);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.process-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  pointer-events: none;
 }
 
 .process-stage:hover {
-  border-color: var(--color-gold);
-  box-shadow: var(--shadow-card);
+  border-color: var(--color-gold, #B78736);
+  box-shadow: 0 14px 36px rgba(183, 135, 54, 0.16), 0 2px 6px rgba(10, 13, 20, 0.04);
   transform: translateY(-4px);
 }
 
-.process-stage-num {
-  font-family: var(--font-mono);
-  font-size: 0.825rem;
-  font-weight: 700;
-  color: var(--color-gold);
-  background: var(--color-gold-dim);
-  display: inline-block;
-  align-self: flex-start;
-  padding: 0.25rem 0.6rem;
-  border-radius: var(--radius-xs);
-  margin-bottom: 1.25rem;
-}
-
-.process-stage-icon {
-  width: 64px;
-  height: 64px;
-  margin-bottom: 1.25rem;
+/* Top bar with stage label */
+.process-stage-topbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.85rem;
 }
 
 .process-stage-label {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 0.72rem;
   letter-spacing: 0.16em;
   font-weight: 600;
-  color: var(--color-gold);
+  color: var(--color-gold, #B78736);
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  background: var(--color-gold-dim, rgba(183, 135, 54, 0.08));
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-xs, 3px);
+  border: 1px solid rgba(183, 135, 54, 0.2);
+}
+
+/* Photorealistic Thumbnail Preview Container */
+.process-stage-thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm, 6px);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  background-color: var(--color-bg-primary, #FAF8F5);
+  border: 1px solid rgba(223, 217, 206, 0.7);
+}
+
+.process-stage-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.process-stage:hover .process-stage-thumb {
+  transform: scale(1.06);
+}
+
+.process-stage-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(18, 20, 26, 0) 50%, rgba(18, 20, 26, 0.25) 100%);
+  pointer-events: none;
+}
+
+/* Content Details */
+.process-stage-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .process-stage-title {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading, "Space Grotesk", sans-serif);
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--color-text-primary);
-  margin-bottom: 0.75rem;
+  color: var(--color-text-primary, #12141A);
+  margin-bottom: 0.65rem;
 }
 
 .process-stage-desc {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #4E5666);
 }
 
 @media (max-width: 1024px) {
@@ -101,5 +154,16 @@
 @media (max-width: 640px) {
   .process-grid {
     grid-template-columns: 1fr;
+  }
+
+  .process-stage {
+    padding: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-stage-thumb {
+    transition: none !important;
+    transform: none !important;
   }
 }

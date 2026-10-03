@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import About from "../components/sections/about/About";
-import EngineeringJourney from "../components/sections/about/EngineeringJourney";
 import EngineeringProcess from "../components/sections/about/EngineeringProcess";
 import ClientEcosystem from "../components/sections/about/ClientEcosystem";
 import "./AboutPage.css";
@@ -30,17 +29,12 @@ export default function AboutPage() {
         <About />
       </div>
 
-      {/* 02 — Featured Engineering Journey */}
-      <div id="engineering-journey">
-        <EngineeringJourney />
-      </div>
-
-      {/* 03 — Process / From Soil to Skyline */}
+      {/* 02 — Process / From Soil to Skyline */}
       <div id="engineering-process">
         <EngineeringProcess />
       </div>
 
-      {/* 04 — Client Ecosystem */}
+      {/* 03 — Client Ecosystem */}
       <div id="clients">
         <ClientEcosystem />
       </div>

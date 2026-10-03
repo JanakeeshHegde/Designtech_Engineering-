@@ -1,26 +1,50 @@
 /* ============================================================
-   HOME CONTACT CTA — Architectural Call to Action
+   HOME CONTACT CTA — Premium Warm Architectural Surface
    ============================================================ */
 
 .hcc {
-  background: var(--color-bg-dark);
-  color: var(--color-text-on-dark);
+  background: linear-gradient(155deg, #EBE4D8 0%, #E4DDD0 45%, #DDD5C6 100%);
+  color: var(--color-text-primary, #14171F);
   position: relative;
   overflow: hidden;
-  padding: clamp(4rem, 8vw, 7rem) 0;
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+  border-top: 1px solid rgba(213, 206, 194, 0.8);
 }
 
+/* Ambient gold glow at top */
 .hcc::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(183, 135, 54, 0.15) 0%, transparent 70%);
-  filter: blur(80px);
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(183, 135, 54, 0.3), transparent);
   pointer-events: none;
+}
+
+/* Radial warmth from bottom-right */
+.hcc::after {
+  content: "";
+  position: absolute;
+  bottom: -120px; right: -80px;
+  width: 560px; height: 560px;
+  background: radial-gradient(circle at center, rgba(183, 135, 54, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hcc-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 0;
+}
+
+.hcc-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(183, 135, 54, 0.12), transparent);
 }
 
 .hcc-container {
@@ -29,16 +53,18 @@
 }
 
 .hcc-text {
-  max-width: 650px;
+  max-width: 680px;
 }
 
 .hcc-heading {
-  color: #FFFFFF;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.035em;
-  line-height: 1;
+  color: var(--color-text-primary, #14171F);
+  margin-top: 0.5rem;
+  margin-bottom: 1.75rem;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
 .hcc-btn {
-  margin-top: 1rem;
+  margin-top: 1.75rem;
 }
+

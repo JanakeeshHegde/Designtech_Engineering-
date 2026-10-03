@@ -1,0 +1,103 @@
+/* ============================================================
+   SCROLL TO TOP — ARCHITECTURAL FLOATING UP ARROW
+   ============================================================ */
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border, #DFD9CE);
+  color: var(--color-text-primary, #12141A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 990;
+  box-shadow: 0 4px 20px rgba(10, 13, 20, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.9);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+  padding: 0;
+}
+
+.scroll-to-top-btn--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.scroll-to-top-btn:hover {
+  background: #FFFFFF;
+  border-color: var(--color-gold, #B78736);
+  color: var(--color-gold, #B78736);
+  box-shadow: 0 8px 28px rgba(183, 135, 54, 0.25);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.scroll-to-top-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* ── Progress Ring SVG ── */
+.stt-progress-ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.stt-ring-bg {
+  stroke: rgba(18, 20, 26, 0.06);
+}
+
+.stt-ring-fill {
+  stroke: var(--color-gold, #B78736);
+  transition: stroke-dashoffset 0.15s ease-out;
+}
+
+/* ── Up Arrow Icon ── */
+.stt-icon-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-to-top-btn:hover .stt-icon-wrap {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .scroll-to-top-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 44px;
+    height: 44px;
+  }
+
+  .stt-progress-ring {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top-btn,
+  .stt-icon-wrap,
+  .stt-ring-fill {
+    transition: none !important;
+  }
+}

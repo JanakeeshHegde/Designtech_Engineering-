@@ -1,10 +1,11 @@
 export interface SectorItem {
+  id: string;
   num: string;
   title: string;
   subtitle: string;
   desc: string;
   tags: string[];
-  visual: "building" | "water" | "industrial" | "solar";
+  image: string;
 }
 
 export interface FieldPreviewItem {
@@ -14,4 +15,5 @@ export interface FieldPreviewItem {
   desc: string;
   tag: string;
   sectorId: string;
+  image: string;
 }

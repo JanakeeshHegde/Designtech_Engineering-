@@ -1,17 +1,9 @@
-import { Link } from "react-router-dom";
 import "./ProjectsHero.css";
 
 export default function ProjectsHero() {
   return (
     <section className="proj-hero" aria-labelledby="proj-hero-heading">
       <div className="container">
-        {/* Breadcrumb Navigation */}
-        <nav className="proj-hero-breadcrumb" aria-label="Breadcrumb">
-          <Link to="/" className="proj-hero-breadcrumb-link">HOME</Link>
-          <span className="proj-hero-breadcrumb-sep" aria-hidden="true">/</span>
-          <span className="proj-hero-breadcrumb-curr" aria-current="page">PROJECTS</span>
-        </nav>
-
         <div className="proj-hero-inner">
           <div className="proj-hero-main">
             <div className="section-number">PROJECT PORTFOLIO</div>

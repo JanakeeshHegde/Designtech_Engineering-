@@ -10,8 +10,8 @@ import "./HomeFeaturedProjects.css";
 gsap.registerPlugin(ScrollTrigger);
 
 // Exactly 4 featured projects derived strictly from centralized data
-const HOME_PROJECTS = featuredProjects.length >= 4 
-  ? featuredProjects.slice(0, 4) 
+const HOME_PROJECTS = featuredProjects.length >= 4
+  ? featuredProjects.slice(0, 4)
   : allProjects.slice(0, 4);
 
 export default function HomeFeaturedProjects() {
@@ -214,18 +214,18 @@ export default function HomeFeaturedProjects() {
                 {/* Structural Highlights & Facilities */}
                 {((currentProject.facilities && currentProject.facilities.length > 0) ||
                   (currentProject.technicalHighlights && currentProject.technicalHighlights.length > 0)) && (
-                  <div className="hfp-highlights">
-                    <span className="hfp-feat-label">STRUCTURAL HIGHLIGHTS:</span>
-                    <div className="hfp-chips">
-                      {currentProject.technicalHighlights?.map((t) => (
-                        <span key={t} className="tag-chip">{t}</span>
-                      ))}
-                      {currentProject.facilities?.slice(0, 3).map((f) => (
-                        <span key={f} className="tag-chip">{f}</span>
-                      ))}
+                    <div className="hfp-highlights">
+                      <span className="hfp-feat-label">STRUCTURAL HIGHLIGHTS:</span>
+                      <div className="hfp-chips">
+                        {currentProject.technicalHighlights?.map((t) => (
+                          <span key={t} className="tag-chip">{t}</span>
+                        ))}
+                        {currentProject.facilities?.slice(0, 3).map((f) => (
+                          <span key={f} className="tag-chip">{f}</span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 {/* Direct Action Link to Archive */}
                 <div className="hfp-cta-wrap">

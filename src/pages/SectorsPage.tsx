@@ -22,34 +22,36 @@ export default function SectorsPage() {
         </div>
       </div>
 
-      {/* Existing Sectors component — completely unchanged */}
-      <div
-        id="residential-commercial"
-        data-sector="residential"
-      >
-        <Sectors />
-      </div>
+      <Sectors />
 
-      {/* Bottom CTA */}
+      {/* Bottom Architectural Project CTA Card */}
       <div className="sectors-page-cta">
-        <div className="container sectors-page-cta-inner">
-          <div className="section-divider" style={{ marginBottom: "2rem" }} />
-          <p className="t-body" style={{ marginBottom: "1.5rem", maxWidth: "480px" }}>
-            Working across all these sectors with the same commitment to engineering excellence.
-          </p>
-          <div className="sectors-page-cta-row">
-            <Link to="/about#engineering-journey" className="btn btn-outline">
-              VIEW PROJECTS
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
-            <Link to="/contact" className="btn btn-primary">
-              DISCUSS YOUR PROJECT
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
+        <div className="container">
+          <div className="sectors-cta-card">
+            <div className="sectors-cta-text">
+              <span className="t-label">CROSS-SECTOR ENGINEERING CONSULTANCY</span>
+              <h3 className="t-display-sm sectors-cta-title">
+                Ready to engineer your next structural development?
+              </h3>
+              <p className="t-body sectors-cta-desc">
+                Working across all these sectors with the same commitment to engineering excellence,
+                structural safety, and on-time delivery.
+              </p>
+            </div>
+            <div className="sectors-cta-buttons">
+              <Link to="/contact" className="btn btn-primary">
+                <span>DISCUSS YOUR PROJECT</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
+              <Link to="/projects" className="btn btn-outline">
+                <span>VIEW PROJECTS</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

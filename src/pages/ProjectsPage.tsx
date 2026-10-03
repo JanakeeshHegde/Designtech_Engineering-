@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { allProjects, PROJECT_CATEGORIES } from "../data/projects";
@@ -125,6 +126,18 @@ export default function ProjectsPage() {
 
   return (
     <main id="main-content" className="projects-page" ref={containerRef}>
+      {/* Page intro strip */}
+      <div className="projects-page-intro">
+        <div className="container projects-page-intro-inner">
+          <div className="section-number">PROJECT PORTFOLIO</div>
+          <div className="projects-page-breadcrumb">
+            <Link to="/" className="projects-page-breadcrumb-link">HOME</Link>
+            <span className="projects-page-breadcrumb-sep" aria-hidden="true">/</span>
+            <span>PROJECTS</span>
+          </div>
+        </div>
+      </div>
+
       {/* 01 — Hero Header */}
       <ProjectsHero />
 
@@ -148,10 +161,6 @@ export default function ProjectsPage() {
               DISPLAYING {filteredProjects.length} OF {allProjects.length} DOCUMENTED STRUCTURES
             </span>
           </div>
-
-          <span className="proj-meta-instruction">
-            SCROLL TO EXPLORE OR JUMP VIA STICKY PROJECT INDEX
-          </span>
         </div>
 
         <div className="proj-editorial-container" role="list">
@@ -177,6 +186,37 @@ export default function ProjectsPage() {
           </div>
         )}
       </section>
+
+      {/* 04 — Bottom Architectural Project CTA Card */}
+      <div className="projects-page-cta">
+        <div className="container">
+          <div className="proj-bottom-cta-card">
+            <div className="proj-bottom-cta-text">
+              <span className="t-label">STRUCTURAL ENGINEERING CONSULTANCY</span>
+              <h3 className="t-display-sm proj-bottom-cta-title">
+                Have a project you would like to engineer with us?
+              </h3>
+              <p className="t-body proj-bottom-cta-desc">
+                From concept feasibility to structural design, drawing production, and site supervision, our team delivers safe, economical, and enduring engineering solutions.
+              </p>
+            </div>
+            <div className="proj-bottom-cta-buttons">
+              <Link to="/contact" className="btn btn-primary">
+                <span>START A PROJECT</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
+              <Link to="/sectors" className="btn btn-outline">
+                <span>EXPLORE SECTORS</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

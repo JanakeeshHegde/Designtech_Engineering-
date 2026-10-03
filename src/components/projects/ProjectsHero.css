@@ -3,43 +3,23 @@
    ============================================================ */
 
 .proj-hero {
-  padding-top: calc(var(--nav-height, 76px) + 2.5rem);
-  padding-bottom: 3.5rem;
-  background: var(--color-bg-primary, #FAF8F5);
+  padding-top: clamp(2rem, 4vw, 3.5rem);
+  padding-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  background: linear-gradient(160deg, #FAF8F5 0%, #F5F0E8 50%, #EDE6DA 100%);
   border-bottom: 1px solid var(--color-border, #E5E0D8);
   position: relative;
+  overflow: hidden;
 }
 
-/* ── BREADCRUMB NAVIGATION ── */
-.proj-hero-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 2rem;
-  font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.proj-hero-breadcrumb-link {
-  color: var(--color-text-tertiary, #8A857B);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.proj-hero-breadcrumb-link:hover {
-  color: var(--color-gold, #B78736);
-}
-
-.proj-hero-breadcrumb-sep {
-  color: var(--color-border, #D5CEBF);
-  font-weight: 300;
-}
-
-.proj-hero-breadcrumb-curr {
-  color: var(--color-gold, #B78736);
-  font-weight: 600;
+.proj-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 15%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(183, 135, 54, 0.05) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 /* ── MAIN CONTENT ROW ── */
@@ -52,7 +32,7 @@
 }
 
 .proj-hero-main {
-  max-width: 740px;
+  max-width: 780px;
   flex: 1 1 500px;
 }
 
@@ -60,7 +40,7 @@
   color: var(--color-text-primary, #1A1815);
   letter-spacing: -0.03em;
   margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   line-height: 1.05;
 }
 
@@ -70,18 +50,18 @@
 
 .proj-hero-description {
   font-size: 1.05rem;
-  line-height: 1.7;
-  color: var(--color-text-secondary, #575249);
-  margin-top: 1rem;
+  line-height: 1.75;
+  color: var(--color-text-secondary, #4E5666);
+  margin-top: 0.75rem;
 }
 
 @media (max-width: 768px) {
   .proj-hero {
-    padding-top: calc(var(--nav-height, 76px) + 1.5rem);
-    padding-bottom: 2.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   .proj-hero-inner {
-    gap: 2rem;
+    gap: 1.5rem;
   }
 }

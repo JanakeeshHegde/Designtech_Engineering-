@@ -78,9 +78,6 @@ export default function HomeAboutTeaser() {
 
           <div className="hat-grid">
             <div className="hat-left">
-              <div className="hat-structure-marker" aria-hidden="true">
-                <span className="hat-marker-num">01 // IDENTITY</span>
-              </div>
               <h2 id="hat-heading" className="hat-statement t-display-lg">
                 Engineered with purpose. Built to endure.
               </h2>
@@ -105,9 +102,9 @@ export default function HomeAboutTeaser() {
 
               <div className="hat-action">
                 <Link to="/about" className="btn btn-primary hat-cta" aria-label="Learn more about Designtech Engineering">
-                  <span>DISCOVER OUR STORY &amp; CAPABILITIES</span>
+                  <span>DISCOVER OUR STORY</span>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </Link>
               </div>

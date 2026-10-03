@@ -4,6 +4,7 @@ import { useLenis } from "./hooks";
 import { useHashScroll } from "./hooks/useHashScroll";
 import Navbar from "./components/layout/Navbar";
 import PageTransition from "./components/common/PageTransition";
+import ScrollToTop from "./components/common/ScrollToTop";
 import Footer from "./components/layout/Footer";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
@@ -19,10 +20,10 @@ function AppInner() {
   const progressRef = useRef<HTMLDivElement>(null);
 
   // Lenis smooth scroll + GSAP ticker
-  useLenis();
+  const { scrollTo } = useLenis();
 
   // Hash-based anchor scroll on every navigation (e.g. /about#expertise)
-  useHashScroll();
+  useHashScroll(scrollTo);
 
   // Scroll to top on route change when there's no hash
   useEffect(() => {
@@ -73,6 +74,9 @@ function AppInner() {
             <Route path="*" element={<HomePage />} />
           </Routes>
         </PageTransition>
+
+        {/* Floating Architectural Scroll To Top Up Arrow */}
+        <ScrollToTop />
 
         {/* Footer — always visible */}
         <Footer />

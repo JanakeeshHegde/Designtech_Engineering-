@@ -23,10 +23,28 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
     project.hasBeforeAfter && project.beforeImage && project.afterImage ? "beforeAfter" : "media"
   );
 
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
   useEffect(() => {
     setActiveImage(allImages[0] || "");
     setFailedImages(new Set());
   }, [project.id, allImages.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxOpen(false);
+    };
+    if (lightboxOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [lightboxOpen]);
 
   const handleImageError = (failedSrc: string) => {
     setFailedImages((prev) => {
@@ -106,8 +124,14 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
             </div>
           )}
 
-          {/* Large Architectural Frame */}
-          <div className={`proj-cs-frame ${viewMode === "beforeAfter" ? "proj-cs-ba-frame" : ""}`}>
+          {/* Large Architectural Frame with Full Image Presentation */}
+          <div
+            className={`proj-cs-frame ${viewMode === "beforeAfter" ? "proj-cs-ba-frame" : ""}`}
+            onClick={() => {
+              if (hasValidImage && viewMode === "media") setLightboxOpen(true);
+            }}
+            title={hasValidImage && viewMode === "media" ? "Click to view full image in high resolution" : ""}
+          >
             {hasValidImage ? (
               viewMode === "beforeAfter" && project.beforeImage && project.afterImage ? (
                 <div className="proj-cs-ba-wrap">
@@ -119,13 +143,21 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                   />
                 </div>
               ) : (
-                <img
-                  src={activeImage}
-                  alt={`${project.title} architectural view`}
-                  loading="lazy"
-                  className="proj-cs-img"
-                  onError={() => handleImageError(activeImage)}
-                />
+                <>
+                  <img
+                    src={activeImage}
+                    alt={`${project.title} architectural view`}
+                    loading="lazy"
+                    className="proj-cs-img"
+                    onError={() => handleImageError(activeImage)}
+                  />
+                  <div className="proj-cs-expand-hint" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                    </svg>
+                    <span>Click to expand full image</span>
+                  </div>
+                </>
               )
             ) : (
               /* Clean neutral architectural empty state when image is not yet uploaded */
@@ -176,7 +208,6 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           <div className="proj-cs-specs-card">
             <div className="proj-cs-card-header">
               <span className="proj-cs-sheet-title">STRUCTURAL CASE SPECIFICATION</span>
-              <span className="proj-cs-sheet-badge">IS 456 / IS 800</span>
             </div>
 
             {/* Description */}
@@ -260,6 +291,61 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           </div>
         </div>
       </div>
+
+      {/* Full Resolution Image Lightbox Modal */}
+      {lightboxOpen && hasValidImage && (
+        <div
+          className="proj-cs-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} full view`}
+          onClick={() => setLightboxOpen(false)}
+        >
+          <div className="proj-cs-lightbox-backdrop" />
+          <div className="proj-cs-lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <div className="proj-cs-lightbox-header">
+              <div className="proj-cs-lightbox-meta">
+                <span className="proj-cs-lightbox-num">{project.number}</span>
+                <span className="proj-cs-lightbox-title">{project.title}</span>
+                {project.location && <span className="proj-cs-lightbox-loc">— {project.location}</span>}
+              </div>
+              <button
+                type="button"
+                className="proj-cs-lightbox-close"
+                onClick={() => setLightboxOpen(false)}
+                aria-label="Close full image view"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="proj-cs-lightbox-img-wrap">
+              <img
+                src={activeImage}
+                alt={`${project.title} full architectural view`}
+                className="proj-cs-lightbox-img"
+              />
+            </div>
+            {availableImages.length > 1 && (
+              <div className="proj-cs-lightbox-thumbs">
+                {availableImages.map((img, i) => (
+                  <button
+                    key={img}
+                    type="button"
+                    className={`proj-cs-lightbox-thumb-btn ${activeImage === img ? "proj-cs-lightbox-thumb-btn--active" : ""}`}
+                    onClick={() => setActiveImage(img)}
+                    aria-label={`View photo ${i + 1}`}
+                  >
+                    <img src={img} alt="" className="proj-cs-lightbox-thumb-img" />
+                    <span>0{i + 1}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </article>
   );
 }

@@ -31,12 +31,6 @@ const LocationIcon = () => (
   </svg>
 );
 
-const ArrowIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className="footer-arrow">
-    <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -126,10 +120,6 @@ export default function Footer() {
           <p className="footer-copy">
             © {currentYear} Designtech Engineering. All Rights Reserved.
           </p>
-          <Link to="/contact" className="footer-cta-link">
-            <span>Start a Project</span>
-            <ArrowIcon />
-          </Link>
         </div>
       </div>
     </footer>

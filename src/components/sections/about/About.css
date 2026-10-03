@@ -3,15 +3,25 @@
    ============================================================ */
 
 .about {
-  background: var(--color-bg-primary);
+  background: linear-gradient(160deg, #FAF8F5 0%, #F6F1E9 50%, #F2ECE3 100%);
   border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.about::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(183, 135, 54, 0.2), transparent);
+  pointer-events: none;
 }
 
 .about-header {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
 }
 
 .about-eyebrow {
@@ -33,7 +43,7 @@
 .about-grid {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
-  gap: clamp(3rem, 6vw, 6rem);
+  gap: clamp(2rem, 4vw, 4rem);
   align-items: flex-start;
 }
 
@@ -43,7 +53,7 @@
   line-height: 1.05;
   color: var(--color-text-primary);
   letter-spacing: -0.03em;
-  margin-bottom: 2.25rem;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -53,7 +63,7 @@
 }
 
 .about-text-block {
-  margin-bottom: 3rem;
+  margin-bottom: 1.75rem;
 }
 
 .about-lead {
@@ -138,7 +148,7 @@
 
 .about-value-item:hover {
   border-color: var(--color-gold);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 8px 32px rgba(183, 135, 54, 0.14);
   transform: translateX(6px);
 }
 

@@ -35,7 +35,7 @@ export function useLenis() {
     };
   }, []);
 
-  const scrollTo = useCallback((target: string | number, options?: { offset?: number }) => {
+  const scrollTo = useCallback((target: string | number | HTMLElement, options?: { offset?: number }) => {
     if (lenisRef.current) {
       lenisRef.current.scrollTo(target, { offset: options?.offset ?? 0 });
     }

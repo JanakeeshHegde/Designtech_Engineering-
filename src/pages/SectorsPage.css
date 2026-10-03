@@ -1,5 +1,5 @@
 .sectors-page-intro {
-  background: var(--color-bg-secondary);
+  background: linear-gradient(160deg, #F5F0E8 0%, #EDE6DA 100%);
   border-bottom: 1px solid var(--color-border);
   padding: calc(var(--nav-height) + 1.25rem) 0 1.25rem;
 }
@@ -31,20 +31,72 @@
 .sectors-page-breadcrumb-sep        { color: var(--color-border); }
 
 .sectors-page-cta {
-  background: var(--color-bg-secondary);
-  padding: var(--section-pad-y) 0;
-  border-top: 1px solid var(--color-border);
+  background: linear-gradient(160deg, #FAF8F5 0%, #F5EFE6 100%);
+  padding: 3rem 0 4rem;
+  border-top: 1px solid var(--color-border, #DFD9CE);
 }
 
-.sectors-page-cta-row {
+.sectors-cta-card {
+  background: var(--color-card-bg, #FFFFFF);
+  color: var(--color-text-primary, #12141A);
+  border: 1px solid var(--color-border, #DFD9CE);
+  border-radius: var(--radius-lg, 14px);
+  padding: clamp(2rem, 4vw, 3.5rem);
   display: flex;
-  gap: 0.85rem;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  box-shadow: var(--shadow-card, 0 10px 36px rgba(10, 13, 20, 0.06));
+  position: relative;
 }
 
-.sectors-page-cta-row .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
+.sectors-cta-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  pointer-events: none;
+}
+
+.sectors-cta-text {
+  max-width: 680px;
+}
+
+.sectors-cta-title {
+  color: var(--color-text-primary, #12141A);
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+}
+
+.sectors-cta-desc {
+  color: var(--color-text-secondary, #4E5666);
+  font-size: 1.025rem;
+  line-height: 1.7;
+}
+
+.sectors-cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+.sectors-cta-buttons .btn {
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .sectors-cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .sectors-cta-buttons {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }

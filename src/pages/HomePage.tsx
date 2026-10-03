@@ -6,6 +6,8 @@ import HomeFieldsPreview from "../components/sections/home/HomeFieldsPreview";
 import HomeTrustSection from "../components/sections/home/HomeTrustSection";
 import HomeFeaturedProjects from "../components/sections/home/HomeFeaturedProjects";
 
+import HomeContactCTA from "../components/sections/home/HomeContactCTA";
+
 export default function HomePage() {
   useEffect(() => {
     document.title = "Designtech Engineering | Civil & Structural Engineering Consultancy";
@@ -14,10 +16,7 @@ export default function HomePage() {
   return (
     <main id="main-content">
       {/* 01 — Cinematic Hero */}
-      <Hero onEnter={() => {
-        const el = document.getElementById("about-intro");
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }} />
+      <Hero />
 
       {/* 02 — Company Introduction */}
       <HomeAboutTeaser />
@@ -33,6 +32,9 @@ export default function HomePage() {
 
       {/* 06 — Client / Trust Section */}
       <HomeTrustSection />
+
+      {/* 07 — Architectural Project CTA */}
+      <HomeContactCTA />
     </main>
   );
 }

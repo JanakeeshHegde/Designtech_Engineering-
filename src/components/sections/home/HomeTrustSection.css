@@ -3,13 +3,22 @@
    ============================================================ */
 
 .hts {
-  background-color: var(--color-bg-secondary, #F0ECE4);
+  background: linear-gradient(155deg, #EDE8DE 0%, #E6DFD4 50%, #E0D8CA 100%);
   position: relative;
   overflow: hidden;
-  border-top: 1px solid var(--color-border, #DFD9CE);
-  border-bottom: 1px solid var(--color-border, #DFD9CE);
-  padding-top: clamp(4rem, 7vw, 6.5rem);
-  padding-bottom: clamp(4rem, 7vw, 6.5rem);
+  border-top: 1px solid rgba(218, 212, 200, 0.8);
+  border-bottom: 1px solid rgba(218, 212, 200, 0.8);
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.hts::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(183, 135, 54, 0.2), transparent);
+  pointer-events: none;
 }
 
 .hts-header {
@@ -17,7 +26,7 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 3rem;
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 .hts-header-left {
@@ -49,14 +58,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.25rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
 }
 
 .hts-client-item {
   background: var(--color-card-bg, #FFFFFF);
   border: 1px solid var(--color-border, #DFD9CE);
   border-radius: var(--radius-sm, 4px);
-  padding: 1.5rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-subtle, 0 2px 14px rgba(10, 13, 20, 0.04));
@@ -142,8 +151,8 @@
 .hts-marquee-wrapper {
   position: relative;
   width: 100%;
-  margin-top: 3.5rem;
-  padding: 1.5rem 0 0.5rem;
+  margin-top: 2rem;
+  padding: 1rem 0 0.5rem;
   overflow: hidden;
   border-top: 1px dashed var(--color-border, #DFD9CE);
 }

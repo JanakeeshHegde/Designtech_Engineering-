@@ -3,8 +3,18 @@
    ============================================================ */
 
 .hfp-section {
-  background: var(--color-bg-secondary);
+  background: linear-gradient(165deg, #F7F4EF 0%, #F2EDE4 50%, #EDE7DB 100%);
   border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.hfp-section::before {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(183, 135, 54, 0.15), transparent);
+  pointer-events: none;
 }
 
 .hfp-title {
@@ -17,8 +27,13 @@
   background: var(--color-card-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 20px 64px rgba(18, 20, 26, 0.08), 0 6px 20px rgba(18, 20, 26, 0.05);
   overflow: hidden;
+  transition: box-shadow 0.5s ease;
+}
+
+.hfp-showcase-board:hover {
+  box-shadow: 0 28px 80px rgba(18, 20, 26, 0.10), 0 8px 28px rgba(18, 20, 26, 0.06);
 }
 
 /* ── Top Bar ── */
@@ -135,8 +150,8 @@
 .hfp-stage-content {
   display: grid;
   grid-template-columns: 1.15fr 1.25fr;
-  padding: clamp(2rem, 4vw, 3.5rem);
-  gap: clamp(2rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
   align-items: center;
 }
 
@@ -258,24 +273,30 @@
 
 .hfp-media-container {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  min-height: 380px;
+  max-height: 520px;
+  height: clamp(360px, 40vw, 500px);
   overflow: hidden;
   position: relative;
-  background: #EFEBE3;
+  background: radial-gradient(circle at center, #FAF8F5 0%, #EDE8DE 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem;
 }
 
 .hfp-stage-img {
+  max-width: 100%;
+  max-height: 100%;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s var(--ease-out);
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.4s var(--ease-out);
 }
 
 .hfp-stage-img:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .hfp-ba-wrap {

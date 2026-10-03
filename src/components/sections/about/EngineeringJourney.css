@@ -3,8 +3,21 @@
    ============================================================ */
 
 .eng-journey {
-  background: var(--color-bg-secondary, #F0ECE4);
+  background: linear-gradient(155deg, #F2EDE4 0%, #EBE4DA 50%, #E5DDD0 100%);
   border-bottom: 1px solid var(--color-border, #DFD9CE);
+  position: relative;
+  overflow: hidden;
+}
+
+.eng-journey::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: 15%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(183, 135, 54, 0.06) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .ej-title {
@@ -33,9 +46,18 @@
   transition: all 0.35s var(--ease-out);
 }
 
+.ej-journey-step::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  pointer-events: none;
+}
+
 .ej-journey-step:hover {
   border-color: var(--color-gold, #B78736);
-  box-shadow: 0 10px 30px rgba(183, 135, 54, 0.14);
+  box-shadow: 0 14px 34px rgba(183, 135, 54, 0.16), 0 2px 8px rgba(10, 13, 20, 0.04);
   transform: translateY(-4px);
 }
 
