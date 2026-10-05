@@ -383,17 +383,21 @@
   padding: 1rem;
   background: #0E1118;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y pinch-zoom;
 }
 
 .proj-cs-lightbox-img {
   max-width: 100%;
   max-height: 100%;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   object-position: center;
   border-radius: 4px;
+  margin: auto;
+  display: block;
 }
 
 .proj-cs-lightbox-nav {
@@ -800,13 +804,20 @@
   }
 
   .proj-cs-lightbox-img-wrap {
-    padding: 0.35rem;
+    padding: 0.5rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y pinch-zoom;
   }
 
   .proj-cs-lightbox-img {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
+    margin: auto;
+    display: block;
   }
 
   .proj-cs-lightbox-nav {

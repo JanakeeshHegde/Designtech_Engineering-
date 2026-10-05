@@ -206,7 +206,7 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           {availableImages.length > 1 && (
             <div className="proj-cs-gallery">
               <span className="proj-cs-gallery-heading">DOCUMENTATION VIEWS &amp; DRAWINGS:</span>
-              <div className="proj-cs-thumbs">
+              <div className="proj-cs-thumbs" data-lenis-prevent="true">
                 {availableImages.map((img, i) => {
                   const isVid = isVideoUrl(img);
                   return (
@@ -343,10 +343,15 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label={`${project.title} full view`}
+          data-lenis-prevent="true"
           onClick={() => setLightboxOpen(false)}
         >
           <div className="proj-cs-lightbox-backdrop" />
-          <div className="proj-cs-lightbox-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="proj-cs-lightbox-content"
+            data-lenis-prevent="true"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="proj-cs-lightbox-header">
               <div className="proj-cs-lightbox-meta">
                 <span className="proj-cs-lightbox-num">{project.number}</span>
@@ -364,7 +369,7 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                 </svg>
               </button>
             </div>
-            <div className="proj-cs-lightbox-img-wrap">
+            <div className="proj-cs-lightbox-img-wrap" data-lenis-prevent="true">
               {availableImages.length > 1 && (
                 <button
                   type="button"
@@ -416,7 +421,7 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
               )}
             </div>
             {availableImages.length > 1 && (
-              <div className="proj-cs-lightbox-thumbs">
+              <div className="proj-cs-lightbox-thumbs" data-lenis-prevent="true">
                 {availableImages.map((img, i) => {
                   const isVid = isVideoUrl(img);
                   return (
