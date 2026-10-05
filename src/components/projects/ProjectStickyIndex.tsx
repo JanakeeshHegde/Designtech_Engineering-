@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { Project } from "../../data/projects";
 import "./ProjectStickyIndex.css";
 
@@ -21,10 +20,6 @@ export default function ProjectStickyIndex({
   categories,
   categoryCounts,
 }: Props) {
-  const [mobileExpanded, setMobileExpanded] = useState(false);
-
-  const activeProject = projects.find((p) => p.id === activeProjectId) || projects[0];
-
   return (
     <div className="proj-sticky-panel">
       {/* Category Filter Pills */}
@@ -49,31 +44,11 @@ export default function ProjectStickyIndex({
               );
             })}
           </div>
-
-          <div className="proj-index-toggle-mobile">
-            <button
-              type="button"
-              className="proj-mobile-idx-btn"
-              onClick={() => setMobileExpanded(!mobileExpanded)}
-              aria-expanded={mobileExpanded}
-            >
-              <span>INDEX: {activeProject ? `${activeProject.number} ${activeProject.title}` : "SELECT PROJECT"}</span>
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                style={{ transform: mobileExpanded ? "rotate(180deg)" : "rotate(0)" }}
-              >
-                <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
 
-      {/* Sticky Project Index Bar (Horizontal Rail on Desktop / Drawer on Mobile) */}
-      <div className={`proj-index-strip ${mobileExpanded ? "proj-index-strip--open" : ""}`}>
+      {/* Sticky Project Index Bar (Horizontal Rail on Desktop) */}
+      <div className="proj-index-strip">
         <div className="container proj-index-container">
           <div className="proj-index-label-group">
             <span className="proj-index-main-label">PROJECT INDEX</span>
@@ -89,10 +64,7 @@ export default function ProjectStickyIndex({
                   type="button"
                   id={`idx-btn-${p.id}`}
                   className={`proj-index-item ${isActive ? "proj-index-item--active" : ""}`}
-                  onClick={() => {
-                    onSelectProject(p.id);
-                    setMobileExpanded(false);
-                  }}
+                  onClick={() => onSelectProject(p.id)}
                   aria-current={isActive ? "true" : undefined}
                 >
                   <span className="proj-idx-num">{p.number}</span>
