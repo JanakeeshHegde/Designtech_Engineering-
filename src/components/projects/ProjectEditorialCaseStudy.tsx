@@ -24,23 +24,27 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
   );
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
   const currentIndex = availableImages.indexOf(activeImage);
 
   const handlePrevImage = () => {
     if (availableImages.length <= 1) return;
     const nextIdx = (currentIndex - 1 + availableImages.length) % availableImages.length;
     setActiveImage(availableImages[nextIdx]);
+    setIsZoomed(false);
   };
 
   const handleNextImage = () => {
     if (availableImages.length <= 1) return;
     const nextIdx = (currentIndex + 1) % availableImages.length;
     setActiveImage(availableImages[nextIdx]);
+    setIsZoomed(false);
   };
 
   useEffect(() => {
     setActiveImage(allImages[0] || "");
     setFailedImages(new Set());
+    setIsZoomed(false);
   }, [project.id, allImages.length]);
 
   useEffect(() => {
@@ -358,18 +362,46 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                 <span className="proj-cs-lightbox-title">{project.title}</span>
                 {project.location && <span className="proj-cs-lightbox-loc">— {project.location}</span>}
               </div>
-              <button
-                type="button"
-                className="proj-cs-lightbox-close"
-                onClick={() => setLightboxOpen(false)}
-                aria-label="Close full image view"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
+              <div className="proj-cs-lightbox-actions">
+                {!isVideoUrl(activeImage) && (
+                  <button
+                    type="button"
+                    className={`proj-cs-lightbox-zoom-btn ${isZoomed ? "proj-cs-lightbox-zoom-btn--active" : ""}`}
+                    onClick={() => setIsZoomed(!isZoomed)}
+                    aria-label={isZoomed ? "Fit image to screen" : "Zoom into image for detailed inspection"}
+                    title={isZoomed ? "Reset fit to screen" : "Zoom 1.5x / Enable Pan"}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      {isZoomed ? (
+                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                      ) : (
+                        <>
+                          <circle cx="11" cy="11" r="8" />
+                          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                          <line x1="11" y1="8" x2="11" y2="14" />
+                          <line x1="8" y1="11" x2="14" y2="11" />
+                        </>
+                      )}
+                    </svg>
+                    <span>{isZoomed ? "FIT" : "ZOOM / PAN"}</span>
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="proj-cs-lightbox-close"
+                  onClick={() => {
+                    setLightboxOpen(false);
+                    setIsZoomed(false);
+                  }}
+                  aria-label="Close full image view"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <div className="proj-cs-lightbox-img-wrap" data-lenis-prevent="true">
+            <div className={`proj-cs-lightbox-img-wrap ${isZoomed ? "proj-cs-lightbox-img-wrap--zoomed" : ""}`} data-lenis-prevent="true">
               {availableImages.length > 1 && (
                 <button
                   type="button"
@@ -400,7 +432,9 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                   key={activeImage}
                   src={activeImage}
                   alt={`${project.title} full architectural view`}
-                  className="proj-cs-lightbox-img"
+                  className={`proj-cs-lightbox-img ${isZoomed ? "proj-cs-lightbox-img--zoomed" : ""}`}
+                  onClick={() => setIsZoomed(!isZoomed)}
+                  title={isZoomed ? "Tap to fit to screen" : "Tap to zoom & pan in full resolution"}
                 />
               )}
 

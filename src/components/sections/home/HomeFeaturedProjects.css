@@ -260,6 +260,19 @@
 
 .hfp-cta-wrap {
   display: flex;
+  width: 100%;
+}
+
+.hfp-inspect-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: center;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 1rem;
 }
 
 /* Visual Column */
@@ -273,9 +286,9 @@
 
 .hfp-media-container {
   width: 100%;
-  min-height: 380px;
+  min-height: 320px;
   max-height: 520px;
-  height: clamp(360px, 40vw, 500px);
+  height: clamp(300px, 40vw, 500px);
   overflow: hidden;
   position: relative;
   background: radial-gradient(circle at center, #FAF8F5 0%, #EDE8DE 100%);
@@ -322,6 +335,7 @@
   background: var(--color-bg-primary);
   border-top: 1px solid var(--color-border);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .hfp-thumb-btn {
@@ -416,13 +430,26 @@
 
 @media (max-width: 1024px) {
   .hfp-selector-ribbon {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .hfp-selector-ribbon::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hfp-ribbon-tab {
+    flex: 0 0 220px;
+    border-right: 1px solid var(--color-border);
+    border-bottom: none;
   }
 
   .hfp-stage-content,
   .hfp-stage--odd {
     grid-template-columns: 1fr;
-    gap: 2.25rem;
+    gap: 1.75rem;
   }
 
   .hfp-visual-col,
@@ -436,17 +463,118 @@
   }
 }
 
-@media (max-width: 640px) {
-  .hfp-selector-ribbon {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .hfp-board-top-bar {
+    padding: 0.85rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .hfp-dwg-title {
+    font-size: 0.65rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+  }
+
+  .hfp-sheet-counter {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  .hfp-ribbon-tab {
+    flex: 0 0 180px;
+    padding: 0.85rem 1rem;
+  }
+
+  .hfp-ribbon-num {
+    font-size: 0.8rem;
+  }
+
+  .hfp-ribbon-title {
+    font-size: 0.8rem;
+    max-width: 120px;
+  }
+
+  .hfp-stage-content {
+    padding: 1.25rem 1rem;
+    gap: 1.25rem;
+  }
+
+  .hfp-media-container {
+    min-height: 220px;
+    max-height: 340px;
+    height: clamp(220px, 55vw, 340px);
+    padding: 0.25rem;
+  }
+
+  .hfp-big-number {
+    font-size: 1.75rem;
+  }
+
+  .hfp-project-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hfp-sub-bar {
+    margin-bottom: 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .hfp-params-grid {
+    gap: 0.85rem 1rem;
+    padding: 1rem 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .hfp-dd {
+    font-size: 0.85rem;
+  }
+
+  .hfp-highlights {
+    margin-bottom: 1.5rem;
   }
 
   .hfp-board-bottom-bar {
+    padding: 1rem;
     flex-direction: column;
     align-items: stretch;
+    gap: 1rem;
   }
 
   .hfp-board-nav-arrows {
     justify-content: space-between;
+    width: 100%;
+  }
+
+  .hfp-master-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hfp-ribbon-tab {
+    flex: 0 0 160px;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .hfp-ribbon-tab-inner {
+    gap: 0.5rem;
+  }
+
+  .hfp-params-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hfp-inspect-btn {
+    font-size: 0.72rem;
+    padding: 0.7rem 0.6rem;
+  }
+
+  .hfp-arrow-btn span {
+    font-size: 0.65rem;
   }
 }
