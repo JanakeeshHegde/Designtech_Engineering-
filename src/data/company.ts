@@ -9,8 +9,7 @@ export const OFFICE_INFO: OfficeInfo = {
   addressLine4: "Rajarajeshwari Nagar,",
   addressLine5: "Bengaluru, Karnataka – 560098",
   phone1: "9035761979",
-  phone2: "9880593211",
   email: "designtecheng.team@gmail.com",
   googleMapsUrl: "https://maps.app.goo.gl/hVHjofptkSHAEeiz5",
-  coordinates: [12.9162, 77.5118],
+  coordinates: [12.9101281, 77.5209058],
 };

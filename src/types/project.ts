@@ -2,7 +2,7 @@ export interface Project {
   id: string;
   number: string;
   title: string;
-  location: string;
+  location?: string;
   client?: string;
   category: string;
   type: string;

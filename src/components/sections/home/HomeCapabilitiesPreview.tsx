@@ -169,6 +169,10 @@ export default function HomeCapabilitiesPreview() {
                         loading="lazy"
                         decoding="async"
                       />
+                      <div className="hcp-image-overlay">
+                        <span className="hcp-overlay-tag">{cap.category}</span>
+                        <h4 className="hcp-overlay-title">{cap.title}</h4>
+                      </div>
                     </div>
                   );
                 })}

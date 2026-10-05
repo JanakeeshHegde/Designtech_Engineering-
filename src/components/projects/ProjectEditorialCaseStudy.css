@@ -42,7 +42,7 @@
 }
 
 .proj-cs-category {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.725rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -57,7 +57,7 @@
 }
 
 .proj-cs-number-label {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -65,7 +65,7 @@
 }
 
 .proj-cs-number {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--color-gold, #B78736);
@@ -92,13 +92,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--color-text-secondary, #4E5666);
 }
 
 .proj-cs-type-tag {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--color-text-tertiary, #7D8799);
 }
@@ -131,7 +131,7 @@
 }
 
 .proj-cs-tab {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 600;
   padding: 0.45rem 0.85rem;
@@ -194,7 +194,7 @@
   background: rgba(18, 20, 26, 0.75);
   backdrop-filter: blur(8px);
   color: #FFFFFF;
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -215,6 +215,66 @@
   height: 100%;
 }
 
+.proj-cs-frame--video {
+  cursor: default;
+  background: radial-gradient(circle at center, #FAF8F5 0%, #EDE8DE 100%);
+  border: 1px solid var(--color-border, #DFD9CE);
+}
+
+.proj-cs-video-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 0.5rem;
+}
+
+.proj-cs-video-player {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-radius: var(--radius-sm, 6px);
+}
+
+.proj-cs-lightbox-video {
+  max-height: 70vh;
+  background: transparent;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.proj-cs-thumb-video-badge {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg-secondary, #F0ECE4);
+}
+
+.proj-cs-play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(183, 135, 54, 0.5);
+  color: #FFFFFF;
+}
+
+.proj-cs-lightbox-vid-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-gold, #B78736);
+  padding: 0.1rem 0.35rem;
+}
+
 /* ── Fullscreen Lightbox Modal ── */
 .proj-cs-lightbox {
   position: fixed;
@@ -223,29 +283,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(0.75rem, 2vw, 1.5rem);
   animation: projCsFadeIn 0.25s ease forwards;
 }
 
 .proj-cs-lightbox-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(20, 23, 31, 0.6);
-  backdrop-filter: blur(16px);
+  background: rgba(10, 13, 20, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .proj-cs-lightbox-content {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1440px;
+  height: 94vh;
   max-height: 94vh;
   display: flex;
   flex-direction: column;
-  background: #FAF8F5;
-  border: 1px solid var(--color-border, #DFD9CE);
+  background: #14171F;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-lg, 12px);
-  box-shadow: 0 24px 64px rgba(18, 20, 26, 0.25);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 }
 
@@ -253,9 +315,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--color-border, #DFD9CE);
-  background: #FFFFFF;
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: #181C26;
+  color: #FAF8F5;
 }
 
 .proj-cs-lightbox-meta {
@@ -266,35 +329,35 @@
 }
 
 .proj-cs-lightbox-num {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--color-gold, #B78736);
-  background: var(--color-gold-dim, rgba(183, 135, 54, 0.12));
+  background: rgba(183, 135, 54, 0.2);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
 }
 
 .proj-cs-lightbox-title {
-  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-family: var(--font-heading);
   font-size: 1rem;
   font-weight: 700;
-  color: var(--color-text-primary, #12141A);
+  color: #FAF8F5;
 }
 
 .proj-cs-lightbox-loc {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--color-text-secondary, #4E5666);
+  color: rgba(250, 248, 245, 0.7);
 }
 
 .proj-cs-lightbox-close {
-  background: var(--color-bg-secondary, #F0ECE4);
-  border: 1px solid var(--color-border, #DFD9CE);
-  color: var(--color-text-primary, #12141A);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FAF8F5;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -312,30 +375,67 @@
 .proj-cs-lightbox-img-wrap {
   flex: 1;
   min-height: 0;
-  max-height: 75vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem;
-  background: radial-gradient(circle at center, #FFFFFF 0%, #F2EDE4 100%);
+  padding: 1rem;
+  background: #0E1118;
+  position: relative;
+  overflow: hidden;
 }
 
 .proj-cs-lightbox-img {
   max-width: 100%;
   max-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(18, 20, 26, 0.08);
+  object-position: center;
+  border-radius: 4px;
+}
+
+.proj-cs-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(20, 23, 31, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.proj-cs-lightbox-nav--prev {
+  left: 1.25rem;
+}
+
+.proj-cs-lightbox-nav--next {
+  right: 1.25rem;
+}
+
+.proj-cs-lightbox-nav:hover {
+  background: var(--color-gold, #B78736);
+  border-color: var(--color-gold, #B78736);
+  color: #FFFFFF;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .proj-cs-lightbox-thumbs {
   display: flex;
   gap: 0.6rem;
-  padding: 0.85rem 1.5rem;
-  background: #FFFFFF;
-  border-top: 1px solid var(--color-border, #DFD9CE);
+  padding: 0.75rem 1.5rem;
+  background: #181C26;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   overflow-x: auto;
 }
 
@@ -344,11 +444,11 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.3rem 0.6rem;
-  background: var(--color-bg-secondary, #F0ECE4);
-  border: 1.5px solid var(--color-border, #DFD9CE);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
   border-radius: 4px;
-  color: var(--color-text-secondary, #4E5666);
-  font-family: var(--font-mono, "DM Mono", monospace);
+  color: rgba(250, 248, 245, 0.8);
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -357,8 +457,8 @@
 
 .proj-cs-lightbox-thumb-btn--active {
   border-color: var(--color-gold, #B78736);
-  background: var(--color-gold-dim, rgba(183, 135, 54, 0.15));
-  color: var(--color-gold, #B78736);
+  background: rgba(183, 135, 54, 0.2);
+  color: var(--color-gold-bright, #DEAA50);
 }
 
 .proj-cs-lightbox-thumb-img {
@@ -411,7 +511,7 @@
 }
 
 .proj-cs-empty-number {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 2rem;
   font-weight: 800;
   color: var(--color-gold, #B78736);
@@ -420,14 +520,14 @@
 }
 
 .proj-cs-empty-title {
-  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-family: var(--font-heading);
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-text-primary, #12141A);
 }
 
 .proj-cs-empty-tag {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -443,7 +543,7 @@
 }
 
 .proj-cs-gallery-heading {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -491,7 +591,7 @@
 }
 
 .proj-cs-thumb-idx {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   color: var(--color-text-tertiary, #7D8799);
 }
@@ -514,7 +614,7 @@
 }
 
 .proj-cs-sheet-title {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -522,7 +622,7 @@
 }
 
 .proj-cs-sheet-badge {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
   color: var(--color-gold, #B78736);
@@ -554,7 +654,7 @@
 }
 
 .proj-cs-dt {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -563,7 +663,7 @@
 }
 
 .proj-cs-dd {
-  font-family: var(--font-body, "Manrope", sans-serif);
+  font-family: var(--font-body);
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--color-text-primary, #12141A);
@@ -575,7 +675,7 @@
 }
 
 .proj-cs-block-title {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -595,7 +695,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--font-body, "Manrope", sans-serif);
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--color-text-secondary, #4E5666);
 }

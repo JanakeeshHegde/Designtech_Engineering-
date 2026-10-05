@@ -90,8 +90,7 @@ export default function Navbar() {
           <div className="mobile-menu-footer">
             <p className="mobile-menu-contact">designtecheng.team@gmail.com</p>
             <p className="mobile-menu-contact">
-              <a href="tel:+919035761979">9035761979</a> &nbsp;/&nbsp;
-              <a href="tel:+919880593211">9880593211</a>
+              <a href="tel:+919035761979">9035761979</a>
             </p>
           </div>
         </div>

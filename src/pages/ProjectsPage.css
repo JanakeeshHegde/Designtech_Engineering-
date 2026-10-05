@@ -62,14 +62,14 @@
 }
 
 .proj-meta-active-count {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--color-text-secondary, #4E5666);
 }
 
 .proj-meta-instruction {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   color: var(--color-text-tertiary, #7D8799);
   letter-spacing: 0.08em;

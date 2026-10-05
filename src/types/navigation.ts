@@ -12,7 +12,6 @@ export interface OfficeInfo {
   addressLine4: string;
   addressLine5: string;
   phone1: string;
-  phone2: string;
   email: string;
   googleMapsUrl: string;
   coordinates: [number, number];

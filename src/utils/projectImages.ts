@@ -15,7 +15,7 @@ import type { Project } from "../types/project";
 
 // Automatically discover all project images in public/projects/ via Vite's glob import
 const rawProjectImages = import.meta.glob<string>(
-  "/public/projects/**/*.{jpg,jpeg,png,webp,avif,JPG,PNG,JPEG,WEBP,svg,SVG}",
+  "/public/projects/**/*.{jpg,jpeg,png,webp,avif,JPG,PNG,JPEG,WEBP,svg,SVG,mp4,MP4,webm,WEBM,mov,MOV}",
   { eager: true, query: "?url", import: "default" }
 );
 

@@ -1,11 +1,26 @@
 /* ============================================================
-   SCROLL TO TOP — ARCHITECTURAL FLOATING UP ARROW
+   FLOATING QUICK ACTIONS (BACK-TO-TOP & WHATSAPP)
    ============================================================ */
 
-.scroll-to-top-btn {
+.floating-actions {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  z-index: 990;
+  pointer-events: none;
+}
+
+.floating-actions > * {
+  pointer-events: auto;
+}
+
+/* ── 1. Scroll To Top Button ── */
+.scroll-to-top-btn {
+  position: relative;
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -17,11 +32,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 990;
   box-shadow: 0 4px 20px rgba(10, 13, 20, 0.1);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(16px) scale(0.9);
+  pointer-events: none;
+  transform: translateY(14px) scale(0.9);
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -34,6 +49,7 @@
 .scroll-to-top-btn--visible {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
   transform: translateY(0) scale(1);
 }
 
@@ -47,6 +63,11 @@
 
 .scroll-to-top-btn:active {
   transform: translateY(-1px) scale(0.98);
+}
+
+.scroll-to-top-btn:focus-visible {
+  outline: 2px solid var(--color-gold, #B78736);
+  outline-offset: 3px;
 }
 
 /* ── Progress Ring SVG ── */
@@ -80,10 +101,59 @@
   transform: translateY(-2px);
 }
 
+/* ── 2. WhatsApp Floating Button (Directly Below) ── */
+.whatsapp-floating-btn {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #25D366;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              box-shadow 0.25s ease;
+  padding: 0;
+}
+
+.whatsapp-floating-btn:hover {
+  background-color: #20BA5A;
+  color: #FFFFFF;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 26px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-floating-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.whatsapp-floating-btn:focus-visible {
+  outline: 2px solid #25D366;
+  outline-offset: 3px;
+}
+
+.whatsapp-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Responsive Spacing ── */
 @media (max-width: 768px) {
+  .floating-actions {
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    right: 1.25rem;
+    gap: 0.55rem;
+  }
+
   .scroll-to-top-btn {
-    bottom: 1.5rem;
-    right: 1.5rem;
     width: 44px;
     height: 44px;
   }
@@ -92,12 +162,23 @@
     width: 44px;
     height: 44px;
   }
+
+  .whatsapp-floating-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .whatsapp-icon {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .scroll-to-top-btn,
   .stt-icon-wrap,
-  .stt-ring-fill {
+  .stt-ring-fill,
+  .whatsapp-floating-btn {
     transition: none !important;
   }
 }

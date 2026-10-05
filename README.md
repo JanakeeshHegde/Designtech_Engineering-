@@ -138,10 +138,10 @@ All sector details and fields of operation are centrally managed in [`src/data/s
 All office details, phone numbers, email, and map location are stored centrally in [`src/data/company.ts`](src/data/company.ts):
 
 - `addressLine1` through `addressLine5`
-- `phone1` and `phone2`
+- `phone1`
 - `email` (also used for mailto destination)
 - `googleMapsUrl`
-- `coordinates` (latitude & longitude used by Leaflet map)
+- `coordinates` (latitude & longitude used by the Google Maps embed)
 
 Updating `OFFICE_INFO` in this single file immediately updates the **Contact Page**, **Studio Map**, **Footer**, and **Mailto Handler**.
 

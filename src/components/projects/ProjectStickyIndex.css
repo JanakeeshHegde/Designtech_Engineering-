@@ -45,7 +45,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.45rem 0.95rem;
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -87,7 +87,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.85rem;
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--color-text-primary, #12141A);
@@ -117,7 +117,7 @@
 }
 
 .proj-index-main-label {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -125,7 +125,7 @@
 }
 
 .proj-index-sub-label {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   color: var(--color-text-tertiary, #7D8799);
 }
@@ -176,7 +176,7 @@
 }
 
 .proj-idx-num {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--color-gold, #B78736);
@@ -188,14 +188,14 @@
 }
 
 .proj-idx-cat {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.58rem;
   text-transform: uppercase;
   color: var(--color-text-tertiary, #7D8799);
 }
 
 .proj-idx-title {
-  font-family: var(--font-heading, "Space Grotesk", sans-serif);
+  font-family: var(--font-heading);
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--color-text-primary, #12141A);

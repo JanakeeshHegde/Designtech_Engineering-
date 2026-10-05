@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SECTORS } from "../../../data/sectors";
@@ -8,12 +7,24 @@ import "./Sectors.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Map sector IDs to representative projects from project catalog
-const SECTOR_PROJECT_MAP: Record<string, string[]> = {
-  "residential-commercial": ["hotel-country-inn", "malabar-gold-rr-nagar", "cross-winds-apartment", "puttur-commercial-apartment"],
-  "water-sewage-treatment": [],
-  "industrial-institutions": ["st-josephs-college", "harohalli-industrial", "cmr-pu-college", "sagittarius-metals"],
-  "solar-renewable-energy": ["silent-shores-solar"],
+// Map sector IDs to representative projects dynamically based on category
+const getRelatedProjectsForSector = (sectorId: string) => {
+  switch (sectorId) {
+    case "residential-commercial":
+      return projects.filter(
+        (p) => p.category === "Residential" || p.category === "Commercial"
+      );
+    case "industrial-institutions":
+      return projects.filter(
+        (p) => p.category === "Industrial" || p.category === "Institutional"
+      );
+    case "solar-renewable-energy":
+      return projects.filter((p) => p.category === "Solar & Renewable");
+    case "water-sewage-treatment":
+      return [];
+    default:
+      return [];
+  }
 };
 
 export default function Sectors() {
@@ -88,8 +99,7 @@ export default function Sectors() {
         {/* Rich Architectural Sector Cards */}
         <div className="sectors-showcase-grid">
           {SECTORS.map((s) => {
-            const relProjectIds = SECTOR_PROJECT_MAP[s.id] || [];
-            const relatedProjects = projects.filter((p) => relProjectIds.includes(p.id));
+            const relatedProjects = getRelatedProjectsForSector(s.id);
 
             return (
               <article
@@ -121,20 +131,20 @@ export default function Sectors() {
                   {/* Representative Sector Projects Snippet */}
                   {relatedProjects.length > 0 && (
                     <div className="sector-sc-projects-preview">
-                      <span className="sector-sc-label">REPRESENTATIVE DOCUMENTED PROJECTS</span>
-                      <div className="sector-sc-proj-list">
-                        {relatedProjects.slice(0, 3).map((rp) => (
-                          <Link
+                      <div className="sector-sc-projects-header">
+                        <span className="sector-sc-label">REPRESENTATIVE DOCUMENTED PROJECTS</span>
+                        <span className="sector-sc-count-tag">{relatedProjects.length} PROJECTS</span>
+                      </div>
+                      <div className="sector-sc-proj-list" role="list">
+                        {relatedProjects.map((rp) => (
+                          <div
                             key={rp.id}
-                            to={`/projects?id=${rp.id}`}
                             className="sector-sc-proj-item"
+                            role="listitem"
                           >
-                            <span className="sector-sc-proj-bullet">▪</span>
+                            <span className="sector-sc-proj-dot" aria-hidden="true" />
                             <span className="sector-sc-proj-name">{rp.title}</span>
-                            {rp.location && (
-                              <span className="sector-sc-proj-loc">({rp.location})</span>
-                            )}
-                          </Link>
+                          </div>
                         ))}
                       </div>
                     </div>

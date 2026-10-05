@@ -154,117 +154,166 @@
   border: 1px solid var(--color-border);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  background: var(--color-bg-secondary);
-}
-
-.contact-map {
-  width: 100%;
-  height: 420px;
-}
-
-.contact-info-block {
   background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 2rem 2.25rem;
-  box-shadow: var(--shadow-subtle);
-  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.contact-section-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-gold);
-  margin-bottom: 0.5rem;
-}
-
-.contact-business {
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--color-text-primary);
-  margin-bottom: 1.5rem;
-}
-
-.contact-addr-line {
-  margin-bottom: 1.25rem;
-}
-
-.contact-addr-line:last-child {
-  margin-bottom: 0;
-}
-
-.contact-addr-line .t-label {
-  display: block;
-  margin-bottom: 0.35rem;
-}
-
-.contact-addr-detail {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-}
-
-.contact-link {
-  color: var(--color-text-primary);
-  transition: color 0.2s ease;
-}
-
-.contact-link:hover {
-  color: var(--color-gold);
-}
-
-/* Leaflet Custom Marker & Popup Overrides */
-.dt-marker-pin svg {
-  filter: drop-shadow(0 4px 8px rgba(10, 13, 20, 0.3));
-}
-
-.dt-leaflet-popup .leaflet-popup-content-wrapper {
+.contact-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
   background: #FFFFFF;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-lift);
-  padding: 0;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.dt-popup {
-  padding: 1rem 1.25rem;
+.contact-map-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.dt-popup-title {
-  font-family: var(--font-heading);
-  font-size: 0.9rem;
+.contact-map-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16A34A;
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+  animation: mapPulse 2s infinite;
+}
+
+@keyframes mapPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(22, 163, 74, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+  }
+}
+
+.contact-map-live-text {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   font-weight: 700;
+  letter-spacing: 0.12em;
   color: var(--color-text-primary);
 }
 
-.dt-popup-tag {
+.contact-map-open-link {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
   color: var(--color-gold);
-  margin-bottom: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-.dt-popup-addr {
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--color-text-secondary);
-  margin-bottom: 0.75rem;
-  font-style: normal;
+.contact-map-open-link:hover {
+  color: var(--color-gold-dark, #8a5a15);
+  transform: translateX(1px);
 }
 
-.dt-popup-dir {
+.contact-map-frame-container {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: #EAE6DF;
+}
+
+.contact-map-skeleton {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: linear-gradient(110deg, #ece6dd 8%, #f5efe6 18%, #ece6dd 33%);
+  background-size: 200% 100%;
+  animation: mapShimmer 1.8s linear infinite;
+  color: var(--color-text-muted);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
+}
+
+@keyframes mapShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.contact-map-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-gold);
+  border-radius: 50%;
+  animation: mapSpin 0.8s linear infinite;
+}
+
+@keyframes mapSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.contact-map-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.contact-map-iframe.is-loaded {
+  opacity: 1;
+}
+
+.contact-map-actions {
+  display: flex;
+  padding: 0.85rem 1rem;
+  background: #FFFFFF;
+  border-top: 1px solid var(--color-border);
+}
+
+.contact-map-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--color-gold);
-  text-decoration: underline;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.contact-map-btn--primary {
+  background: var(--color-gold);
+  color: #FFFFFF;
+}
+
+.contact-map-btn--primary:hover {
+  background: var(--color-gold-dark, #8A5A15);
+  box-shadow: 0 4px 12px rgba(168, 117, 36, 0.25);
+  transform: translateY(-1px);
 }
 
 /* Final Closer */

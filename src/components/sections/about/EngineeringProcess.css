@@ -79,7 +79,7 @@
 }
 
 .process-stage-label {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   font-weight: 600;
@@ -131,7 +131,7 @@
 }
 
 .process-stage-title {
-  font-family: var(--font-heading, "Space Grotesk", sans-serif);
+  font-family: var(--font-heading);
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.01em;

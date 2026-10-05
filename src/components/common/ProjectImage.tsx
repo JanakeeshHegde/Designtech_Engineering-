@@ -76,7 +76,7 @@ export default function ProjectImage({
             y="160"
             fill="var(--color-gold, #A87524)"
             fontSize="11"
-            fontFamily="DM Mono, monospace"
+            fontFamily="Plus Jakarta Sans, sans-serif"
             fontWeight="700"
             textAnchor="middle"
             letterSpacing="0.1em"
@@ -88,7 +88,7 @@ export default function ProjectImage({
             y="176"
             fill="var(--color-text-secondary, #5A6270)"
             fontSize="7.5"
-            fontFamily="DM Mono, monospace"
+            fontFamily="Plus Jakarta Sans, sans-serif"
             textAnchor="middle"
             letterSpacing="0.08em"
           >
@@ -96,7 +96,7 @@ export default function ProjectImage({
           </text>
 
           {/* Bottom Sheet Spec Marker */}
-          <text x="425" y="265" fill="var(--color-gold, #A87524)" fontSize="7" fontFamily="DM Mono, monospace" textAnchor="end">
+          <text x="425" y="265" fill="var(--color-gold, #A87524)" fontSize="7" fontFamily="Plus Jakarta Sans, sans-serif" textAnchor="end">
             STRUCTURAL RECORD
           </text>
         </svg>

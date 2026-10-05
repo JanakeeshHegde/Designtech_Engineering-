@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import "./Contact.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -15,8 +13,7 @@ import { OFFICE_INFO } from "../../../data/company";
 import { generateMailtoUrl } from "../../../utils/mailto";
 
 const GOOGLE_MAPS_DIRECTIONS = OFFICE_INFO.googleMapsUrl;
-const OFFICE_COORDS: [number, number] = OFFICE_INFO.coordinates;
-
+const GOOGLE_MAPS_EMBED_URL = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.948!2d77.51833!3d12.9101281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f5aa3717c4d%3A0x65e857e76e832a65!2sDesigntech%20Engineering!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin`;
 
 interface FormData {
   fullName: string;
@@ -45,8 +42,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<L.Map | null>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   const [form, setForm] = useState<FormData>({
     fullName: "",
@@ -155,90 +151,7 @@ export default function Contact() {
     };
   }, []);
 
-  /* ───── LEAFLET MAP ───── */
-
-  useEffect(() => {
-    if (!mapContainerRef.current) return;
-    if (mapRef.current) return;
-
-    const container = mapContainerRef.current;
-
-    const goldIcon = L.divIcon({
-      className: "dt-marker",
-      html: `
-        <div class="dt-marker-wrap" aria-hidden="true">
-          <div class="dt-marker-pin">
-            <svg viewBox="0 0 32 40" width="32" height="40">
-              <path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 24 16 24s16-12 16-24C32 7.163 24.837 0 16 0z" fill="#A87524" />
-              <circle cx="16" cy="15" r="5.2" fill="#FFFFFF" />
-            </svg>
-          </div>
-          <div class="dt-marker-shadow" />
-        </div>
-      `,
-      iconSize: [32, 40],
-      iconAnchor: [16, 40],
-      popupAnchor: [0, -38],
-    });
-
-    const map = L.map(container, {
-      scrollWheelZoom: false,
-      zoomControl: true,
-      attributionControl: true,
-    }).setView(OFFICE_COORDS, 16);
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(map);
-
-    const marker = L.marker(OFFICE_COORDS, { icon: goldIcon }).addTo(map);
-
-    const popupContent = `
-      <div class="dt-popup" role="dialog" aria-label="Designtech Engineering location">
-        <div class="dt-popup-title">${OFFICE_INFO.business}</div>
-        <div class="dt-popup-tag">${OFFICE_INFO.tagline}</div>
-        <address class="dt-popup-addr">
-          ${OFFICE_INFO.addressLine1}<br/>
-          ${OFFICE_INFO.addressLine2}<br/>
-          ${OFFICE_INFO.addressLine3}<br/>
-          ${OFFICE_INFO.addressLine4}<br/>
-          ${OFFICE_INFO.addressLine5}
-        </address>
-        <a class="dt-popup-dir" href="${GOOGLE_MAPS_DIRECTIONS}" target="_blank" rel="noopener noreferrer">
-          GET DIRECTIONS →
-        </a>
-      </div>
-    `;
-
-    marker.bindPopup(popupContent, {
-      maxWidth: 280,
-      minWidth: 240,
-      className: "dt-leaflet-popup",
-      closeButton: true,
-    });
-
-    mapRef.current = map;
-
-    const ro = new ResizeObserver(() => {
-      map.invalidateSize();
-    });
-    ro.observe(container);
-
-    const refreshTimer = setTimeout(() => {
-      map.invalidateSize();
-    }, 350);
-
-    return () => {
-      clearTimeout(refreshTimer);
-      ro.disconnect();
-      map.remove();
-      mapRef.current = null;
-    };
-  }, []);
-
   const phoneLink1 = `tel:+91${OFFICE_INFO.phone1}`;
-  const phoneLink2 = `tel:+91${OFFICE_INFO.phone2}`;
   const mailtoLink = `mailto:${OFFICE_INFO.email}`;
 
   /* ───── RENDER ───── */
@@ -446,14 +359,59 @@ export default function Contact() {
           {/* RIGHT COLUMN — MAP + CONTACT INFO */}
           <div className="contact-map-col">
             <div className="contact-map-wrap">
-              <div ref={mapContainerRef} className="contact-map" aria-label="DESIGNTECH ENGINEERING office location map" />
+              <div className="contact-map-header">
+                <div className="contact-map-badge">
+                  <span className="contact-map-live-dot" aria-hidden="true" />
+                  <span className="contact-map-live-text">GOOGLE MAPS</span>
+                </div>
+                <a
+                  href={GOOGLE_MAPS_DIRECTIONS}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-map-open-link"
+                  aria-label="Open location in Google Maps (opens in new tab)"
+                >
+                  <span>Open in Maps</span>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+
+              <div className="contact-map-frame-container">
+                {!mapLoaded && (
+                  <div className="contact-map-skeleton" aria-hidden="true">
+                    <div className="contact-map-spinner" />
+                    <span>Loading satellite & street map...</span>
+                  </div>
+                )}
+                <iframe
+                  title="Designtech Engineering Google Map"
+                  src={GOOGLE_MAPS_EMBED_URL}
+                  className={`contact-map-iframe ${mapLoaded ? "is-loaded" : ""}`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  onLoad={() => setMapLoaded(true)}
+                  allowFullScreen
+                />
+              </div>
+
+              <div className="contact-map-actions">
+                <a
+                  href={GOOGLE_MAPS_DIRECTIONS}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-map-btn contact-map-btn--primary"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                  </svg>
+                  <span>GET DIRECTIONS ON GOOGLE MAPS</span>
+                </a>
+              </div>
             </div>
 
             <div className="contact-info-block" style={{ marginTop: "1.5rem" }}>
-              <div className="contact-section-label">STUDIO / BENGALURU</div>
-
-              <div className="contact-business">{OFFICE_INFO.business}</div>
-
               <address className="contact-addr" style={{ fontStyle: "normal" }}>
                 <div className="contact-addr-line">
                   <span className="t-label">ADDRESS</span>
@@ -474,8 +432,7 @@ export default function Contact() {
                 <div className="contact-addr-line">
                   <span className="t-label">TELEPHONE</span>
                   <div className="contact-addr-detail">
-                    <a href={phoneLink1} className="contact-link">+91 {OFFICE_INFO.phone1}</a><br />
-                    <a href={phoneLink2} className="contact-link">+91 {OFFICE_INFO.phone2}</a>
+                    <a href={phoneLink1} className="contact-link">+91 {OFFICE_INFO.phone1}</a>
                   </div>
                 </div>
 
@@ -495,11 +452,6 @@ export default function Contact() {
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="contact-final-line" style={{ opacity: 0.05 + i * 0.03 }} />
           ))}
-          <div className="contact-final-text">
-            <div className="t-display-lg" style={{ opacity: 0.06, userSelect: "none" }}>
-              DESIGNTECH ENGINEERING
-            </div>
-          </div>
         </div>
       </div>
     </section>

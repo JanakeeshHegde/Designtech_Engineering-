@@ -101,7 +101,6 @@ export default function Footer() {
                 <PhoneIcon />
                 <div className="footer-phones">
                   <a href={`tel:+91${OFFICE_INFO.phone1}`} className="footer-link">{OFFICE_INFO.phone1}</a>
-                  <a href={`tel:+91${OFFICE_INFO.phone2}`} className="footer-link">{OFFICE_INFO.phone2}</a>
                 </div>
               </div>
 

@@ -24,6 +24,19 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
   );
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const currentIndex = availableImages.indexOf(activeImage);
+
+  const handlePrevImage = () => {
+    if (availableImages.length <= 1) return;
+    const nextIdx = (currentIndex - 1 + availableImages.length) % availableImages.length;
+    setActiveImage(availableImages[nextIdx]);
+  };
+
+  const handleNextImage = () => {
+    if (availableImages.length <= 1) return;
+    const nextIdx = (currentIndex + 1) % availableImages.length;
+    setActiveImage(availableImages[nextIdx]);
+  };
 
   useEffect(() => {
     setActiveImage(allImages[0] || "");
@@ -33,6 +46,8 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxOpen(false);
+      if (e.key === "ArrowLeft") handlePrevImage();
+      if (e.key === "ArrowRight") handleNextImage();
     };
     if (lightboxOpen) {
       window.addEventListener("keydown", handleKeyDown);
@@ -44,7 +59,7 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [lightboxOpen]);
+  }, [lightboxOpen, currentIndex, availableImages.length]);
 
   const handleImageError = (failedSrc: string) => {
     setFailedImages((prev) => {
@@ -57,6 +72,8 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
       setActiveImage(remaining[0]);
     }
   };
+
+  const isVideoUrl = (url: string) => /\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(url);
 
   return (
     <article
@@ -128,9 +145,9 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
           <div
             className={`proj-cs-frame ${viewMode === "beforeAfter" ? "proj-cs-ba-frame" : ""}`}
             onClick={() => {
-              if (hasValidImage && viewMode === "media") setLightboxOpen(true);
+              if (hasValidImage && viewMode === "media" && !isVideoUrl(activeImage)) setLightboxOpen(true);
             }}
-            title={hasValidImage && viewMode === "media" ? "Click to view full image in high resolution" : ""}
+            title={hasValidImage && viewMode === "media" && !isVideoUrl(activeImage) ? "Click to view full image in high resolution" : ""}
           >
             {hasValidImage ? (
               viewMode === "beforeAfter" && project.beforeImage && project.afterImage ? (
@@ -140,6 +157,19 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                     afterSrc={project.afterImage}
                     beforeLabel="CONSTRUCTION STAGE"
                     afterLabel="COMPLETED STRUCTURE"
+                  />
+                </div>
+              ) : isVideoUrl(activeImage) ? (
+                <div className="proj-cs-video-wrap">
+                  <video
+                    key={activeImage}
+                    src={activeImage}
+                    className="proj-cs-video-player"
+                    controls
+                    playsInline
+                    autoPlay
+                    muted
+                    loop
                   />
                 </div>
               ) : (
@@ -177,27 +207,41 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
             <div className="proj-cs-gallery">
               <span className="proj-cs-gallery-heading">DOCUMENTATION VIEWS &amp; DRAWINGS:</span>
               <div className="proj-cs-thumbs">
-                {availableImages.map((img, i) => (
-                  <div className="proj-cs-thumb-item" key={img}>
-                    <button
-                      type="button"
-                      className={`proj-cs-thumb-btn ${activeImage === img && viewMode === "media" ? "proj-cs-thumb-btn--active" : ""}`}
-                      onClick={() => {
-                        setActiveImage(img);
-                        setViewMode("media");
-                      }}
-                      aria-label={`View image ${i + 1} for ${project.title}`}
-                    >
-                      <img
-                        src={img}
-                        alt=""
-                        className="proj-cs-thumb-img"
-                        onError={() => handleImageError(img)}
-                      />
-                    </button>
-                    <span className="proj-cs-thumb-idx">0{i + 1}</span>
-                  </div>
-                ))}
+                {availableImages.map((img, i) => {
+                  const isVid = isVideoUrl(img);
+                  return (
+                    <div className="proj-cs-thumb-item" key={img}>
+                      <button
+                        type="button"
+                        className={`proj-cs-thumb-btn ${activeImage === img && viewMode === "media" ? "proj-cs-thumb-btn--active" : ""}`}
+                        onClick={() => {
+                          setActiveImage(img);
+                          setViewMode("media");
+                        }}
+                        aria-label={`View ${isVid ? "video" : "image"} ${i + 1} for ${project.title}`}
+                      >
+                        {isVid ? (
+                          <div className="proj-cs-thumb-video-badge">
+                            <video src={img} className="proj-cs-thumb-img" muted preload="metadata" />
+                            <div className="proj-cs-play-icon" aria-hidden="true">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                          </div>
+                        ) : (
+                          <img
+                            src={img}
+                            alt=""
+                            className="proj-cs-thumb-img"
+                            onError={() => handleImageError(img)}
+                          />
+                        )}
+                      </button>
+                      <span className="proj-cs-thumb-idx">{isVid ? "VIDEO" : `0${i + 1}`}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -321,26 +365,77 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
               </button>
             </div>
             <div className="proj-cs-lightbox-img-wrap">
-              <img
-                src={activeImage}
-                alt={`${project.title} full architectural view`}
-                className="proj-cs-lightbox-img"
-              />
+              {availableImages.length > 1 && (
+                <button
+                  type="button"
+                  className="proj-cs-lightbox-nav proj-cs-lightbox-nav--prev"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrevImage();
+                  }}
+                  aria-label="Previous image"
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+              )}
+
+              {isVideoUrl(activeImage) ? (
+                <video
+                  key={activeImage}
+                  src={activeImage}
+                  className="proj-cs-lightbox-img proj-cs-lightbox-video"
+                  controls
+                  autoPlay
+                  playsInline
+                />
+              ) : (
+                <img
+                  key={activeImage}
+                  src={activeImage}
+                  alt={`${project.title} full architectural view`}
+                  className="proj-cs-lightbox-img"
+                />
+              )}
+
+              {availableImages.length > 1 && (
+                <button
+                  type="button"
+                  className="proj-cs-lightbox-nav proj-cs-lightbox-nav--next"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNextImage();
+                  }}
+                  aria-label="Next image"
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
+              )}
             </div>
             {availableImages.length > 1 && (
               <div className="proj-cs-lightbox-thumbs">
-                {availableImages.map((img, i) => (
-                  <button
-                    key={img}
-                    type="button"
-                    className={`proj-cs-lightbox-thumb-btn ${activeImage === img ? "proj-cs-lightbox-thumb-btn--active" : ""}`}
-                    onClick={() => setActiveImage(img)}
-                    aria-label={`View photo ${i + 1}`}
-                  >
-                    <img src={img} alt="" className="proj-cs-lightbox-thumb-img" />
-                    <span>0{i + 1}</span>
-                  </button>
-                ))}
+                {availableImages.map((img, i) => {
+                  const isVid = isVideoUrl(img);
+                  return (
+                    <button
+                      key={img}
+                      type="button"
+                      className={`proj-cs-lightbox-thumb-btn ${activeImage === img ? "proj-cs-lightbox-thumb-btn--active" : ""}`}
+                      onClick={() => setActiveImage(img)}
+                      aria-label={`View ${isVid ? "video" : "photo"} ${i + 1}`}
+                    >
+                      {isVid ? (
+                        <span className="proj-cs-lightbox-vid-tag">▶ VID</span>
+                      ) : (
+                        <img src={img} alt="" className="proj-cs-lightbox-thumb-img" />
+                      )}
+                      <span>0{i + 1}</span>
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>

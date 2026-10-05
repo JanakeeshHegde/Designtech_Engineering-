@@ -36,31 +36,47 @@
 .navbar-logo {
   display: flex;
   align-items: center;
+  justify-content: center;
   line-height: 1;
   cursor: pointer;
   padding: 0;
   transition: transform 0.3s var(--ease-out), opacity 0.25s;
   text-decoration: none;
   flex-shrink: 0;
+  position: relative;
 }
 
 .navbar-logo:hover {
-  opacity: 0.88;
+  opacity: 0.92;
   transform: translateY(-1px);
 }
 
 .navbar-logo-img {
-  height: 44px;
+  height: 52px;
+  max-height: 54px;
   width: auto;
-  max-width: 190px;
+  max-width: 220px;
   object-fit: contain;
   display: block;
+  mix-blend-mode: multiply;
+  filter: contrast(1.15) saturate(1.1) brightness(0.95);
+  image-rendering: -webkit-optimize-contrast;
+  transition: transform 0.25s ease;
+}
+
+@media (max-width: 1024px) {
+  .navbar-logo-img {
+    height: 46px;
+    max-height: 48px;
+    max-width: 190px;
+  }
 }
 
 @media (max-width: 768px) {
   .navbar-logo-img {
-    height: 36px;
-    max-width: 150px;
+    height: 40px;
+    max-height: 42px;
+    max-width: 165px;
   }
 }
 

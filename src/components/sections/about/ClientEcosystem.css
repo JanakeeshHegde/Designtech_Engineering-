@@ -79,19 +79,19 @@
 
 /* ── COMPACT CLIENT CARDS (Minimalist Logo Only) ── */
 .ce-client-card {
-  width: 180px;
-  min-width: 180px;
-  max-width: 180px;
-  height: 90px;
-  min-height: 90px;
-  background: var(--color-bg-secondary, #F4F1EA);
-  border: 1px solid var(--color-border, #E2DDD4);
+  width: 230px;
+  min-width: 230px;
+  max-width: 230px;
+  height: 115px;
+  min-height: 115px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.09);
   border-radius: var(--radius-md, 8px);
-  padding: 0.75rem 1.25rem;
+  padding: 0.85rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
   position: relative;
   flex-shrink: 0;
@@ -99,8 +99,8 @@
 
 .ce-client-card:hover {
   border-color: var(--color-gold, #B78736);
-  box-shadow: 0 8px 24px rgba(183, 135, 54, 0.12);
-  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(183, 135, 54, 0.16);
+  transform: translateY(-4px);
   background: #FFFFFF;
 }
 
@@ -114,24 +114,24 @@
 }
 
 .ce-client-logo-img {
-  max-width: 130px;
-  max-height: 52px;
+  max-width: 185px;
+  max-height: 80px;
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: contrast(1.05);
-  opacity: 0.92;
+  filter: contrast(1.04);
+  opacity: 1;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .ce-client-card:hover .ce-client-logo-img {
   opacity: 1;
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .ce-logo-placeholder {
-  font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-text-secondary, #575249);
   text-align: center;
@@ -139,16 +139,16 @@
 
 @media (max-width: 768px) {
   .ce-client-card {
-    width: 150px;
-    min-width: 150px;
-    max-width: 150px;
-    height: 80px;
-    min-height: 80px;
-    padding: 0.5rem 1rem;
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+    height: 95px;
+    min-height: 95px;
+    padding: 0.65rem 1rem;
   }
 
   .ce-client-logo-img {
-    max-width: 110px;
-    max-height: 44px;
+    max-width: 145px;
+    max-height: 65px;
   }
 }

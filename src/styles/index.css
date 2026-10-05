@@ -1,10 +1,10 @@
-﻿/* ============================================================
+/* ============================================================
    DESIGNTECH ENGINEERING — PREMIUM ARCHITECTURAL DESIGN SYSTEM
    Warm Ivory x Light Stone x Soft Concrete x Burnished Bronze
    ============================================================ */
 
 /* --- FONTS --- */
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap");
 
 /* --- DESIGN TOKENS --- */
 :root {
@@ -72,11 +72,12 @@
   --color-muted:            #495262;
   --color-faint:            rgba(73, 82, 98, 0.08);
 
-  /* Typography System */
-  --font-display: "Space Grotesk", "Syne", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-heading: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-body:    "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono:    "DM Mono", monospace;
+  /* Typography System — Plus Jakarta Sans */
+  --font-primary: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body:    "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:    "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Spacing System */
   --space-1:  0.25rem;
@@ -191,16 +192,16 @@ input, textarea, select { font-family: inherit; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
 
 /* --- TYPOGRAPHY --- */
-.t-display    { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; color: var(--color-text-primary); }
-.t-display-xl { font-family: var(--font-display); font-weight: 700; font-size: clamp(3.25rem, 7.5vw, 6.5rem); letter-spacing: -0.035em; line-height: 0.96; color: var(--color-text-primary); }
-.t-display-lg { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.25rem, 4.8vw, 4.25rem); letter-spacing: -0.03em; line-height: 1.06; color: var(--color-text-primary); }
-.t-display-md { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3.2vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.15; color: var(--color-text-primary); }
-.t-display-sm { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.35rem, 2.2vw, 1.85rem); letter-spacing: -0.02em; line-height: 1.25; color: var(--color-text-primary); }
-.t-heading    { font-family: var(--font-heading); font-weight: 600; font-size: 1.35rem; letter-spacing: -0.015em; line-height: 1.35; color: var(--color-text-primary); }
-.t-body       { font-family: var(--font-body); font-size: 1.05rem; line-height: 1.78; color: var(--color-text-secondary); font-weight: 400; }
-.t-body-sm    { font-family: var(--font-body); font-size: 0.92rem; line-height: 1.65; color: var(--color-text-secondary); }
-.t-mono       { font-family: var(--font-mono); font-size: 0.825rem; letter-spacing: 0.05em; }
-.t-label      { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-gold); }
+.t-display    { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--color-text-primary); }
+.t-display-xl { font-family: var(--font-display); font-weight: 700; font-size: clamp(3rem, 7vw, 6rem); letter-spacing: -0.025em; line-height: 1.02; color: var(--color-text-primary); }
+.t-display-lg { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.1rem, 4.5vw, 4rem); letter-spacing: -0.02em; line-height: 1.1; color: var(--color-text-primary); }
+.t-display-md { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.65rem, 3vw, 2.5rem); letter-spacing: -0.015em; line-height: 1.2; color: var(--color-text-primary); }
+.t-display-sm { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.25rem, 2vw, 1.75rem); letter-spacing: -0.01em; line-height: 1.3; color: var(--color-text-primary); }
+.t-heading    { font-family: var(--font-heading); font-weight: 600; font-size: 1.3rem; letter-spacing: -0.01em; line-height: 1.4; color: var(--color-text-primary); }
+.t-body       { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--color-text-secondary); font-weight: 400; }
+.t-body-sm    { font-family: var(--font-body); font-size: 0.9rem; line-height: 1.6; color: var(--color-text-secondary); font-weight: 400; }
+.t-mono       { font-family: var(--font-mono); font-size: 0.825rem; letter-spacing: 0.04em; }
+.t-label      { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-gold); }
 
 /* --- SECTION SYSTEM --- */
 .section { padding-top: var(--section-pad-y); padding-bottom: var(--section-pad-y); position: relative; overflow: hidden; }
