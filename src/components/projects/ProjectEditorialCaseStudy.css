@@ -733,8 +733,15 @@
     gap: 2rem;
   }
 
-  .proj-case-study--odd .proj-cs-media-col { order: 1; }
-  .proj-case-study--odd .proj-cs-info-col { order: 2; }
+  .proj-cs-media-col,
+  .proj-case-study--odd .proj-cs-media-col {
+    order: 1;
+  }
+
+  .proj-cs-info-col,
+  .proj-case-study--odd .proj-cs-info-col {
+    order: 2;
+  }
 }
 
 @media (max-width: 640px) {

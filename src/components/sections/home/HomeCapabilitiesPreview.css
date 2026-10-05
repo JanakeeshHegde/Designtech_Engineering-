@@ -284,6 +284,15 @@
 @media (max-width: 960px) {
   .hcp-interactive-layout {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .hcp-viewport-col {
+    order: 1;
+  }
+
+  .hcp-selector-list {
+    order: 2;
   }
 
   .hcp-header-row {
@@ -297,11 +306,11 @@
   }
 
   .hcp-viewport-container {
-    min-height: 400px;
+    min-height: 380px;
   }
 
   .hcp-image-stage {
-    min-height: 400px;
+    min-height: 380px;
   }
 }
 

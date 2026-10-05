@@ -328,7 +328,15 @@
 @media (max-width: 1024px) {
   .sector-card-showcase {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.75rem;
+  }
+
+  .sector-sc-visual {
+    order: 1;
+  }
+
+  .sector-sc-content {
+    order: 2;
   }
 
   .sector-sc-viewport {

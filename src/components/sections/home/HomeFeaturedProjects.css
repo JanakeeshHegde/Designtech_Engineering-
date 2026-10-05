@@ -422,11 +422,18 @@
   .hfp-stage-content,
   .hfp-stage--odd {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2.25rem;
   }
 
-  .hfp-stage--odd .hfp-info-col { order: 1; }
-  .hfp-stage--odd .hfp-visual-col { order: 2; }
+  .hfp-visual-col,
+  .hfp-stage--odd .hfp-visual-col {
+    order: 1;
+  }
+
+  .hfp-info-col,
+  .hfp-stage--odd .hfp-info-col {
+    order: 2;
+  }
 }
 
 @media (max-width: 640px) {
