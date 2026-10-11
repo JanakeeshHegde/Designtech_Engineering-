@@ -181,7 +181,7 @@ export default function ProjectsPage() {
               className="btn btn-outline"
               onClick={() => setSelectedCategory("ALL")}
             >
-              SHOW ALL 16 PROJECTS
+              SHOW ALL {allProjects.length} PROJECTS
             </button>
           </div>
         )}

@@ -21,7 +21,7 @@ const getRelatedProjectsForSector = (sectorId: string) => {
     case "solar-renewable-energy":
       return projects.filter((p) => p.category === "Solar & Renewable");
     case "water-sewage-treatment":
-      return [];
+      return projects.filter((p) => p.category === "Water & Sewage Treatment Plants");
     default:
       return [];
   }
@@ -52,7 +52,14 @@ export default function Sectors() {
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   const scrollToSector = (id: string) => {

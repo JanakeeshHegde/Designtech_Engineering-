@@ -57,11 +57,11 @@ const STAGES: ProcessStage[] = [
   },
   {
     num: "06",
-    label: "STRUCTURE",
-    title: "BUILT REALITY",
-    desc: "The engineering journey culminates in a standing structure — designed with precision, built with confidence, tested by time.",
-    image: "/process/06-built-reality.jpg",
-    alt: "Completed modern commercial skyscraper with glass and concrete structural facade reaching the skyline",
+    label: "STRUCTURAL ASSESSMENT",
+    title: "BUILDING STABILITY CHECKING",
+    desc: "Comprehensive structural assessment of existing buildings to evaluate their strength, stability, and safety. We identify structural weaknesses, assess potential risks, and provide professional recommendations for strengthening and rehabilitation.",
+    image: "/process/06-building-stability-checking.jpg",
+    alt: "Professional structural engineer conducting building stability assessment and structural condition inspection on reinforced concrete columns and beams with crack measurement gauge",
   },
 ];
 

@@ -235,26 +235,8 @@
 
 .sector-sc-proj-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 0.6rem;
-  max-height: 260px;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-/* Custom scrollbar for project list */
-.sector-sc-proj-list::-webkit-scrollbar {
-  width: 4px;
-}
-
-.sector-sc-proj-list::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.04);
-  border-radius: 2px;
-}
-
-.sector-sc-proj-list::-webkit-scrollbar-thumb {
-  background: rgba(183, 135, 54, 0.4);
-  border-radius: 2px;
 }
 
 .sector-sc-proj-item {

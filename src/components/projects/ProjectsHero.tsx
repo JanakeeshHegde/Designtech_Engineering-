@@ -12,7 +12,7 @@ export default function ProjectsHero() {
             </h1>
             <div className="section-divider" />
             <p className="t-body proj-hero-description">
-              Explore our completed engineering work across residential, commercial, institutional, industrial, and solar sectors. Browse project details, technical scope, and delivery highlights.
+              Explore our completed engineering work across residential, commercial, institutional, industrial, water & sewage treatment, and solar sectors. Browse project details, technical scope, and delivery highlights.
             </p>
           </div>
         </div>

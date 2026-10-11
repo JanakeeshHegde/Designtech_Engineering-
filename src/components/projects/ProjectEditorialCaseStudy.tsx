@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import type { Project } from "../../data/projects";
 import { getProjectAllImages } from "../../utils/projectImages";
 import BeforeAfter from "../common/BeforeAfter";
@@ -24,44 +25,70 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
   );
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const currentIndex = availableImages.indexOf(activeImage);
 
   const handlePrevImage = () => {
     if (availableImages.length <= 1) return;
     const nextIdx = (currentIndex - 1 + availableImages.length) % availableImages.length;
     setActiveImage(availableImages[nextIdx]);
-    setIsZoomed(false);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+      scrollContainerRef.current.scrollLeft = 0;
+    }
   };
 
   const handleNextImage = () => {
     if (availableImages.length <= 1) return;
     const nextIdx = (currentIndex + 1) % availableImages.length;
     setActiveImage(availableImages[nextIdx]);
-    setIsZoomed(false);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+      scrollContainerRef.current.scrollLeft = 0;
+    }
   };
 
   useEffect(() => {
     setActiveImage(allImages[0] || "");
     setFailedImages(new Set());
-    setIsZoomed(false);
   }, [project.id, allImages.length]);
 
+  // Lock body and html scroll while lightbox is open, restore previous position upon close
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightboxOpen(false);
-      if (e.key === "ArrowLeft") handlePrevImage();
-      if (e.key === "ArrowRight") handleNextImage();
+    if (!lightboxOpen) return;
+
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      window.scrollTo(0, scrollY);
     };
-    if (lightboxOpen) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+  }, [lightboxOpen]);
+
+  // Keyboard navigation handler (Escape, ArrowLeft, ArrowRight)
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setLightboxOpen(false);
+      } else if (e.key === "ArrowLeft") {
+        handlePrevImage();
+      } else if (e.key === "ArrowRight") {
+        handleNextImage();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
     };
   }, [lightboxOpen, currentIndex, availableImages.length]);
 
@@ -185,12 +212,23 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                     className="proj-cs-img"
                     onError={() => handleImageError(activeImage)}
                   />
-                  <div className="proj-cs-expand-hint" aria-hidden="true">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <button
+                    type="button"
+                    className="proj-cs-expand-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (hasValidImage && viewMode === "media" && !isVideoUrl(activeImage)) {
+                        setLightboxOpen(true);
+                      }
+                    }}
+                    aria-label={`Expand full image for ${project.title}`}
+                    title="Expand full image viewer"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                       <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
                     </svg>
-                    <span>Click to expand full image</span>
-                  </div>
+                    <span>EXPAND FULL VIEW</span>
+                  </button>
                 </>
               )
             ) : (
@@ -341,67 +379,65 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
       </div>
 
       {/* Full Resolution Image Lightbox Modal */}
-      {lightboxOpen && hasValidImage && (
+      {lightboxOpen && hasValidImage && typeof document !== "undefined" && createPortal(
         <div
-          className="proj-cs-lightbox"
+          className="proj-cs-lightbox-overlay"
           role="dialog"
           aria-modal="true"
           aria-label={`${project.title} full view`}
           data-lenis-prevent="true"
-          onClick={() => setLightboxOpen(false)}
         >
-          <div className="proj-cs-lightbox-backdrop" />
+          {/* Backdrop */}
           <div
-            className="proj-cs-lightbox-content"
-            data-lenis-prevent="true"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="proj-cs-lightbox-header">
-              <div className="proj-cs-lightbox-meta">
-                <span className="proj-cs-lightbox-num">{project.number}</span>
-                <span className="proj-cs-lightbox-title">{project.title}</span>
-                {project.location && <span className="proj-cs-lightbox-loc">— {project.location}</span>}
-              </div>
-              <div className="proj-cs-lightbox-actions">
-                {!isVideoUrl(activeImage) && (
-                  <button
-                    type="button"
-                    className={`proj-cs-lightbox-zoom-btn ${isZoomed ? "proj-cs-lightbox-zoom-btn--active" : ""}`}
-                    onClick={() => setIsZoomed(!isZoomed)}
-                    aria-label={isZoomed ? "Fit image to screen" : "Zoom into image for detailed inspection"}
-                    title={isZoomed ? "Reset fit to screen" : "Zoom 1.5x / Enable Pan"}
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                      {isZoomed ? (
-                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                      ) : (
-                        <>
-                          <circle cx="11" cy="11" r="8" />
-                          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                          <line x1="11" y1="8" x2="11" y2="14" />
-                          <line x1="8" y1="11" x2="14" y2="11" />
-                        </>
-                      )}
-                    </svg>
-                    <span>{isZoomed ? "FIT" : "ZOOM / PAN"}</span>
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className="proj-cs-lightbox-close"
-                  onClick={() => {
-                    setLightboxOpen(false);
-                    setIsZoomed(false);
-                  }}
-                  aria-label="Close full image view"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
+            className="proj-cs-lightbox-backdrop"
+            onClick={() => {
+              setLightboxOpen(false);
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Sticky Header with Title, Meta, and Close Button */}
+          <header className="proj-cs-lightbox-header" data-lenis-prevent="true">
+            <div className="proj-cs-lightbox-meta">
+              <span className="proj-cs-lightbox-num">{project.number}</span>
+              <span className="proj-cs-lightbox-title">{project.title}</span>
+              {project.location && (
+                <span className="proj-cs-lightbox-loc">— {project.location}</span>
+              )}
             </div>
-            <div className={`proj-cs-lightbox-img-wrap ${isZoomed ? "proj-cs-lightbox-img-wrap--zoomed" : ""}`} data-lenis-prevent="true">
+
+            <div className="proj-cs-lightbox-actions">
+              <button
+                type="button"
+                className="proj-cs-lightbox-close"
+                onClick={() => {
+                  setLightboxOpen(false);
+                }}
+                aria-label="Close image viewer"
+                title="Close viewer (Esc)"
+              >
+                <span className="proj-cs-lightbox-close-icon" aria-hidden="true">✕</span>
+                <span className="proj-cs-lightbox-close-text">CLOSE</span>
+              </button>
+            </div>
+          </header>
+
+          {/* Primary Scrollable Viewport Container */}
+          <div
+            ref={scrollContainerRef}
+            className="proj-cs-lightbox-scroll-container"
+            data-lenis-prevent="true"
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+          >
+            <div
+              className="proj-cs-lightbox-stage"
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  setLightboxOpen(false);
+                }
+              }}
+            >
               {availableImages.length > 1 && (
                 <button
                   type="button"
@@ -418,25 +454,36 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                 </button>
               )}
 
-              {isVideoUrl(activeImage) ? (
-                <video
-                  key={activeImage}
-                  src={activeImage}
-                  className="proj-cs-lightbox-img proj-cs-lightbox-video"
-                  controls
-                  autoPlay
-                  playsInline
-                />
-              ) : (
-                <img
-                  key={activeImage}
-                  src={activeImage}
-                  alt={`${project.title} full architectural view`}
-                  className={`proj-cs-lightbox-img ${isZoomed ? "proj-cs-lightbox-img--zoomed" : ""}`}
-                  onClick={() => setIsZoomed(!isZoomed)}
-                  title={isZoomed ? "Tap to fit to screen" : "Tap to zoom & pan in full resolution"}
-                />
-              )}
+              <div className="proj-cs-lightbox-image-wrap">
+                {isVideoUrl(activeImage) ? (
+                  <video
+                    key={activeImage}
+                    src={activeImage}
+                    className="proj-cs-lightbox-image proj-cs-lightbox-video"
+                    controls
+                    autoPlay
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    key={activeImage}
+                    src={activeImage}
+                    alt={`${project.title} full architectural view`}
+                    className={`proj-cs-lightbox-image ${isPortrait ? "proj-cs-lightbox-image--portrait" : "proj-cs-lightbox-image--landscape"}`}
+                    onLoad={(e) => {
+                      const img = e.currentTarget;
+                      setIsPortrait(img.naturalHeight > img.naturalWidth);
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  />
+                )}
+                <div className="proj-cs-lightbox-caption" onClick={(e) => e.stopPropagation()}>
+                  <span className="proj-cs-lightbox-caption-tag">{project.category}</span>
+                  <span className="proj-cs-lightbox-caption-title">{project.title}</span>
+                </div>
+              </div>
 
               {availableImages.length > 1 && (
                 <button
@@ -454,31 +501,40 @@ export default function ProjectEditorialCaseStudy({ project, index }: Props) {
                 </button>
               )}
             </div>
-            {availableImages.length > 1 && (
-              <div className="proj-cs-lightbox-thumbs" data-lenis-prevent="true">
-                {availableImages.map((img, i) => {
-                  const isVid = isVideoUrl(img);
-                  return (
-                    <button
-                      key={img}
-                      type="button"
-                      className={`proj-cs-lightbox-thumb-btn ${activeImage === img ? "proj-cs-lightbox-thumb-btn--active" : ""}`}
-                      onClick={() => setActiveImage(img)}
-                      aria-label={`View ${isVid ? "video" : "photo"} ${i + 1}`}
-                    >
-                      {isVid ? (
-                        <span className="proj-cs-lightbox-vid-tag">▶ VID</span>
-                      ) : (
-                        <img src={img} alt="" className="proj-cs-lightbox-thumb-img" />
-                      )}
-                      <span>0{i + 1}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
           </div>
-        </div>
+
+          {/* Bottom Thumbnail Strip (if multiple images) */}
+          {availableImages.length > 1 && (
+            <nav className="proj-cs-lightbox-thumbs" data-lenis-prevent="true" aria-label="Project images gallery thumbnails">
+              {availableImages.map((img, i) => {
+                const isVid = isVideoUrl(img);
+                return (
+                  <button
+                    key={img}
+                    type="button"
+                    className={`proj-cs-lightbox-thumb-btn ${activeImage === img ? "proj-cs-lightbox-thumb-btn--active" : ""}`}
+                    onClick={() => {
+                      setActiveImage(img);
+                      if (scrollContainerRef.current) {
+                        scrollContainerRef.current.scrollTop = 0;
+                        scrollContainerRef.current.scrollLeft = 0;
+                      }
+                    }}
+                    aria-label={`View ${isVid ? "video" : "photo"} ${i + 1}`}
+                  >
+                    {isVid ? (
+                      <span className="proj-cs-lightbox-vid-tag">▶ VID</span>
+                    ) : (
+                      <img src={img} alt="" className="proj-cs-lightbox-thumb-img" />
+                    )}
+                    <span>0{i + 1}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          )}
+        </div>,
+        document.body
       )}
     </article>
   );

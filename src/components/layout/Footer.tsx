@@ -32,8 +32,6 @@ const LocationIcon = () => (
 );
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className="footer" role="contentinfo">
       <div className="container">
@@ -117,7 +115,7 @@ export default function Footer() {
         {/* ── Bottom Bar ── */}
         <div className="footer-bottom">
           <p className="footer-copy">
-            © {currentYear} Designtech Engineering. All Rights Reserved.
+            © {new Date().getFullYear()} Designtech Engineering. All Rights Reserved.
           </p>
         </div>
       </div>
