@@ -250,6 +250,14 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--radius-xs, 4px);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.sector-sc-proj-item:hover {
+  border-color: var(--color-gold, #B78736);
+  box-shadow: 0 4px 12px rgba(183, 135, 54, 0.12);
+  transform: translateY(-1px);
 }
 
 .sector-sc-proj-dot {
@@ -258,6 +266,11 @@
   border-radius: 50%;
   background-color: var(--color-gold, #B78736);
   flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.sector-sc-proj-item:hover .sector-sc-proj-dot {
+  transform: scale(1.3);
 }
 
 .sector-sc-proj-name {

@@ -55,14 +55,6 @@ const STAGES: ProcessStage[] = [
     image: "/process/05-peer-review.jpg",
     alt: "Senior civil and structural engineers conducting peer review audit and building code compliance check",
   },
-  {
-    num: "06",
-    label: "STRUCTURAL ASSESSMENT",
-    title: "BUILDING STABILITY CHECKING",
-    desc: "Comprehensive structural assessment of existing buildings to evaluate their strength, stability, and safety. We identify structural weaknesses, assess potential risks, and provide professional recommendations for strengthening and rehabilitation.",
-    image: "/process/06-building-stability-checking.jpg",
-    alt: "Professional structural engineer conducting building stability assessment and structural condition inspection on reinforced concrete columns and beams with crack measurement gauge",
-  },
 ];
 
 export default function EngineeringProcess() {

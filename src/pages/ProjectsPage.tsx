@@ -29,9 +29,11 @@ export default function ProjectsPage() {
     const counts: Record<string, number> = { ALL: allProjects.length };
     PROJECT_CATEGORIES.forEach((cat) => {
       if (cat !== "ALL") {
-        counts[cat] = allProjects.filter(
-          (p) => p.category.toLowerCase() === cat.toLowerCase()
-        ).length;
+        counts[cat] = allProjects.filter((p) => {
+          const pNorm = p.category.toLowerCase().replace(/&/g, "and").replace(/\s+/g, " ").trim();
+          const catNorm = cat.toLowerCase().replace(/&/g, "and").replace(/\s+/g, " ").trim();
+          return pNorm === catNorm;
+        }).length;
       }
     });
     return counts;
@@ -40,9 +42,11 @@ export default function ProjectsPage() {
   // Filter projects by category
   const filteredProjects = useMemo(() => {
     if (selectedCategory === "ALL") return allProjects;
-    return allProjects.filter(
-      (p) => p.category.toLowerCase() === selectedCategory.toLowerCase()
-    );
+    return allProjects.filter((p) => {
+      const pNorm = p.category.toLowerCase().replace(/&/g, "and").replace(/\s+/g, " ").trim();
+      const catNorm = selectedCategory.toLowerCase().replace(/&/g, "and").replace(/\s+/g, " ").trim();
+      return pNorm === catNorm;
+    });
   }, [selectedCategory]);
 
   // Set default active project when filtered list changes

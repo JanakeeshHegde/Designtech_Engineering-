@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SECTORS } from "../../../data/sectors";
@@ -22,6 +23,14 @@ const getRelatedProjectsForSector = (sectorId: string) => {
       return projects.filter((p) => p.category === "Solar & Renewable");
     case "water-sewage-treatment":
       return projects.filter((p) => p.category === "Water & Sewage Treatment Plants");
+    case "structural-stability-strengthening":
+    case "structural-assessment-stability":
+      return projects.filter(
+        (p) =>
+          p.category.toLowerCase().includes("stability") ||
+          p.category.toLowerCase().includes("strengthening") ||
+          p.category.toLowerCase().includes("assessment")
+      );
     default:
       return [];
   }
@@ -136,7 +145,7 @@ export default function Sectors() {
                   </div>
 
                   {/* Representative Sector Projects Snippet */}
-                  {relatedProjects.length > 0 && (
+                  {relatedProjects.length > 0 ? (
                     <div className="sector-sc-projects-preview">
                       <div className="sector-sc-projects-header">
                         <span className="sector-sc-label">REPRESENTATIVE DOCUMENTED PROJECTS</span>
@@ -144,15 +153,41 @@ export default function Sectors() {
                       </div>
                       <div className="sector-sc-proj-list" role="list">
                         {relatedProjects.map((rp) => (
-                          <div
+                          <Link
                             key={rp.id}
+                            to={`/projects#project-${rp.id}`}
                             className="sector-sc-proj-item"
                             role="listitem"
                           >
                             <span className="sector-sc-proj-dot" aria-hidden="true" />
                             <span className="sector-sc-proj-name">{rp.title}</span>
-                          </div>
+                          </Link>
                         ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="sector-sc-projects-preview">
+                      <div className="sector-sc-projects-header">
+                        <span className="sector-sc-label">KEY ASSESSMENT SCOPE &amp; CAPABILITIES</span>
+                        <span className="sector-sc-count-tag">CORE AUDIT PRACTICE</span>
+                      </div>
+                      <div className="sector-sc-proj-list" role="list">
+                        <div className="sector-sc-proj-item" role="listitem">
+                          <span className="sector-sc-proj-dot" aria-hidden="true" />
+                          <span className="sector-sc-proj-name">Building Stability &amp; Structural Safety Certification</span>
+                        </div>
+                        <div className="sector-sc-proj-item" role="listitem">
+                          <span className="sector-sc-proj-dot" aria-hidden="true" />
+                          <span className="sector-sc-proj-name">NDT, Ultrasonic &amp; Rebound Hammer Concrete Testing</span>
+                        </div>
+                        <div className="sector-sc-proj-item" role="listitem">
+                          <span className="sector-sc-proj-dot" aria-hidden="true" />
+                          <span className="sector-sc-proj-name">Structural Distress Mapping, Crack &amp; Deflection Audits</span>
+                        </div>
+                        <div className="sector-sc-proj-item" role="listitem">
+                          <span className="sector-sc-proj-dot" aria-hidden="true" />
+                          <span className="sector-sc-proj-name">Retrofitting, Column Jacketing &amp; Strengthening Schemes</span>
+                        </div>
                       </div>
                     </div>
                   )}

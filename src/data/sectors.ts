@@ -37,6 +37,15 @@ export const SECTORS: SectorItem[] = [
     tags: ["Solar MMS Design", "Wind Dynamic Analysis", "Rooftop Load Audits", "Utility-Scale Arrays", "Cold-Formed Steel"],
     image: "/sectors/solar-renewable-energy.png",
   },
+  {
+    id: "structural-stability-strengthening",
+    num: "05",
+    title: "STRUCTURAL STABILITY CHECK AND STRENGTHENING",
+    subtitle: "STABILITY AUDITS, CONDITION EVALUATION & RETROFITTING",
+    desc: "Comprehensive structural stability check and strengthening of existing structures to evaluate strength, stability, and safety. We identify structural distress and weaknesses, perform non-destructive testing (NDT), evaluate foundation settlement, and formulate professional engineering recommendations for strengthening, retrofitting, and rehabilitation.",
+    tags: ["Structural Stability Check", "Structural Strengthening", "Building Stability Audits", "NDT & Distress Evaluation", "Retrofitting & Jacketing", "Structural Safety Certification"],
+    image: "/sectors/structural-assessment-stability.jpg",
+  },
 ];
 
 export const FIELDS_PREVIEW: FieldPreviewItem[] = [
@@ -75,5 +84,14 @@ export const FIELDS_PREVIEW: FieldPreviewItem[] = [
     tag: "Wind Resilient MMS",
     sectorId: "solar-renewable-energy",
     image: "/sectors/solar-renewable-energy.png",
+  },
+  {
+    num: "05",
+    title: "Structural Stability Check and Strengthening",
+    category: "STABILITY CHECK & STRENGTHENING",
+    desc: "Comprehensive structural stability check, condition evaluation, and strengthening for existing structures.",
+    tag: "Stability & Strengthening",
+    sectorId: "structural-stability-strengthening",
+    image: "/sectors/structural-assessment-stability.jpg",
   },
 ];

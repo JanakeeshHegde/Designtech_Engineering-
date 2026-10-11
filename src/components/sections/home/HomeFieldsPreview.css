@@ -54,8 +54,8 @@
 /* ── GRID SYSTEM ── */
 .hfpw-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(0.85rem, 1.5vw, 1.5rem);
 }
 
 .hfpw-card {
@@ -81,7 +81,7 @@
 
 /* Card Body */
 .hfpw-card-body {
-  padding: 1.5rem;
+  padding: clamp(1.15rem, 1.5vw, 1.5rem);
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -95,16 +95,16 @@
 
 .hfpw-card-cat {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #E5BD72;
 }
 
 .hfpw-card-title {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #FFFFFF;
   margin-bottom: 0.75rem;
@@ -112,8 +112,9 @@
 }
 
 .hfpw-card-desc {
+  font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.86);
-  line-height: 1.6;
+  line-height: 1.55;
   margin-bottom: 1.5rem;
   flex: 1;
 }
@@ -122,13 +123,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 0.85rem;
   border-top: 1px solid rgba(255, 255, 255, 0.28);
 }
 
 .hfpw-card-tag {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   color: #E5BD72;
 }
@@ -152,11 +153,17 @@
 
 @media (max-width: 1200px) {
   .hfpw-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .hfpw-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .hfpw-header-row {
     flex-direction: column;
     align-items: flex-start;
