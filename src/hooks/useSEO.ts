@@ -14,7 +14,7 @@ export interface UseSEOOptions {
 }
 
 const DOMAIN = "https://designtechengineering.in";
-const DEFAULT_IMAGE = `${DOMAIN}/og-image.png`;
+const DEFAULT_IMAGE = `${DOMAIN}/og-image.jpg`;
 
 function setMetaTag(selector: string, attribute: string, value: string) {
   let element = document.querySelector(selector);
@@ -84,7 +84,7 @@ export function useSEO({
     setMetaTag('meta[property="og:type"]', "content", "website");
     setMetaTag('meta[property="og:image"]', "content", DEFAULT_IMAGE);
     setMetaTag('meta[property="og:image:secure_url"]', "content", DEFAULT_IMAGE);
-    setMetaTag('meta[property="og:image:type"]', "content", "image/png");
+    setMetaTag('meta[property="og:image:type"]', "content", "image/jpeg");
     setMetaTag('meta[property="og:image:width"]', "content", "1200");
     setMetaTag('meta[property="og:image:height"]', "content", "630");
     setMetaTag('meta[property="og:image:alt"]', "content", "DesignTech Engineering — Civil and Structural Consultants");
