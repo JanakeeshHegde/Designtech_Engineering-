@@ -77,9 +77,9 @@ export default function Sectors() {
         <div className="sectors-header">
           <div className="sectors-header-left">
             <span className="sectors-eyebrow">SPECIALIZED SECTORS</span>
-            <h2 id="sectors-heading" className="sectors-headline t-display-md">
+            <h1 id="sectors-heading" className="sectors-headline t-display-md">
               FIELDS OF OPERATION
-            </h2>
+            </h1>
             <p className="sectors-header-desc t-body">
               Multi-disciplinary civil and structural engineering adapted to the distinct technical,
               structural, and regulatory requirements of every built environment.

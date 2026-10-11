@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { allProjects, PROJECT_CATEGORIES } from "../data/projects";
+import { useSEO } from "../hooks";
 import ProjectsHero from "../components/projects/ProjectsHero";
 import ProjectStickyIndex from "../components/projects/ProjectStickyIndex";
 import ProjectEditorialCaseStudy from "../components/projects/ProjectEditorialCaseStudy";
@@ -15,10 +16,13 @@ export default function ProjectsPage() {
   const [activeProjectId, setActiveProjectId] = useState<string>(allProjects[0]?.id || "");
   const containerRef = useRef<HTMLElement>(null);
 
-  // Set page title for SEO
-  useEffect(() => {
-    document.title = "Projects Archive & Structural Portfolio | Designtech Engineering";
-  }, []);
+  // Set page metadata for SEO
+  useSEO({
+    title: "Civil & Structural Engineering Projects Portfolio | DesignTech Engineering",
+    description: "Explore documented engineering projects by DesignTech Engineering across commercial landmarks, residential apartments, industrial PEB factories, institutional centres, and STP water tanks.",
+    path: "/projects",
+    breadcrumbs: [{ name: "Projects", path: "/projects" }],
+  });
 
   // Compute category counts
   const categoryCounts = useMemo(() => {

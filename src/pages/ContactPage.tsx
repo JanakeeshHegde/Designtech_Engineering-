@@ -1,12 +1,15 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSEO } from "../hooks";
 import Contact from "../components/sections/contact/Contact";
 import "./ContactPage.css";
 
 export default function ContactPage() {
-  useEffect(() => {
-    document.title = "Contact Designtech Engineering | Bangalore";
-  }, []);
+  useSEO({
+    title: "Contact DesignTech Engineering | Consult Structural Engineers Bengaluru",
+    description: "Connect with DesignTech Engineering for structural consultations, building stability evaluations, civil engineering design, and project inquiries in Bengaluru, Karnataka.",
+    path: "/contact",
+    breadcrumbs: [{ name: "Contact", path: "/contact" }],
+  });
 
   return (
     <main id="main-content">

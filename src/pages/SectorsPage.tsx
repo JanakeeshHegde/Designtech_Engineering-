@@ -1,12 +1,15 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSEO } from "../hooks";
 import Sectors from "../components/sections/sectors/Sectors";
 import "./SectorsPage.css";
 
 export default function SectorsPage() {
-  useEffect(() => {
-    document.title = "Designtech Engineering | Sectors & Fields of Operation";
-  }, []);
+  useSEO({
+    title: "Fields of Operation & Engineering Sectors | DesignTech Engineering",
+    description: "Comprehensive structural engineering services across residential, commercial, industrial, institutional, solar renewable roofing, and water & sewage treatment plants.",
+    path: "/sectors",
+    breadcrumbs: [{ name: "Sectors", path: "/sectors" }],
+  });
 
   return (
     <main id="main-content">

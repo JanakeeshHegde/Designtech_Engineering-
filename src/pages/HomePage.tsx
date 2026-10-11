@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useSEO } from "../hooks";
 import Hero from "../components/sections/home/Hero";
 import HomeAboutTeaser from "../components/sections/home/HomeAboutTeaser";
 import HomeCapabilitiesPreview from "../components/sections/home/HomeCapabilitiesPreview";
@@ -9,9 +9,11 @@ import HomeFeaturedProjects from "../components/sections/home/HomeFeaturedProjec
 import HomeContactCTA from "../components/sections/home/HomeContactCTA";
 
 export default function HomePage() {
-  useEffect(() => {
-    document.title = "Designtech Engineering | Civil & Structural Engineering Consultancy";
-  }, []);
+  useSEO({
+    title: "DesignTech Engineering | Structural Engineering Consultancy Bengaluru",
+    description: "DesignTech Engineering is a premier civil and structural engineering consultancy based in Bengaluru, specializing in structural design, building stability assessment, high-rises, commercial, industrial, and STP projects.",
+    path: "/",
+  });
 
   return (
     <main id="main-content">

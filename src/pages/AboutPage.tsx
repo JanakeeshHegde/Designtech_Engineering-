@@ -1,14 +1,17 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSEO } from "../hooks";
 import About from "../components/sections/about/About";
 import EngineeringProcess from "../components/sections/about/EngineeringProcess";
 import ClientEcosystem from "../components/sections/about/ClientEcosystem";
 import "./AboutPage.css";
 
 export default function AboutPage() {
-  useEffect(() => {
-    document.title = "About Designtech Engineering | Civil & Structural Consultancy";
-  }, []);
+  useSEO({
+    title: "About Us | DesignTech Engineering — Civil & Structural Consultants",
+    description: "Learn about DesignTech Engineering, an experienced civil and structural engineering consultancy in Rajarajeshwari Nagar, Bengaluru, delivering precision engineering, structural integrity, and project excellence.",
+    path: "/about",
+    breadcrumbs: [{ name: "About", path: "/about" }],
+  });
 
   return (
     <main id="main-content">

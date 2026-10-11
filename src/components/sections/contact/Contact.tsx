@@ -211,7 +211,7 @@ export default function Contact() {
       <div className="container">
         <div className="contact-header section-header">
           <div className="section-number">CONTACT</div>
-          <h2 id="contact-heading" className="t-display-lg">LET&apos;S BUILD<br />WHAT LASTS.</h2>
+          <h1 id="contact-heading" className="t-display-lg">LET&apos;S BUILD<br />WHAT LASTS.</h1>
           <div className="section-divider" />
         </div>
 

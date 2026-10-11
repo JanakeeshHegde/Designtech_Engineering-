@@ -72,11 +72,11 @@ export default function About() {
         <div className="about-grid">
           {/* Left Column: Narrative & Address */}
           <div className="about-narrative-col">
-            <h2 id="about-heading" className="about-title t-display-lg">
+            <h1 id="about-heading" className="about-title t-display-lg">
               <span className="about-title-line">ENGINEERING</span>
               <span className="about-title-line">WITH ENDURING</span>
               <span className="about-title-line about-title-accent">PURPOSE.</span>
-            </h2>
+            </h1>
 
             <div className="about-text-block">
               <p className="about-lead">
