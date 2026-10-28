@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # React routes that share names with public asset directories.
+  # Keep these before file/directory checks so /projects and /sectors render the SPA.
+  RewriteCond %{REQUEST_URI} ^/(projects|sectors)/?$ [NC]
+  RewriteRule ^ index.html [END]
+
+  # Serve existing files and directories directly (JavaScript, CSS, images, etc.)
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Send all other client-side routes to the React entry document
+  RewriteRule ^ index.html [L]
+</IfModule>
