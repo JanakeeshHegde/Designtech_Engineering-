@@ -154,4 +154,4 @@ The contact form is 100% client-side and requires no external backend or API key
 1. User fills out the form on `/contact`.
 2. Form validates required fields and tests the honeypot anti-spam trap.
 3. Clicking **Send Enquiry** builds a structured mailto link via [`src/utils/mailto.ts`](src/utils/mailto.ts).
-4. The user's native email client (Outlook, Apple Mail, Gmail app, etc.) opens prefilled with the enquiry addressed to `designtecheng.team@gmail.com`.
+4. The user's native email client (Outlook, Apple Mail, Gmail app, etc.) opens prefilled with the enquiry addressed to `avinash@designtechengineering.in`.

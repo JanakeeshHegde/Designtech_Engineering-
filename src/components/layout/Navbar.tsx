@@ -114,7 +114,7 @@ export default function Navbar() {
             <div className="mobile-menu-contact-group">
               <span className="mobile-menu-label">Direct Inquiry</span>
               <a
-                href="mailto:designtecheng.team@gmail.com"
+                href="mailto:avinash@designtechengineering.in"
                 className="mobile-contact-item"
                 aria-label="Email Designtech Engineering"
               >
@@ -122,7 +122,7 @@ export default function Navbar() {
                   <rect x="2" y="4" width="20" height="16" rx="2"/>
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                 </svg>
-                <span>designtecheng.team@gmail.com</span>
+                <span>avinash@designtechengineering.in</span>
               </a>
               <a
                 href="tel:+919035761979"
